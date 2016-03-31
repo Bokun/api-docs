@@ -17,6 +17,9 @@
         "/category.json/{productCategory}": {
             "get": {
                 "summary": "Categories",
+                "tags": [
+                    "Category"
+                ],
                 "description": "Information about product categorization.\n",
                 "parameters": [
                     {

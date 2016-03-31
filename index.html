@@ -35,7 +35,7 @@
       if (url && url.length > 1) {
         url = decodeURIComponent(url[1]);
       } else {
-        url = "http://bokun.github.io/api-docs/swagger-prod.json";
+        url = "http://bokun.github.io/api-docs/swagger-test.json";
       }
 
       // Pre load translate...
@@ -81,7 +81,7 @@
       function addApiKeyAuthorization(){
         var key = encodeURIComponent($('#input_apiKey')[0].value);
         if(key && key.trim() != "") {
-            var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("api_key", key, "query");
+            var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("X-Bokun-AccessKey", key, "header");
             window.swaggerUi.api.clientAuthorizations.add("api_key", apiKeyAuth);
             log("added key " + key);
         }
@@ -122,8 +122,8 @@
     <form id='api_selector'>
       <div class="input">
         <select id="input_baseUrl" class="select-input" name="baseUrl">
-          <option value="http://bokun.github.io/api-docs/swagger-prod.json">Production environment</option>
           <option value="http://bokun.github.io/api-docs/swagger-test.json">Test environment</option>
+          <option value="http://bokun.github.io/api-docs/swagger-prod.json">Production environment</option>
         </select>
       </div>
       <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"/></div>

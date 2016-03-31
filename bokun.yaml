@@ -2,73 +2,83 @@
 # as a demonstration of an API spec in YAML
 swagger: '2.0'
 info:
-  title: Uber API
-  description: Move your app forward with the Uber API
+  title: Bokun API
+  description: Documentation for the Bokun API.
   version: "1.0.0"
 # the domain of the service
-host: api.uber.com
+host: api.bokun.io
 # array of all schemes that your API supports
 schemes:
   - https
 # will be prefixed to all paths
-basePath: /v1
+basePath: /
 produces:
   - application/json
 paths:
-  /products:
+  /category.json/{productCategory}:
     get:
-      summary: Product Types
+      summary: Categories
       description: |
-        The Products endpoint returns information about the *Uber* products
-        offered at a given location. The response includes the display name
-        and other details about each product, and lists the products in the
-        proper display order.
+        Information about product categorization.
       parameters:
-        - name: latitude
-          in: query
-          description: Latitude component of location.
+        - name: productCategory
+          in: path
+          description: The product category for which to retrieve the category tree.
           required: true
-          type: number
-          format: double
-        - name: longitude
+          enum: ['ACCOMMODATION', 'ACTIVITIES', 'CAR_RENTALS', 'TRANSPORT']
+          type: string
+        - name: item
           in: query
-          description: Longitude component of location.
-          required: true
-          type: number
-          format: double
-      tags:
-        - Products
+          description: Specifies whether to get only categories for bookable items in this product type or not.
+          required: false
+          default: false
+          type: boolean
+        - name: flags
+          in: query
+          description: Comma separated list of required flags.
+          required: false
+          type: string
+        - name: lang
+          in: query
+          description: The language to retrieve the content in.
+          required: false
+          type: string
+          default: EN
       responses:
         200:
-          description: An array of products
+          description: An array of categories
           schema:
             type: array
             items:
-              $ref: '#/definitions/Product'
+              $ref: '#/definitions/Category'
         default:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
-  
+
 definitions:
-  Product:
+  Category:
     type: object
     properties:
-      product_id:
+      id:
+        type: integer
+        description: Unique identifier representing the category.
+      title:
         type: string
-        description: Unique identifier representing a specific product for a given latitude & longitude. For example, uberX in San Francisco will have a different product_id than uberX in Los Angeles.
-      description:
-        type: string
-        description: Description of product.
-      display_name:
-        type: string
-        description: Display name of product.
-      capacity:
-        type: string
-        description: Capacity of product. For example, 4 people.
-      image:
-        type: string
-        description: Image URL representing the product.
+        description: The category title.
+      allowsSelectingMultipleChildren:
+        type: boolean
+        description: Specifies whether this category allows selection of multiple children or only a single one.
+      flags:
+        type: array
+        description: A list of flags for this category.
+        items:
+          type: string
+      categories:
+        type: array
+        description: Child categories that belong to this category.
+        items:
+          $ref: '#/definitions/Category'
   Error:
     type: object
     properties:

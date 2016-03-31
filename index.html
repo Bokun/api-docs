@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Swagger UI</title>
+  <title>Bokun API</title>
   <link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32" />
   <link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
   <link href='css/typography.css' media='screen' rel='stylesheet' type='text/css'/>
@@ -35,7 +35,7 @@
       if (url && url.length > 1) {
         url = decodeURIComponent(url[1]);
       } else {
-        url = "http://petstore.swagger.io/v2/swagger.json";
+        url = "http://bokun.github.io/api-docs/swagger.json";
       }
 
       // Pre load translate...
@@ -52,7 +52,7 @@
               clientId: "your-client-id",
               clientSecret: "your-client-secret-if-required",
               realm: "your-realms",
-              appName: "your-app-name", 
+              appName: "your-app-name",
               scopeSeparator: ",",
               additionalQueryStringParams: {}
             });
@@ -104,14 +104,28 @@
       }
   });
   </script>
+  <style>
+    .swagger-section #input_baseUrl.select-input {
+      height: 30px;
+      line-height: 30px;
+      width: 200px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body class="swagger-section">
 <div id='header'>
   <div class="swagger-ui-wrap">
-    <a id="logo" href="http://swagger.io">swagger</a>
+    <a id="logo" href="http://bokun.io">BOKUN</a>
     <form id='api_selector'>
-      <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="text"/></div>
+      <div class="input">
+        <select id="input_baseUrl" class="select-input" name="baseUrl">
+          <option value="http://bokun.github.io/api-docs/swagger-prod.json">Production environment</option>
+          <option value="http://bokun.github.io/api-docs/swagger-test.json">Test environment</option>
+        </select>
+      </div>
       <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"/></div>
       <div class='input'><a id="explore" href="#" data-sw-translate>Explore</a></div>
     </form>

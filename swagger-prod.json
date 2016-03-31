@@ -1,0 +1,127 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Bokun API",
+        "description": "Documentation for the Bokun API.",
+        "version": "1.0.0"
+    },
+    "host": "api.bokun.io",
+    "schemes": [
+        "https"
+    ],
+    "basePath": "/",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/category.json/{productCategory}": {
+            "get": {
+                "summary": "Categories",
+                "description": "Information about product categorization.\n",
+                "parameters": [
+                    {
+                        "name": "productCategory",
+                        "in": "path",
+                        "description": "The product category for which to retrieve the category tree.",
+                        "required": true,
+                        "enum": [
+                            "ACCOMMODATION",
+                            "ACTIVITIES",
+                            "CAR_RENTALS",
+                            "TRANSPORT"
+                        ],
+                        "type": "string"
+                    },
+                    {
+                        "name": "item",
+                        "in": "query",
+                        "description": "Specifies whether to get only categories for bookable items in this product type or not.",
+                        "required": false,
+                        "default": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "flags",
+                        "in": "query",
+                        "description": "Comma separated list of required flags.",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lang",
+                        "in": "query",
+                        "description": "The language to retrieve the content in.",
+                        "required": false,
+                        "type": "string",
+                        "default": "EN"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of categories",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Category"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Category": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Unique identifier representing the category."
+                },
+                "title": {
+                    "type": "string",
+                    "description": "The category title."
+                },
+                "allowsSelectingMultipleChildren": {
+                    "type": "boolean",
+                    "description": "Specifies whether this category allows selection of multiple children or only a single one."
+                },
+                "flags": {
+                    "type": "array",
+                    "description": "A list of flags for this category.",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "categories": {
+                    "type": "array",
+                    "description": "Child categories that belong to this category.",
+                    "items": {
+                        "$ref": "#/definitions/Category"
+                    }
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

@@ -35,7 +35,7 @@
       if (url && url.length > 1) {
         url = decodeURIComponent(url[1]);
       } else {
-        url = "http://bokun.github.io/api-docs/swagger-test.json";
+        url = "swagger-test.json";
       }
 
       // Pre load translate...
@@ -122,8 +122,8 @@
     <form id='api_selector'>
       <div class="input">
         <select id="input_baseUrl" class="select-input" name="baseUrl">
-          <option value="http://bokun.github.io/api-docs/swagger-test.json">Test environment</option>
-          <option value="http://bokun.github.io/api-docs/swagger-prod.json">Production environment</option>
+          <option value="swagger-test.json">Test environment</option>
+          <option value="swagger-prod.json">Production environment</option>
         </select>
       </div>
       <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"/></div>

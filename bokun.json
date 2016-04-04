@@ -1,14 +1,14 @@
 {
+    "host": "localhost:9000",
+    "basePath": "/",
+    "schemes": [
+        "http"
+    ],
     "swagger": "2.0",
     "info": {
         "title": "Bokun API",
-        "description": "Documentation for the Bokun API.",
-        "version": "1.0.0"
+        "version": "1.0"
     },
-    "host": "api.bokun.io",
-    "schemes": [
-        "https"
-    ],
     "tags": [
         {
             "name": "accommodation",

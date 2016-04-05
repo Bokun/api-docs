@@ -1,14 +1,12 @@
 {
-    "host": "localhost:9000",
-    "basePath": "/",
-    "schemes": [
-        "http"
-    ],
     "swagger": "2.0",
     "info": {
         "title": "Bokun API",
         "version": "1.0"
     },
+    "schemes": [
+        "http"
+    ],
     "tags": [
         {
             "name": "accommodation",
@@ -2127,7 +2125,7 @@
                         "name": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/CancelProductBookingDto"
+                            "$ref": "#/definitions/cancelProductBooking"
                         }
                     }
                 ],
@@ -2165,7 +2163,7 @@
                         "name": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/CancelBookingDto"
+                            "$ref": "#/definitions/cancelBooking"
                         }
                     }
                 ],
@@ -3002,7 +3000,7 @@
                         "name": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/is.bokun.dtos.booking.SingleRouteBookingRequestDto"
+                            "$ref": "#/definitions/SingleRouteBookingRequestDto"
                         }
                     }
                 ],
@@ -3404,6 +3402,71 @@
                 }
             }
         },
+        "AccommodationQuery": {
+            "properties": {
+                "accommodationId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "dateFormats": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "endDate": {
+                    "type": "string"
+                },
+                "excludeBoxes": {
+                    "type": "boolean"
+                },
+                "externalId": {
+                    "type": "string"
+                },
+                "facetFilters": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/FacetFilter"
+                    }
+                },
+                "locationFilters": {
+                    "$ref": "#/definitions/LocationFilters"
+                },
+                "page": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "publishedSince": {
+                    "type": "string"
+                },
+                "rooms": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RoomQuery"
+                    }
+                },
+                "sortField": {
+                    "type": "string"
+                },
+                "sortOrder": {
+                    "type": "string"
+                },
+                "startDate": {
+                    "type": "string"
+                },
+                "textFilter": {
+                    "$ref": "#/definitions/TextFilter"
+                },
+                "vendorId": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
         "AvailabilityInfoDto": {
             "properties": {
                 "availableCount": {
@@ -3559,6 +3622,83 @@
                 }
             }
         },
+        "FacetFilter": {
+            "properties": {
+                "excluded": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "GeoBoundingBoxFilter": {
+            "properties": {
+                "bottomRight": {
+                    "$ref": "#/definitions/GeoPoint"
+                },
+                "topLeft": {
+                    "$ref": "#/definitions/GeoPoint"
+                }
+            }
+        },
+        "GeoDistanceFilter": {
+            "properties": {
+                "center": {
+                    "$ref": "#/definitions/GeoPoint"
+                },
+                "distance": {
+                    "type": "string"
+                }
+            }
+        },
+        "GeoDistanceRangeFilter": {
+            "properties": {
+                "center": {
+                    "$ref": "#/definitions/GeoPoint"
+                },
+                "fromDistance": {
+                    "type": "string"
+                },
+                "includeLower": {
+                    "type": "boolean"
+                },
+                "includeUpper": {
+                    "type": "boolean"
+                },
+                "toDistance": {
+                    "type": "string"
+                }
+            }
+        },
+        "GeoPoint": {
+            "properties": {
+                "lat": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "lng": {
+                    "type": "number",
+                    "format": "double"
+                }
+            }
+        },
+        "GeoPolygonFilter": {
+            "properties": {
+                "points": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GeoPoint"
+                    }
+                }
+            }
+        },
         "ItemDto": {
             "properties": {
                 "externalId": {
@@ -3652,6 +3792,22 @@
                 }
             }
         },
+        "LocationFilters": {
+            "properties": {
+                "geoBoundingBoxFilter": {
+                    "$ref": "#/definitions/GeoBoundingBoxFilter"
+                },
+                "geoDistanceFilter": {
+                    "$ref": "#/definitions/GeoDistanceFilter"
+                },
+                "geoDistanceRangeFilter": {
+                    "$ref": "#/definitions/GeoDistanceRangeFilter"
+                },
+                "geoPolygonFilter": {
+                    "$ref": "#/definitions/GeoPolygonFilter"
+                }
+            }
+        },
         "PhotoDto": {
             "properties": {
                 "alternateText": {
@@ -3721,6 +3877,21 @@
                 },
                 "type": {
                     "type": "string"
+                }
+            }
+        },
+        "RoomQuery": {
+            "properties": {
+                "adults": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
                 }
             }
         },
@@ -4192,6 +4363,31 @@
                 }
             }
         },
+        "TextFilter": {
+            "properties": {
+                "operator": {
+                    "type": "string"
+                },
+                "searchExternalId": {
+                    "type": "boolean"
+                },
+                "searchFullText": {
+                    "type": "boolean"
+                },
+                "searchKeywords": {
+                    "type": "boolean"
+                },
+                "searchTitle": {
+                    "type": "boolean"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "wildcard": {
+                    "type": "boolean"
+                }
+            }
+        },
         "VendorDto": {
             "properties": {
                 "currencyCode": {
@@ -4259,6 +4455,126 @@
                 },
                 "thumbnailUrl": {
                     "type": "string"
+                }
+            }
+        },
+        "CarQuery": {
+            "properties": {
+                "airConditioning": {
+                    "type": "boolean"
+                },
+                "carRentalIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                },
+                "carRentalSlug": {
+                    "type": "string"
+                },
+                "carTypeIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                },
+                "co2EmissionFilter": {
+                    "$ref": "#/definitions/NumericRangeFilter"
+                },
+                "dateFormats": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "driverAge": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "dropoffLocationFilters": {
+                    "$ref": "#/definitions/LocationFilters"
+                },
+                "dropoffLocationIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                },
+                "endDate": {
+                    "type": "string"
+                },
+                "excludeBoxes": {
+                    "type": "boolean"
+                },
+                "externalId": {
+                    "type": "string"
+                },
+                "facetFilters": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/FacetFilter"
+                    }
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "fuelEconomyFilter": {
+                    "$ref": "#/definitions/NumericRangeFilter"
+                },
+                "luggage": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "minDoorCount": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "page": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "passengers": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "pickupLocationFilters": {
+                    "$ref": "#/definitions/LocationFilters"
+                },
+                "pickupLocationIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                },
+                "publishedSince": {
+                    "type": "string"
+                },
+                "sortField": {
+                    "type": "string"
+                },
+                "sortOrder": {
+                    "type": "string"
+                },
+                "startDate": {
+                    "type": "string"
+                },
+                "textFilter": {
+                    "$ref": "#/definitions/TextFilter"
+                },
+                "vendorId": {
+                    "type": "integer",
+                    "format": "int64"
                 }
             }
         },
@@ -4712,6 +5028,27 @@
                 },
                 "vendor": {
                     "$ref": "#/definitions/ItemDto"
+                }
+            }
+        },
+        "NumericRangeFilter": {
+            "properties": {
+                "excluded": {
+                    "type": "boolean"
+                },
+                "from": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "includeLower": {
+                    "type": "boolean"
+                },
+                "includeUpper": {
+                    "type": "boolean"
+                },
+                "to": {
+                    "type": "integer",
+                    "format": "int32"
                 }
             }
         },
@@ -5291,6 +5628,84 @@
                 }
             }
         },
+        "ActivityQuery": {
+            "properties": {
+                "agendaLocationFilters": {
+                    "$ref": "#/definitions/LocationFilters"
+                },
+                "comboActivity": {
+                    "type": "boolean"
+                },
+                "dateFormats": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "endDate": {
+                    "type": "string"
+                },
+                "excludeBoxes": {
+                    "type": "boolean"
+                },
+                "externalId": {
+                    "type": "string"
+                },
+                "facetFilters": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/FacetFilter"
+                    }
+                },
+                "page": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "participants": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "participantsByAge": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "publishedSince": {
+                    "type": "string"
+                },
+                "sortField": {
+                    "$ref": "#/definitions/ActivitySortField",
+                    "enum": [
+                        "BEST_SELLING_GLOBAL",
+                        "BEST_SELLING_IN_CHANNEL",
+                        "ALPHABETIC",
+                        "RANDOM"
+                    ]
+                },
+                "sortOrder": {
+                    "type": "string"
+                },
+                "startDate": {
+                    "type": "string"
+                },
+                "startPointLocationFilters": {
+                    "$ref": "#/definitions/LocationFilters"
+                },
+                "textFilter": {
+                    "$ref": "#/definitions/TextFilter"
+                },
+                "vendorId": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
         "ActivityRouteDto": {
             "properties": {
                 "center": {
@@ -5536,18 +5951,6 @@
                 "unitCount": {
                     "type": "integer",
                     "format": "int32"
-                }
-            }
-        },
-        "GeoPoint": {
-            "properties": {
-                "lat": {
-                    "type": "number",
-                    "format": "double"
-                },
-                "lng": {
-                    "type": "number",
-                    "format": "double"
                 }
             }
         },
@@ -5912,6 +6315,108 @@
                 }
             }
         },
+        "AccommodationBookingRequestDto": {
+            "properties": {
+                "accommodationId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "checkinDate": {
+                    "type": "string"
+                },
+                "checkoutDate": {
+                    "type": "string"
+                },
+                "ignoreAssignmentIfFull": {
+                    "type": "boolean"
+                },
+                "rooms": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RoomBookingRequestDto"
+                    }
+                },
+                "travelType": {
+                    "$ref": "#/definitions/TravelTypeEnum",
+                    "enum": [
+                        "BUSINESS",
+                        "LEISURE",
+                        "CONFERENCE"
+                    ]
+                }
+            }
+        },
+        "ActivityBookingRequestDto": {
+            "properties": {
+                "activityId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "dropoff": {
+                    "type": "boolean"
+                },
+                "dropoffPlaceDescription": {
+                    "type": "string"
+                },
+                "dropoffPlaceId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "extras": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ExtraBookingRequestDto"
+                    }
+                },
+                "flexibleDayOption": {
+                    "type": "string"
+                },
+                "pickup": {
+                    "type": "boolean"
+                },
+                "pickupPlaceDescription": {
+                    "type": "string"
+                },
+                "pickupPlaceId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "pickupPlaceRoomNumber": {
+                    "type": "string"
+                },
+                "pricingCategoryBookings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ActivityPricingCategoryBookingRequestDto"
+                    }
+                },
+                "startTimeId": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
+        "ActivityPricingCategoryBookingRequestDto": {
+            "properties": {
+                "extras": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ExtraBookingRequestDto"
+                    }
+                },
+                "pricingCategoryId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "quantity": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        },
         "AllotmentDto": {
             "properties": {
                 "id": {
@@ -5919,6 +6424,19 @@
                     "format": "int64"
                 },
                 "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "BookingAnswerWithIdGroupDto": {
+            "properties": {
+                "answers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BookingAnswerWithIdDto"
+                    }
+                },
+                "name": {
                     "type": "string"
                 }
             }
@@ -6038,6 +6556,34 @@
                 }
             }
         },
+        "CarRentalBookingRequestDto": {
+            "properties": {
+                "carRentalId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "cars": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CarBookingDTO"
+                    }
+                },
+                "dropoffDate": {
+                    "type": "string"
+                },
+                "dropoffLocationId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "pickupDate": {
+                    "type": "string"
+                },
+                "pickupLocationId": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
         "CarTypeAvailabilityBookingDto": {
             "properties": {
                 "availability": {
@@ -6094,6 +6640,24 @@
                 }
             }
         },
+        "ExtraBookingRequestDto": {
+            "properties": {
+                "answers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BookingAnswerWithIdGroupDto"
+                    }
+                },
+                "extraId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "unitCount": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        },
         "FareClassDto": {
             "properties": {
                 "defaultClass": {
@@ -6111,6 +6675,18 @@
                 },
                 "title": {
                     "type": "string"
+                }
+            }
+        },
+        "PricingCategoryPassengerSpecificationDto": {
+            "properties": {
+                "categoryId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "passengers": {
+                    "type": "integer",
+                    "format": "int32"
                 }
             }
         },
@@ -6373,6 +6949,52 @@
                 }
             }
         },
+        "RoutePathSegmentBookingRequest": {
+            "properties": {
+                "departureSchedules": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RouteScheduleBookingRequestDto"
+                    }
+                },
+                "passengerSpecification": {
+                    "$ref": "#/definitions/SegmentPassengerSpecificationDto"
+                },
+                "returnSchedules": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RouteScheduleBookingRequestDto"
+                    }
+                },
+                "returning": {
+                    "type": "boolean"
+                },
+                "routeId": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
+        "RouteScheduleBookingRequestDto": {
+            "properties": {
+                "dropoffPlaceId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "pickupPlaceId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "routeLegId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "scheduleId": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
         "RouteScheduleDto": {
             "properties": {
                 "arrivalHour": {
@@ -6460,6 +7082,20 @@
                 }
             }
         },
+        "SegmentPassengerSpecificationDto": {
+            "properties": {
+                "fareClassId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "passengerSpecifications": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PricingCategoryPassengerSpecificationDto"
+                    }
+                }
+            }
+        },
         "ShoppingCart": {
             "properties": {
                 "accommodationBookings": {
@@ -6511,6 +7147,22 @@
                 },
                 "vessel": {
                     "$ref": "#/definitions/VesselDto"
+                }
+            }
+        },
+        "TransportBookingRequestDto": {
+            "properties": {
+                "departureDate": {
+                    "type": "string"
+                },
+                "pathSegments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RoutePathSegmentBookingRequest"
+                    }
+                },
+                "returnDate": {
+                    "type": "string"
                 }
             }
         },
@@ -6840,18 +7492,6 @@
                         "type": "integer",
                         "format": "int32"
                     }
-                }
-            }
-        },
-        "PricingCategoryPassengerSpecificationDto": {
-            "properties": {
-                "categoryId": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "passengers": {
-                    "type": "integer",
-                    "format": "int32"
                 }
             }
         },
@@ -7299,6 +7939,26 @@
                 }
             }
         },
+        "AccommodationBookingAnswersDto": {
+            "properties": {
+                "answerGroups": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BookingAnswerGroupDto"
+                    }
+                },
+                "bookingId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "roomBookings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RoomBookingAnswersDto"
+                    }
+                }
+            }
+        },
         "AccommodationBookingDetailsDto": {
             "properties": {
                 "accommodation": {
@@ -7501,37 +8161,6 @@
                 }
             }
         },
-        "AccommodationBookingRequestDto": {
-            "properties": {
-                "accommodationId": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "checkinDate": {
-                    "type": "string"
-                },
-                "checkoutDate": {
-                    "type": "string"
-                },
-                "ignoreAssignmentIfFull": {
-                    "type": "boolean"
-                },
-                "rooms": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/RoomBookingRequestDto"
-                    }
-                },
-                "travelType": {
-                    "$ref": "#/definitions/TravelTypeEnum",
-                    "enum": [
-                        "BUSINESS",
-                        "LEISURE",
-                        "CONFERENCE"
-                    ]
-                }
-            }
-        },
         "Action": {
             "properties": {
                 "type": {
@@ -7540,6 +8169,49 @@
                 }
             },
             "discriminator": "type"
+        },
+        "ActivityBookingAnswersDto": {
+            "properties": {
+                "answerGroups": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BookingAnswerGroupDto"
+                    }
+                },
+                "bookingId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "dropoffPlaceDescription": {
+                    "type": "string"
+                },
+                "dropoffPlaceId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "extraBookings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ExtraBookingAnswersDto"
+                    }
+                },
+                "pickupPlaceDescription": {
+                    "type": "string"
+                },
+                "pickupPlaceId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "pickupPlaceRoomNumber": {
+                    "type": "string"
+                },
+                "pricingCategoryBookings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ActivityPricingCategoryBookingAnswersDto"
+                    }
+                }
+            }
         },
         "ActivityBookingDetailsDto": {
             "properties": {
@@ -7855,54 +8527,15 @@
                 }
             }
         },
-        "ActivityBookingRequestDto": {
+        "ActivityPricingCategoryBookingAnswersDto": {
             "properties": {
-                "activityId": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "date": {
-                    "type": "string"
-                },
-                "dropoff": {
-                    "type": "boolean"
-                },
-                "dropoffPlaceDescription": {
-                    "type": "string"
-                },
-                "dropoffPlaceId": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "extras": {
+                "answerGroups": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/ExtraBookingRequestDto"
+                        "$ref": "#/definitions/BookingAnswerGroupDto"
                     }
                 },
-                "flexibleDayOption": {
-                    "type": "string"
-                },
-                "pickup": {
-                    "type": "boolean"
-                },
-                "pickupPlaceDescription": {
-                    "type": "string"
-                },
-                "pickupPlaceId": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "pickupPlaceRoomNumber": {
-                    "type": "string"
-                },
-                "pricingCategoryBookings": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/ActivityPricingCategoryBookingRequestDto"
-                    }
-                },
-                "startTimeId": {
+                "bookingId": {
                     "type": "integer",
                     "format": "int64"
                 }
@@ -7932,24 +8565,6 @@
                     "items": {
                         "$ref": "#/definitions/BookingQuestionGroupDto"
                     }
-                }
-            }
-        },
-        "ActivityPricingCategoryBookingRequestDto": {
-            "properties": {
-                "extras": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/ExtraBookingRequestDto"
-                    }
-                },
-                "pricingCategoryId": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "quantity": {
-                    "type": "integer",
-                    "format": "int32"
                 }
             }
         },
@@ -8036,16 +8651,50 @@
                 }
             }
         },
-        "BookingAnswerWithIdGroupDto": {
+        "BookingAnswersDto": {
             "properties": {
+                "accommodationsBookings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AccommodationBookingAnswersDto"
+                    }
+                },
+                "activityBookings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ActivityBookingAnswersDto"
+                    }
+                },
                 "answers": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/BookingAnswerWithIdDto"
+                        "$ref": "#/definitions/BookingAnswerDto"
                     }
                 },
-                "name": {
-                    "type": "string"
+                "carRentalBookings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CarRentalBookingAnswersDto"
+                    }
+                },
+                "routeBookings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RouteBookingAnswersDto"
+                    }
+                }
+            }
+        },
+        "BookingConfirmationDto": {
+            "properties": {
+                "bookingFields": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BookingFieldDto"
+                    }
+                },
+                "payment": {
+                    "$ref": "#/definitions/CustomerPaymentDto"
                 }
             }
         },
@@ -8214,6 +8863,65 @@
                 }
             }
         },
+        "BookingReservationRequestDto": {
+            "properties": {
+                "answers": {
+                    "$ref": "#/definitions/BookingAnswersDto"
+                },
+                "bookingFields": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BookingFieldDto"
+                    }
+                },
+                "chargeRequest": {
+                    "$ref": "#/definitions/ChargeRequestDto"
+                },
+                "createPaymentsAutomatically": {
+                    "type": "boolean"
+                },
+                "deposit": {
+                    "type": "boolean"
+                },
+                "depositAmount": {
+                    "type": "number"
+                },
+                "depositPercentage": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "discountAmount": {
+                    "type": "number"
+                },
+                "discountPercentage": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "paymentInfo": {
+                    "$ref": "#/definitions/CustomerPaymentDto"
+                }
+            }
+        },
+        "CarBookingAnswersDto": {
+            "properties": {
+                "answerGroups": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BookingAnswerGroupDto"
+                    }
+                },
+                "bookingId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "extraBookings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ExtraBookingAnswersDto"
+                    }
+                }
+            }
+        },
         "CarBookingDetailsDto": {
             "properties": {
                 "answer": {
@@ -8275,6 +8983,26 @@
                 "unitCount": {
                     "type": "integer",
                     "format": "int32"
+                }
+            }
+        },
+        "CarRentalBookingAnswersDto": {
+            "properties": {
+                "answerGroups": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BookingAnswerGroupDto"
+                    }
+                },
+                "bookingId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "carBookings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CarBookingAnswersDto"
+                    }
                 }
             }
         },
@@ -8478,34 +9206,6 @@
                 }
             }
         },
-        "CarRentalBookingRequestDto": {
-            "properties": {
-                "carRentalId": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "cars": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/CarBookingDTO"
-                    }
-                },
-                "dropoffDate": {
-                    "type": "string"
-                },
-                "dropoffLocationId": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "pickupDate": {
-                    "type": "string"
-                },
-                "pickupLocationId": {
-                    "type": "integer",
-                    "format": "int64"
-                }
-            }
-        },
         "CardDto": {
             "properties": {
                 "addressCity": {
@@ -8594,6 +9294,16 @@
                 },
                 "name": {
                     "type": "string"
+                }
+            }
+        },
+        "ChargeRequestDto": {
+            "properties": {
+                "card": {
+                    "$ref": "#/definitions/CardDto"
+                },
+                "confirmBookingOnSuccess": {
+                    "type": "boolean"
                 }
             }
         },
@@ -8973,6 +9683,34 @@
                 }
             }
         },
+        "ErrorDto": {
+            "properties": {
+                "errorCode": {
+                    "type": "string"
+                },
+                "errorDescription": {
+                    "type": "string"
+                }
+            }
+        },
+        "ExtraBookingAnswersDto": {
+            "properties": {
+                "answerGroups": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BookingAnswerWithIdGroupDto"
+                    }
+                },
+                "bookingId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "extraId": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
         "ExtraBookingQuestionsDto": {
             "properties": {
                 "bookingId": {
@@ -8987,24 +9725,6 @@
                     "items": {
                         "$ref": "#/definitions/BookingQuestionWithIdGroupDto"
                     }
-                },
-                "unitCount": {
-                    "type": "integer",
-                    "format": "int32"
-                }
-            }
-        },
-        "ExtraBookingRequestDto": {
-            "properties": {
-                "answers": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/BookingAnswerWithIdGroupDto"
-                    }
-                },
-                "extraId": {
-                    "type": "integer",
-                    "format": "int64"
                 },
                 "unitCount": {
                     "type": "integer",
@@ -9717,6 +10437,30 @@
                 }
             }
         },
+        "RoomBookingAnswersDto": {
+            "properties": {
+                "answerGroups": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BookingAnswerGroupDto"
+                    }
+                },
+                "bookingId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "extraBookings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ExtraBookingAnswersDto"
+                    }
+                },
+                "roomId": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
         "RoomBookingDetailsDto": {
             "properties": {
                 "adults": {
@@ -9806,6 +10550,20 @@
                 "unitCount": {
                     "type": "integer",
                     "format": "int32"
+                }
+            }
+        },
+        "RouteBookingAnswersDto": {
+            "properties": {
+                "answerGroups": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BookingAnswerGroupDto"
+                    }
+                },
+                "bookingId": {
+                    "type": "integer",
+                    "format": "int64"
                 }
             }
         },
@@ -10481,6 +11239,57 @@
                 },
                 "voucherPricesShown": {
                     "type": "boolean"
+                }
+            }
+        },
+        "cancelBooking": {
+            "required": [
+                "refund",
+                "notify",
+                "note"
+            ],
+            "properties": {
+                "note": {
+                    "type": "string",
+                    "description": "Cancellation notes"
+                },
+                "notify": {
+                    "type": "boolean",
+                    "description": "Send notification"
+                },
+                "refund": {
+                    "type": "boolean",
+                    "description": "Refund the booking"
+                }
+            }
+        },
+        "cancelProductBooking": {
+            "required": [
+                "refund",
+                "notify",
+                "refundAmount",
+                "note"
+            ],
+            "properties": {
+                "note": {
+                    "type": "string",
+                    "description": "Cancellation notes"
+                },
+                "notify": {
+                    "type": "boolean",
+                    "description": "Send notification"
+                },
+                "refund": {
+                    "type": "boolean",
+                    "description": "Refund the product booking"
+                },
+                "refundAmount": {
+                    "type": "number",
+                    "description": "Refund amount (if 0 and refund == true, then full amount is refunded)"
+                },
+                "remainInvoiced": {
+                    "type": "boolean",
+                    "description": "Specify whether the product should remain on customer invoice after being cancelled"
                 }
             }
         },

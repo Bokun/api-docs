@@ -1,11 +1,9 @@
-basePath: /
-schemes:
-  - http
 swagger: '2.0'
 info:
   title: Bokun API
-  description: Documentation for the Bokun API.
-  version: '1.0.0'
+  version: '1.0'
+schemes:
+  - http
 tags:
   - name: accommodation
     description: Operations for Accommodation
@@ -1459,7 +1457,7 @@ paths:
           name: body
           required: true
           schema:
-            $ref: '#/definitions/CancelProductBookingDto'
+            $ref: '#/definitions/cancelProductBooking'
       responses:
         '200':
           description: No response was specified
@@ -1484,7 +1482,7 @@ paths:
           name: body
           required: true
           schema:
-            $ref: '#/definitions/CancelBookingDto'
+            $ref: '#/definitions/cancelBooking'
       responses:
         '200':
           description: No response was specified
@@ -2044,7 +2042,7 @@ paths:
           name: body
           required: true
           schema:
-            $ref: '#/definitions/is.bokun.dtos.booking.SingleRouteBookingRequestDto'
+            $ref: '#/definitions/SingleRouteBookingRequestDto'
       responses:
         '200':
           description: No response was specified
@@ -2312,6 +2310,50 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/VideoDto'
+  AccommodationQuery:
+    properties:
+      accommodationId:
+        type: integer
+        format: int64
+      dateFormats:
+        type: array
+        items:
+          type: string
+      endDate:
+        type: string
+      excludeBoxes:
+        type: boolean
+      externalId:
+        type: string
+      facetFilters:
+        type: array
+        items:
+          $ref: '#/definitions/FacetFilter'
+      locationFilters:
+        $ref: '#/definitions/LocationFilters'
+      page:
+        type: integer
+        format: int32
+      pageSize:
+        type: integer
+        format: int32
+      publishedSince:
+        type: string
+      rooms:
+        type: array
+        items:
+          $ref: '#/definitions/RoomQuery'
+      sortField:
+        type: string
+      sortOrder:
+        type: string
+      startDate:
+        type: string
+      textFilter:
+        $ref: '#/definitions/TextFilter'
+      vendorId:
+        type: integer
+        format: int64
   AvailabilityInfoDto:
     properties:
       availableCount:
@@ -2414,6 +2456,54 @@ definitions:
         type: string
       url:
         type: string
+  FacetFilter:
+    properties:
+      excluded:
+        type: boolean
+      name:
+        type: string
+      values:
+        type: array
+        items:
+          type: string
+  GeoBoundingBoxFilter:
+    properties:
+      bottomRight:
+        $ref: '#/definitions/GeoPoint'
+      topLeft:
+        $ref: '#/definitions/GeoPoint'
+  GeoDistanceFilter:
+    properties:
+      center:
+        $ref: '#/definitions/GeoPoint'
+      distance:
+        type: string
+  GeoDistanceRangeFilter:
+    properties:
+      center:
+        $ref: '#/definitions/GeoPoint'
+      fromDistance:
+        type: string
+      includeLower:
+        type: boolean
+      includeUpper:
+        type: boolean
+      toDistance:
+        type: string
+  GeoPoint:
+    properties:
+      lat:
+        type: number
+        format: double
+      lng:
+        type: number
+        format: double
+  GeoPolygonFilter:
+    properties:
+      points:
+        type: array
+        items:
+          $ref: '#/definitions/GeoPoint'
   ItemDto:
     properties:
       externalId:
@@ -2476,6 +2566,16 @@ definitions:
       zoomLevel:
         type: integer
         format: int32
+  LocationFilters:
+    properties:
+      geoBoundingBoxFilter:
+        $ref: '#/definitions/GeoBoundingBoxFilter'
+      geoDistanceFilter:
+        $ref: '#/definitions/GeoDistanceFilter'
+      geoDistanceRangeFilter:
+        $ref: '#/definitions/GeoDistanceRangeFilter'
+      geoPolygonFilter:
+        $ref: '#/definitions/GeoPolygonFilter'
   PhotoDto:
     properties:
       alternateText:
@@ -2523,6 +2623,16 @@ definitions:
         type: string
       type:
         type: string
+  RoomQuery:
+    properties:
+      adults:
+        type: integer
+        format: int32
+      children:
+        type: array
+        items:
+          type: integer
+          format: int32
   RoomRateDto:
     properties:
       id:
@@ -2840,6 +2950,22 @@ definitions:
         type: string
       title:
         type: string
+  TextFilter:
+    properties:
+      operator:
+        type: string
+      searchExternalId:
+        type: boolean
+      searchFullText:
+        type: boolean
+      searchKeywords:
+        type: boolean
+      searchTitle:
+        type: boolean
+      text:
+        type: string
+      wildcard:
+        type: boolean
   VendorDto:
     properties:
       currencyCode:
@@ -2886,6 +3012,89 @@ definitions:
         type: string
       thumbnailUrl:
         type: string
+  CarQuery:
+    properties:
+      airConditioning:
+        type: boolean
+      carRentalIds:
+        type: array
+        items:
+          type: integer
+          format: int64
+      carRentalSlug:
+        type: string
+      carTypeIds:
+        type: array
+        items:
+          type: integer
+          format: int64
+      co2EmissionFilter:
+        $ref: '#/definitions/NumericRangeFilter'
+      dateFormats:
+        type: array
+        items:
+          type: string
+      driverAge:
+        type: integer
+        format: int32
+      dropoffLocationFilters:
+        $ref: '#/definitions/LocationFilters'
+      dropoffLocationIds:
+        type: array
+        items:
+          type: integer
+          format: int64
+      endDate:
+        type: string
+      excludeBoxes:
+        type: boolean
+      externalId:
+        type: string
+      facetFilters:
+        type: array
+        items:
+          $ref: '#/definitions/FacetFilter'
+      flags:
+        type: array
+        items:
+          type: string
+      fuelEconomyFilter:
+        $ref: '#/definitions/NumericRangeFilter'
+      luggage:
+        type: integer
+        format: int32
+      minDoorCount:
+        type: integer
+        format: int32
+      page:
+        type: integer
+        format: int32
+      pageSize:
+        type: integer
+        format: int32
+      passengers:
+        type: integer
+        format: int32
+      pickupLocationFilters:
+        $ref: '#/definitions/LocationFilters'
+      pickupLocationIds:
+        type: array
+        items:
+          type: integer
+          format: int64
+      publishedSince:
+        type: string
+      sortField:
+        type: string
+      sortOrder:
+        type: string
+      startDate:
+        type: string
+      textFilter:
+        $ref: '#/definitions/TextFilter'
+      vendorId:
+        type: integer
+        format: int64
   CarRentalDto:
     properties:
       actualVendor:
@@ -3196,6 +3405,20 @@ definitions:
         type: string
       vendor:
         $ref: '#/definitions/ItemDto'
+  NumericRangeFilter:
+    properties:
+      excluded:
+        type: boolean
+      from:
+        type: integer
+        format: int32
+      includeLower:
+        type: boolean
+      includeUpper:
+        type: boolean
+      to:
+        type: integer
+        format: int32
   CurrencyDto:
     properties:
       code:
@@ -3589,6 +3812,60 @@ definitions:
       quantity:
         type: integer
         format: int32
+  ActivityQuery:
+    properties:
+      agendaLocationFilters:
+        $ref: '#/definitions/LocationFilters'
+      comboActivity:
+        type: boolean
+      dateFormats:
+        type: array
+        items:
+          type: string
+      endDate:
+        type: string
+      excludeBoxes:
+        type: boolean
+      externalId:
+        type: string
+      facetFilters:
+        type: array
+        items:
+          $ref: '#/definitions/FacetFilter'
+      page:
+        type: integer
+        format: int32
+      pageSize:
+        type: integer
+        format: int32
+      participants:
+        type: integer
+        format: int32
+      participantsByAge:
+        type: array
+        items:
+          type: integer
+          format: int32
+      publishedSince:
+        type: string
+      sortField:
+        $ref: '#/definitions/ActivitySortField'
+        enum:
+          - BEST_SELLING_GLOBAL
+          - BEST_SELLING_IN_CHANNEL
+          - ALPHABETIC
+          - RANDOM
+      sortOrder:
+        type: string
+      startDate:
+        type: string
+      startPointLocationFilters:
+        $ref: '#/definitions/LocationFilters'
+      textFilter:
+        $ref: '#/definitions/TextFilter'
+      vendorId:
+        type: integer
+        format: int64
   ActivityRouteDto:
     properties:
       center:
@@ -3753,14 +4030,6 @@ definitions:
       unitCount:
         type: integer
         format: int32
-  GeoPoint:
-    properties:
-      lat:
-        type: number
-        format: double
-      lng:
-        type: number
-        format: double
   PickupPlaceDto:
     properties:
       askForRoomNumber:
@@ -4006,12 +4275,89 @@ definitions:
         type: number
       vendor:
         $ref: '#/definitions/VendorDto'
+  AccommodationBookingRequestDto:
+    properties:
+      accommodationId:
+        type: integer
+        format: int64
+      checkinDate:
+        type: string
+      checkoutDate:
+        type: string
+      ignoreAssignmentIfFull:
+        type: boolean
+      rooms:
+        type: array
+        items:
+          $ref: '#/definitions/RoomBookingRequestDto'
+      travelType:
+        $ref: '#/definitions/TravelTypeEnum'
+        enum:
+          - BUSINESS
+          - LEISURE
+          - CONFERENCE
+  ActivityBookingRequestDto:
+    properties:
+      activityId:
+        type: integer
+        format: int64
+      date:
+        type: string
+      dropoff:
+        type: boolean
+      dropoffPlaceDescription:
+        type: string
+      dropoffPlaceId:
+        type: integer
+        format: int64
+      extras:
+        type: array
+        items:
+          $ref: '#/definitions/ExtraBookingRequestDto'
+      flexibleDayOption:
+        type: string
+      pickup:
+        type: boolean
+      pickupPlaceDescription:
+        type: string
+      pickupPlaceId:
+        type: integer
+        format: int64
+      pickupPlaceRoomNumber:
+        type: string
+      pricingCategoryBookings:
+        type: array
+        items:
+          $ref: '#/definitions/ActivityPricingCategoryBookingRequestDto'
+      startTimeId:
+        type: integer
+        format: int64
+  ActivityPricingCategoryBookingRequestDto:
+    properties:
+      extras:
+        type: array
+        items:
+          $ref: '#/definitions/ExtraBookingRequestDto'
+      pricingCategoryId:
+        type: integer
+        format: int64
+      quantity:
+        type: integer
+        format: int32
   AllotmentDto:
     properties:
       id:
         type: integer
         format: int64
       title:
+        type: string
+  BookingAnswerWithIdGroupDto:
+    properties:
+      answers:
+        type: array
+        items:
+          $ref: '#/definitions/BookingAnswerWithIdDto'
+      name:
         type: string
   CarBookingDto:
     properties:
@@ -4092,6 +4438,25 @@ definitions:
         type: number
       vendor:
         $ref: '#/definitions/VendorDto'
+  CarRentalBookingRequestDto:
+    properties:
+      carRentalId:
+        type: integer
+        format: int64
+      cars:
+        type: array
+        items:
+          $ref: '#/definitions/CarBookingDTO'
+      dropoffDate:
+        type: string
+      dropoffLocationId:
+        type: integer
+        format: int64
+      pickupDate:
+        type: string
+      pickupLocationId:
+        type: integer
+        format: int64
   CarTypeAvailabilityBookingDto:
     properties:
       availability:
@@ -4129,6 +4494,18 @@ definitions:
         format: int64
       title:
         type: string
+  ExtraBookingRequestDto:
+    properties:
+      answers:
+        type: array
+        items:
+          $ref: '#/definitions/BookingAnswerWithIdGroupDto'
+      extraId:
+        type: integer
+        format: int64
+      unitCount:
+        type: integer
+        format: int32
   FareClassDto:
     properties:
       defaultClass:
@@ -4142,6 +4519,14 @@ definitions:
         format: int64
       title:
         type: string
+  PricingCategoryPassengerSpecificationDto:
+    properties:
+      categoryId:
+        type: integer
+        format: int64
+      passengers:
+        type: integer
+        format: int32
   RegionDto:
     properties:
       flag:
@@ -4318,6 +4703,37 @@ definitions:
         format: int64
       pricingCategory:
         $ref: '#/definitions/PricingCategoryDto'
+  RoutePathSegmentBookingRequest:
+    properties:
+      departureSchedules:
+        type: array
+        items:
+          $ref: '#/definitions/RouteScheduleBookingRequestDto'
+      passengerSpecification:
+        $ref: '#/definitions/SegmentPassengerSpecificationDto'
+      returnSchedules:
+        type: array
+        items:
+          $ref: '#/definitions/RouteScheduleBookingRequestDto'
+      returning:
+        type: boolean
+      routeId:
+        type: integer
+        format: int64
+  RouteScheduleBookingRequestDto:
+    properties:
+      dropoffPlaceId:
+        type: integer
+        format: int64
+      pickupPlaceId:
+        type: integer
+        format: int64
+      routeLegId:
+        type: integer
+        format: int64
+      scheduleId:
+        type: integer
+        format: int64
   RouteScheduleDto:
     properties:
       arrivalHour:
@@ -4377,6 +4793,15 @@ definitions:
         type: string
       title:
         type: string
+  SegmentPassengerSpecificationDto:
+    properties:
+      fareClassId:
+        type: integer
+        format: int64
+      passengerSpecifications:
+        type: array
+        items:
+          $ref: '#/definitions/PricingCategoryPassengerSpecificationDto'
   ShoppingCart:
     properties:
       accommodationBookings:
@@ -4413,6 +4838,16 @@ definitions:
         type: number
       vessel:
         $ref: '#/definitions/VesselDto'
+  TransportBookingRequestDto:
+    properties:
+      departureDate:
+        type: string
+      pathSegments:
+        type: array
+        items:
+          $ref: '#/definitions/RoutePathSegmentBookingRequest'
+      returnDate:
+        type: string
   TranslationLanguageDto:
     properties:
       code:
@@ -4637,14 +5072,6 @@ definitions:
         items:
           type: integer
           format: int32
-  PricingCategoryPassengerSpecificationDto:
-    properties:
-      categoryId:
-        type: integer
-        format: int64
-      passengers:
-        type: integer
-        format: int32
   RouteAvailabilityReportDto:
     properties:
       departureDate:
@@ -4948,6 +5375,19 @@ definitions:
         format: int64
       item:
         type: string
+  AccommodationBookingAnswersDto:
+    properties:
+      answerGroups:
+        type: array
+        items:
+          $ref: '#/definitions/BookingAnswerGroupDto'
+      bookingId:
+        type: integer
+        format: int64
+      roomBookings:
+        type: array
+        items:
+          $ref: '#/definitions/RoomBookingAnswersDto'
   AccommodationBookingDetailsDto:
     properties:
       accommodation:
@@ -5091,33 +5531,41 @@ definitions:
       startDate:
         type: string
         format: date-time
-  AccommodationBookingRequestDto:
-    properties:
-      accommodationId:
-        type: integer
-        format: int64
-      checkinDate:
-        type: string
-      checkoutDate:
-        type: string
-      ignoreAssignmentIfFull:
-        type: boolean
-      rooms:
-        type: array
-        items:
-          $ref: '#/definitions/RoomBookingRequestDto'
-      travelType:
-        $ref: '#/definitions/TravelTypeEnum'
-        enum:
-          - BUSINESS
-          - LEISURE
-          - CONFERENCE
   Action:
     properties:
       type:
         type: string
         description: The discriminator field
     discriminator: type
+  ActivityBookingAnswersDto:
+    properties:
+      answerGroups:
+        type: array
+        items:
+          $ref: '#/definitions/BookingAnswerGroupDto'
+      bookingId:
+        type: integer
+        format: int64
+      dropoffPlaceDescription:
+        type: string
+      dropoffPlaceId:
+        type: integer
+        format: int64
+      extraBookings:
+        type: array
+        items:
+          $ref: '#/definitions/ExtraBookingAnswersDto'
+      pickupPlaceDescription:
+        type: string
+      pickupPlaceId:
+        type: integer
+        format: int64
+      pickupPlaceRoomNumber:
+        type: string
+      pricingCategoryBookings:
+        type: array
+        items:
+          $ref: '#/definitions/ActivityPricingCategoryBookingAnswersDto'
   ActivityBookingDetailsDto:
     properties:
       activity:
@@ -5336,40 +5784,13 @@ definitions:
           $ref: '#/definitions/BookingQuestionGroupDto'
       time:
         type: string
-  ActivityBookingRequestDto:
+  ActivityPricingCategoryBookingAnswersDto:
     properties:
-      activityId:
-        type: integer
-        format: int64
-      date:
-        type: string
-      dropoff:
-        type: boolean
-      dropoffPlaceDescription:
-        type: string
-      dropoffPlaceId:
-        type: integer
-        format: int64
-      extras:
+      answerGroups:
         type: array
         items:
-          $ref: '#/definitions/ExtraBookingRequestDto'
-      flexibleDayOption:
-        type: string
-      pickup:
-        type: boolean
-      pickupPlaceDescription:
-        type: string
-      pickupPlaceId:
-        type: integer
-        format: int64
-      pickupPlaceRoomNumber:
-        type: string
-      pricingCategoryBookings:
-        type: array
-        items:
-          $ref: '#/definitions/ActivityPricingCategoryBookingRequestDto'
-      startTimeId:
+          $ref: '#/definitions/BookingAnswerGroupDto'
+      bookingId:
         type: integer
         format: int64
   ActivityPricingCategoryBookingQuestionsDto:
@@ -5390,18 +5811,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/BookingQuestionGroupDto'
-  ActivityPricingCategoryBookingRequestDto:
-    properties:
-      extras:
-        type: array
-        items:
-          $ref: '#/definitions/ExtraBookingRequestDto'
-      pricingCategoryId:
-        type: integer
-        format: int64
-      quantity:
-        type: integer
-        format: int32
   AgentBookingDetailsDto:
     properties:
       contractId:
@@ -5455,14 +5864,36 @@ definitions:
         type: string
       title:
         type: string
-  BookingAnswerWithIdGroupDto:
+  BookingAnswersDto:
     properties:
+      accommodationsBookings:
+        type: array
+        items:
+          $ref: '#/definitions/AccommodationBookingAnswersDto'
+      activityBookings:
+        type: array
+        items:
+          $ref: '#/definitions/ActivityBookingAnswersDto'
       answers:
         type: array
         items:
-          $ref: '#/definitions/BookingAnswerWithIdDto'
-      name:
-        type: string
+          $ref: '#/definitions/BookingAnswerDto'
+      carRentalBookings:
+        type: array
+        items:
+          $ref: '#/definitions/CarRentalBookingAnswersDto'
+      routeBookings:
+        type: array
+        items:
+          $ref: '#/definitions/RouteBookingAnswersDto'
+  BookingConfirmationDto:
+    properties:
+      bookingFields:
+        type: array
+        items:
+          $ref: '#/definitions/BookingFieldDto'
+      payment:
+        $ref: '#/definitions/CustomerPaymentDto'
   BookingEditResult:
     properties:
       actions:
@@ -5571,6 +6002,45 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/RouteBookingQuestionsDto'
+  BookingReservationRequestDto:
+    properties:
+      answers:
+        $ref: '#/definitions/BookingAnswersDto'
+      bookingFields:
+        type: array
+        items:
+          $ref: '#/definitions/BookingFieldDto'
+      chargeRequest:
+        $ref: '#/definitions/ChargeRequestDto'
+      createPaymentsAutomatically:
+        type: boolean
+      deposit:
+        type: boolean
+      depositAmount:
+        type: number
+      depositPercentage:
+        type: number
+        format: double
+      discountAmount:
+        type: number
+      discountPercentage:
+        type: number
+        format: double
+      paymentInfo:
+        $ref: '#/definitions/CustomerPaymentDto'
+  CarBookingAnswersDto:
+    properties:
+      answerGroups:
+        type: array
+        items:
+          $ref: '#/definitions/BookingAnswerGroupDto'
+      bookingId:
+        type: integer
+        format: int64
+      extraBookings:
+        type: array
+        items:
+          $ref: '#/definitions/ExtraBookingAnswersDto'
   CarBookingDetailsDto:
     properties:
       answer:
@@ -5614,6 +6084,19 @@ definitions:
       unitCount:
         type: integer
         format: int32
+  CarRentalBookingAnswersDto:
+    properties:
+      answerGroups:
+        type: array
+        items:
+          $ref: '#/definitions/BookingAnswerGroupDto'
+      bookingId:
+        type: integer
+        format: int64
+      carBookings:
+        type: array
+        items:
+          $ref: '#/definitions/CarBookingAnswersDto'
   CarRentalBookingDetailsDto:
     properties:
       affiliateCommission:
@@ -5755,25 +6238,6 @@ definitions:
       startDate:
         type: string
         format: date-time
-  CarRentalBookingRequestDto:
-    properties:
-      carRentalId:
-        type: integer
-        format: int64
-      cars:
-        type: array
-        items:
-          $ref: '#/definitions/CarBookingDTO'
-      dropoffDate:
-        type: string
-      dropoffLocationId:
-        type: integer
-        format: int64
-      pickupDate:
-        type: string
-      pickupLocationId:
-        type: integer
-        format: int64
   CardDto:
     properties:
       addressCity:
@@ -5833,6 +6297,12 @@ definitions:
         type: string
       name:
         type: string
+  ChargeRequestDto:
+    properties:
+      card:
+        $ref: '#/definitions/CardDto'
+      confirmBookingOnSuccess:
+        type: boolean
   CustomLineItemDto:
     properties:
       calculatedDiscount:
@@ -6088,6 +6558,24 @@ definitions:
       to:
         type: string
         format: date-time
+  ErrorDto:
+    properties:
+      errorCode:
+        type: string
+      errorDescription:
+        type: string
+  ExtraBookingAnswersDto:
+    properties:
+      answerGroups:
+        type: array
+        items:
+          $ref: '#/definitions/BookingAnswerWithIdGroupDto'
+      bookingId:
+        type: integer
+        format: int64
+      extraId:
+        type: integer
+        format: int64
   ExtraBookingQuestionsDto:
     properties:
       bookingId:
@@ -6099,18 +6587,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/BookingQuestionWithIdGroupDto'
-      unitCount:
-        type: integer
-        format: int32
-  ExtraBookingRequestDto:
-    properties:
-      answers:
-        type: array
-        items:
-          $ref: '#/definitions/BookingAnswerWithIdGroupDto'
-      extraId:
-        type: integer
-        format: int64
       unitCount:
         type: integer
         format: int32
@@ -6592,6 +7068,22 @@ definitions:
           - GUIDE
           - ROOM
           - EQUIPMENT
+  RoomBookingAnswersDto:
+    properties:
+      answerGroups:
+        type: array
+        items:
+          $ref: '#/definitions/BookingAnswerGroupDto'
+      bookingId:
+        type: integer
+        format: int64
+      extraBookings:
+        type: array
+        items:
+          $ref: '#/definitions/ExtraBookingAnswersDto'
+      roomId:
+        type: integer
+        format: int64
   RoomBookingDetailsDto:
     properties:
       adults:
@@ -6656,6 +7148,15 @@ definitions:
       unitCount:
         type: integer
         format: int32
+  RouteBookingAnswersDto:
+    properties:
+      answerGroups:
+        type: array
+        items:
+          $ref: '#/definitions/BookingAnswerGroupDto'
+      bookingId:
+        type: integer
+        format: int64
   RouteBookingDetailsDto:
     properties:
       affiliateCommission:
@@ -7119,6 +7620,43 @@ definitions:
         type: boolean
       voucherPricesShown:
         type: boolean
+  cancelBooking:
+    required:
+      - refund
+      - notify
+      - note
+    properties:
+      note:
+        type: string
+        description: Cancellation notes
+      notify:
+        type: boolean
+        description: Send notification
+      refund:
+        type: boolean
+        description: Refund the booking
+  cancelProductBooking:
+    required:
+      - refund
+      - notify
+      - refundAmount
+      - note
+    properties:
+      note:
+        type: string
+        description: Cancellation notes
+      notify:
+        type: boolean
+        description: Send notification
+      refund:
+        type: boolean
+        description: Refund the product booking
+      refundAmount:
+        type: number
+        description: 'Refund amount (if 0 and refund == true, then full amount is refunded)'
+      remainInvoiced:
+        type: boolean
+        description: Specify whether the product should remain on customer invoice after being cancelled
   ProductListDescriptionDto:
     properties:
       children:

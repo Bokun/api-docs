@@ -23,13 +23,11 @@
   <script src='lib/jsoneditor.min.js' type='text/javascript'></script>
   <script src='lib/marked.js' type='text/javascript'></script>
   <script src='lib/swagger-oauth.js' type='text/javascript'></script>
+  <script src="lib/crypto-js/rollups/hmac-sha1.js" type="text/javascript"></script>
+  <script src="lib/crypto-js/components/enc-base64-min.js" type="text/javascript"></script>
 
-  <!-- Some basic translations -->
-  <!-- <script src='lang/translator.js' type='text/javascript'></script> -->
-  <!-- <script src='lang/ru.js' type='text/javascript'></script> -->
-  <!-- <script src='lang/en.js' type='text/javascript'></script> -->
 
-  <script type="text/javascript">
+    <script type="text/javascript">
     $(function () {
       var url = window.location.search.match(/url=([^&]+)/);
       if (url && url.length > 1) {
@@ -67,6 +65,7 @@
           });
 
           addApiKeyAuthorization();
+          addSecretAuthorization()
         },
         onFailure: function(data) {
           log("Unable to Load SwaggerUI");
@@ -78,7 +77,40 @@
         showRequestHeaders: false
       });
 
-      function addApiKeyAuthorization(){
+        SignatureAuthorization = function (key, secret) {
+            this.key = key;
+            this.secret = secret;
+        };
+
+        var getPath = function(href) {
+            var l = document.createElement("a");
+            l.href = href;
+            return l.pathname+l.search;
+        };
+
+        SignatureAuthorization.prototype.apply = function (obj) {
+            var date = new Date().toISOString().replace("T", " ").slice(0, 19);
+            obj.headers["X-Bokun-Date"] = date;
+            obj.headers["X-Bokun-AccessKey"] = this.key;
+            var message = date+this.key+obj.method.toUpperCase()+getPath(obj.url);
+            obj.headers["X-Bokun-Signature"] = CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA1(message, this.secret));
+
+            return true;
+        };
+
+        function addSecretAuthorization() {
+            var key = encodeURIComponent($('#input_apiKey')[0].value);
+            var secret = encodeURIComponent($('#input_secretKey')[0].value);
+            if (key && key.trim() != "" && secret && secret.trim() != "") {
+                var apiSignatureAuth = new SignatureAuthorization(key, secret);
+                window.swaggerUi.api.clientAuthorizations.add("signature_key", apiSignatureAuth);
+                log("authorization added: key = " + key + ", secret = " + secret);
+            }
+        }
+
+        $('#input_secretKey').change(addSecretAuthorization);
+
+        function addApiKeyAuthorization(){
         var key = encodeURIComponent($('#input_apiKey')[0].value);
         if(key && key.trim() != "") {
             var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("X-Bokun-AccessKey", key, "header");
@@ -88,12 +120,6 @@
       }
 
       $('#input_apiKey').change(addApiKeyAuthorization);
-
-      // if you have an apiKey you would like to pre-populate on the page for demonstration purposes...
-      /*
-        var apiKey = "myApiKeyXXXX123456789";
-        $('#input_apiKey').val(apiKey);
-      */
 
       window.swaggerUi.load();
 
@@ -126,7 +152,8 @@
           <option value="swagger-prod.json">Production environment</option>
         </select>
       </div>
-      <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"/></div>
+      <div class='input'><input placeholder="API Key" id="input_apiKey" name="apiKey" type="text"/></div>
+      <div class="input"><input placeholder="Secret Key" id="input_secretKey" name="secretKey" type="password"></div>
       <div class='input'><a id="explore" href="#" data-sw-translate>Explore</a></div>
     </form>
   </div>

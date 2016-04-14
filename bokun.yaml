@@ -3809,9 +3809,6 @@ definitions:
       pricingCategoryId:
         type: integer
         format: int64
-      quantity:
-        type: integer
-        format: int32
   ActivityQuery:
     properties:
       agendaLocationFilters:
@@ -4341,9 +4338,6 @@ definitions:
       pricingCategoryId:
         type: integer
         format: int64
-      quantity:
-        type: integer
-        format: int32
   AllotmentDto:
     properties:
       id:

@@ -2042,7 +2042,7 @@ paths:
           name: body
           required: true
           schema:
-            $ref: '#/definitions/SingleRouteBookingRequestDto'
+            $ref: '#/definitions/SingleTransportBookingRequestDto'
       responses:
         '200':
           description: No response was specified
@@ -7354,6 +7354,39 @@ definitions:
     properties:
       carRentalRequest:
         $ref: '#/definitions/CarRentalBookingRequestDto'
+      chargeRequest:
+        $ref: '#/definitions/ChargeRequest'
+      customer:
+        $ref: '#/definitions/CustomerDto'
+      discountPercentage:
+        type: number
+        format: double
+      externalBookingReference:
+        type: string
+      harbourId:
+        type: integer
+        format: int64
+      manualPayment:
+        $ref: '#/definitions/CustomerPaymentDto'
+      note:
+        type: string
+      paymentOption:
+        $ref: '#/definitions/BookingPaymentOption'
+        enum:
+          - NOT_PAID
+          - ENTER_MANUALLY
+          - PROCESS_ONLINE
+      sendCustomerNotification:
+        type: boolean
+      tokenChargeRequest:
+        $ref: '#/definitions/TokenChargeRequest'
+      vesselId:
+        type: integer
+        format: int64
+  SingleTransportBookingRequestDto:
+    properties:
+      routeRequest:
+        $ref: '#/definitions/TransportBookingRequestDto '
       chargeRequest:
         $ref: '#/definitions/ChargeRequest'
       customer:

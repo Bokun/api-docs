@@ -5415,12 +5415,8 @@ definitions:
         format: int64
       checkIn:
         type: string
-        description: The check in date of the stay interval (yyyy-MM-dd)
-        required: true
       checkOut:
         type: string
-        description: The check out date of the stay interval (yyyy-MM-dd)
-        required: true
   SingleRoomStatusDto:
     properties:
       roomId:

@@ -3,7 +3,7 @@
     "info": {
         "title": "Bokun API",
         "description": "Documentation for the Bokun API.",
-        "version": "1.0.0"
+        "version": "1.0"
     },
     "host": "api.bokundemo.com",
     "schemes": [
@@ -110,6 +110,36 @@
                 }
             }
         },
+        "/accommodation.json/check-room-availability": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accommodation"
+                ],
+                "operationId": "POST_controllers_webservices_AccommodationApiController$_checkRoomAvailability",
+                "summary": "Get a list of all rooms available for a given stay interval.",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/RoomAvailabilityRequestDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "No response was specified",
+                        "schema": {
+                            "$ref": "#/definitions/RoomAvailabilityResponseDto"
+                        }
+                    }
+                }
+            }
+        },
         "/accommodation.json/{id}/check-availability": {
             "post": {
                 "produces": [
@@ -197,6 +227,36 @@
                         "description": "No response was specified",
                         "schema": {
                             "$ref": "#/definitions/AccommodationDto"
+                        }
+                    }
+                }
+            }
+        },
+        "/accommodation.json/{id}/rooms": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accommodation"
+                ],
+                "operationId": "GET_controllers_webservices_AccommodationApiController$_getRoomsByRoomType",
+                "summary": "Get a list of all rooms for a particular Accommodation.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "description": "ID of the accommodation",
+                        "name": "id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "No response was specified",
+                        "schema": {
+                            "$ref": "#/definitions/RoomsGroupedByTypeContainer"
                         }
                     }
                 }
@@ -3002,7 +3062,7 @@
                         "name": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/SingleRouteBookingRequestDto"
+                            "$ref": "#/definitions/SingleTransportBookingRequestDto"
                         }
                     }
                 ],
@@ -7933,6 +7993,78 @@
                 }
             }
         },
+        "RoomAvailabilityRequestDto": {
+            "properties": {
+                "accommodationId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "checkIn": {
+                    "type": "string"
+                },
+                "checkOut": {
+                    "type": "string"
+                }
+            }
+        },
+        "SingleRoomStatusDto": {
+            "properties": {
+                "roomId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "roomTitle": {
+                    "type": "string"
+                },
+                "roomAvailable": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "RoomAvailabilityResponseDto": {
+            "properties": {
+                "roomAvailabilities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/SingleRoomStatusDto"
+                    }
+                }
+            }
+        },
+        "RoomInfo": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "RoomTypeRooms": {
+            "properties": {
+                "roomType": {
+                    "$ref": "#/definitions/LightweightRoomTypeDto"
+                },
+                "rooms": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RoomInfo"
+                    }
+                }
+            }
+        },
+        "RoomsGroupedByTypeContainer": {
+            "properties": {
+                "roomsGroupedByType": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RoomTypeRooms"
+                    }
+                }
+            }
+        },
         "AccommodationBookingAnswersDto": {
             "properties": {
                 "answerGroups": {
@@ -10850,6 +10982,54 @@
             "properties": {
                 "carRentalRequest": {
                     "$ref": "#/definitions/CarRentalBookingRequestDto"
+                },
+                "chargeRequest": {
+                    "$ref": "#/definitions/ChargeRequest"
+                },
+                "customer": {
+                    "$ref": "#/definitions/CustomerDto"
+                },
+                "discountPercentage": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "externalBookingReference": {
+                    "type": "string"
+                },
+                "harbourId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "manualPayment": {
+                    "$ref": "#/definitions/CustomerPaymentDto"
+                },
+                "note": {
+                    "type": "string"
+                },
+                "paymentOption": {
+                    "$ref": "#/definitions/BookingPaymentOption",
+                    "enum": [
+                        "NOT_PAID",
+                        "ENTER_MANUALLY",
+                        "PROCESS_ONLINE"
+                    ]
+                },
+                "sendCustomerNotification": {
+                    "type": "boolean"
+                },
+                "tokenChargeRequest": {
+                    "$ref": "#/definitions/TokenChargeRequest"
+                },
+                "vesselId": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
+        "SingleTransportBookingRequestDto": {
+            "properties": {
+                "routeRequest": {
+                    "$ref": "#/definitions/TransportBookingRequestDto "
                 },
                 "chargeRequest": {
                     "$ref": "#/definitions/ChargeRequest"

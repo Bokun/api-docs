@@ -7,7 +7,7 @@
     },
     "host": "api.bokundemo.com",
     "schemes": [
-        "http"
+        "https"
     ],
     "tags": [
         {

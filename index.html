@@ -32,70 +32,70 @@
         window.location.protocol = "https";
     }
     $(function () {
-      var url = window.location.search.match(/url=([^&]+)/);
-      if (url && url.length > 1) {
-        url = decodeURIComponent(url[1]);
-      } else {
-        url = "swagger-test.json";
-      }
+        var url = window.location.search.match(/url=([^&]+)/);
+        if (url && url.length > 1) {
+            url = decodeURIComponent(url[1]);
+        } else {
+            url = "swagger-test.json";
+        }
 
-      // Pre load translate...
-      if(window.SwaggerTranslator) {
-        window.SwaggerTranslator.translate();
-      }
-      window.swaggerUi = new SwaggerUi({
-        url: url,
-        dom_id: "swagger-ui-container",
-        supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
-        onComplete: function(swaggerApi, swaggerUi){
-          if(typeof initOAuth == "function") {
-            initOAuth({
-              clientId: "your-client-id",
-              clientSecret: "your-client-secret-if-required",
-              realm: "your-realms",
-              appName: "your-app-name",
-              scopeSeparator: ",",
-              additionalQueryStringParams: {}
-            });
-          }
-
-          if(window.SwaggerTranslator) {
+        // Pre load translate...
+        if (window.SwaggerTranslator) {
             window.SwaggerTranslator.translate();
-          }
+        }
+        window.swaggerUi = new SwaggerUi({
+            url: url,
+            dom_id: "swagger-ui-container",
+            supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
+            onComplete: function (swaggerApi, swaggerUi) {
+                if (typeof initOAuth == "function") {
+                    initOAuth({
+                        clientId: "your-client-id",
+                        clientSecret: "your-client-secret-if-required",
+                        realm: "your-realms",
+                        appName: "your-app-name",
+                        scopeSeparator: ",",
+                        additionalQueryStringParams: {}
+                    });
+                }
 
-          $('pre code').each(function(i, e) {
-            hljs.highlightBlock(e)
-          });
+                if (window.SwaggerTranslator) {
+                    window.SwaggerTranslator.translate();
+                }
 
-          addApiKeyAuthorization();
-          addSecretAuthorization()
-        },
-        onFailure: function(data) {
-          log("Unable to Load SwaggerUI");
-        },
-        docExpansion: "none",
-        jsonEditor: false,
-        apisSorter: "alpha",
-        defaultModelRendering: 'schema',
-        showRequestHeaders: false
-      });
+                $('pre code').each(function (i, e) {
+                    hljs.highlightBlock(e)
+                });
+
+                addApiKeyAuthorization();
+                addSecretAuthorization()
+            },
+            onFailure: function (data) {
+                log("Unable to Load SwaggerUI");
+            },
+            docExpansion: "none",
+            jsonEditor: false,
+            apisSorter: "alpha",
+            defaultModelRendering: 'schema',
+            showRequestHeaders: false
+        });
 
         SignatureAuthorization = function (key, secret) {
             this.key = key;
             this.secret = secret;
         };
 
-        var getPath = function(href) {
+        var getPath = function (href) {
             var l = document.createElement("a");
             l.href = href;
-            return l.pathname+l.search;
+            return l.pathname + l.search;
         };
 
         SignatureAuthorization.prototype.apply = function (obj) {
             var date = new Date().toISOString().replace("T", " ").slice(0, 19);
             obj.headers["X-Bokun-Date"] = date;
             obj.headers["X-Bokun-AccessKey"] = this.key;
-            var message = date+this.key+obj.method.toUpperCase()+getPath(obj.url);
+            var message = date + this.key + obj.method.toUpperCase() + getPath(obj.url);
             obj.headers["X-Bokun-Signature"] = CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA1(message, this.secret));
 
             return true;
@@ -113,25 +113,25 @@
 
         $('#input_secretKey').change(addSecretAuthorization);
 
-        function addApiKeyAuthorization(){
-        var key = encodeURIComponent($('#input_apiKey')[0].value);
-        if(key && key.trim() != "") {
-            var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("X-Bokun-AccessKey", key, "header");
-            window.swaggerUi.api.clientAuthorizations.add("api_key", apiKeyAuth);
-            log("added key " + key);
+        function addApiKeyAuthorization() {
+            var key = encodeURIComponent($('#input_apiKey')[0].value);
+            if (key && key.trim() != "") {
+                var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("X-Bokun-AccessKey", key, "header");
+                window.swaggerUi.api.clientAuthorizations.add("api_key", apiKeyAuth);
+                log("added key " + key);
+            }
         }
-      }
 
-      $('#input_apiKey').change(addApiKeyAuthorization);
+        $('#input_apiKey').change(addApiKeyAuthorization);
 
-      window.swaggerUi.load();
+        window.swaggerUi.load();
 
-      function log() {
-        if ('console' in window) {
-          console.log.apply(console, arguments);
+        function log() {
+            if ('console' in window) {
+                console.log.apply(console, arguments);
+            }
         }
-      }
-  });
+    });
   </script>
   <style>
     .swagger-section #input_baseUrl.select-input {

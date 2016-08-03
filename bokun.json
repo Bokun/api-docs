@@ -5621,10 +5621,6 @@
                 "pricingCategoryId": {
                     "type": "integer",
                     "format": "int64"
-                },
-                "quantity": {
-                    "type": "integer",
-                    "format": "int32"
                 }
             }
         },
@@ -6410,10 +6406,6 @@
                 "pricingCategoryId": {
                     "type": "integer",
                     "format": "int64"
-                },
-                "quantity": {
-                    "type": "integer",
-                    "format": "int32"
                 }
             }
         },

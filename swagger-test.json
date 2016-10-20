@@ -1404,7 +1404,7 @@
                     {
                         "in": "path",
                         "description": "The booking type",
-                        "name": "btype",
+                        "name": "bType",
                         "required": true,
                         "type": "string"
                     },
@@ -1785,7 +1785,7 @@
                     {
                         "in": "path",
                         "description": "The booking type",
-                        "name": "btype",
+                        "name": "bType",
                         "required": true,
                         "type": "string"
                     },
@@ -2215,7 +2215,7 @@
                     {
                         "in": "path",
                         "description": "The confirmation code for the booking that you want to cancel",
-                        "name": "bookingConfirmationCode",
+                        "name": "confirmationCode",
                         "required": true,
                         "type": "string"
                     },
@@ -3287,7 +3287,7 @@
                 "accommodations": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/AccommodationReport"
+                        "$ref": "#/definitions/AccommodationAvailabilityReportDto"
                     }
                 },
                 "endDate": {
@@ -3542,7 +3542,11 @@
                     "type": "number"
                 },
                 "ratePrices": {
-                    "$ref": "#/definitions/Map[long,BigDecimal]"
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "number",
+                        "format": "double"
+                    }
                 }
             }
         },
@@ -3555,7 +3559,11 @@
                     }
                 },
                 "extraPrices": {
-                    "$ref": "#/definitions/Map[long,BigDecimal]"
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "number",
+                        "format": "double"
+                    }
                 },
                 "guestCounts": {
                     "type": "array",
@@ -3573,7 +3581,11 @@
                     "format": "int32"
                 },
                 "rateTotalPrices": {
-                    "$ref": "#/definitions/Map[long,BigDecimal]"
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "number",
+                        "format": "double"
+                    }
                 },
                 "roomType": {
                     "$ref": "#/definitions/RoomTypeDto"
@@ -4329,23 +4341,13 @@
                     "format": "int64"
                 },
                 "productCategory": {
-                    "$ref": "#/definitions/ProductCategoryEnum",
-                    "enum": [
-                        "ACCOMMODATION",
-                        "ACTIVITIES",
-                        "CAR_RENTALS",
-                        "TRANSPORT"
-                    ]
+                    "$ref": "#/definitions/ProductCategoryEnum"
                 },
                 "sharedWithSuppliers": {
                     "type": "boolean"
                 },
                 "subCategory": {
-                    "$ref": "#/definitions/TagGroupSubcategoryEnum",
-                    "enum": [
-                        "NONE",
-                        "ITEM"
-                    ]
+                    "$ref": "#/definitions/TagGroupSubcategoryEnum"
                 },
                 "tag": {
                     "type": "array",
@@ -4764,11 +4766,7 @@
                     }
                 },
                 "pricingMode": {
-                    "$ref": "#/definitions/RentalPricingModeEnum",
-                    "enum": [
-                        "USE_PRICE_OF_FIRST_UNIT_FOR_ALL",
-                        "CALCULATE_EACH_UNIT"
-                    ]
+                    "$ref": "#/definitions/RentalPricingModeEnum"
                 },
                 "productCategory": {
                     "type": "string"
@@ -5166,10 +5164,18 @@
                     "type": "number"
                 },
                 "dropoffPricesByCategory": {
-                    "$ref": "#/definitions/Map[long,BigDecimal]"
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "number",
+                        "format": "double"
+                    }
                 },
                 "extraPrices": {
-                    "$ref": "#/definitions/Map[long,BigDecimal]"
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "number",
+                        "format": "double"
+                    }
                 },
                 "flags": {
                     "type": "array",
@@ -5201,10 +5207,18 @@
                     "type": "number"
                 },
                 "pickupPricesByCategory": {
-                    "$ref": "#/definitions/Map[long,BigDecimal]"
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "number",
+                        "format": "double"
+                    }
                 },
                 "pricesByCategory": {
-                    "$ref": "#/definitions/Map[long,BigDecimal]"
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "number",
+                        "format": "double"
+                    }
                 },
                 "soldOut": {
                     "type": "boolean"
@@ -5427,12 +5441,7 @@
                     }
                 },
                 "dropoffPricingType": {
-                    "$ref": "#/definitions/PickupPricingTypeEnum",
-                    "enum": [
-                        "FREE",
-                        "PER_BOOKING",
-                        "PER_PERSON"
-                    ]
+                    "$ref": "#/definitions/PickupPricingTypeEnum"
                 },
                 "dropoffService": {
                     "type": "boolean"
@@ -5530,12 +5539,7 @@
                     "format": "int32"
                 },
                 "pickupPricingType": {
-                    "$ref": "#/definitions/PickupPricingTypeEnum",
-                    "enum": [
-                        "FREE",
-                        "PER_BOOKING",
-                        "PER_PERSON"
-                    ]
+                    "$ref": "#/definitions/PickupPricingTypeEnum"
                 },
                 "pickupService": {
                     "type": "boolean"
@@ -5738,13 +5742,7 @@
                     "type": "string"
                 },
                 "sortField": {
-                    "$ref": "#/definitions/ActivitySortField",
-                    "enum": [
-                        "BEST_SELLING_GLOBAL",
-                        "BEST_SELLING_IN_CHANNEL",
-                        "ALPHABETIC",
-                        "RANDOM"
-                    ]
+                    "$ref": "#/definitions/ActivitySortField"
                 },
                 "sortOrder": {
                     "type": "string"
@@ -6395,12 +6393,62 @@
                     }
                 },
                 "travelType": {
-                    "$ref": "#/definitions/TravelTypeEnum",
-                    "enum": [
-                        "BUSINESS",
-                        "LEISURE",
-                        "CONFERENCE"
-                    ]
+                    "$ref": "#/definitions/TravelTypeEnum"
+                }
+            }
+        },
+        "RoomBookingRequestDto": {
+            "properties": {
+                "roomTypeId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "roomRateId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "roomId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "guests": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CustomerDto"
+                    }
+                },
+                "extras": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ExtraBookingRequestDto"
+                    }
+                },
+                "answers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RoomBookingAnswersDto"
+                    }
+                },
+                "externalReference": {
+                    "type": "string"
+                },
+                "checkinDate": {
+                    "type": "string"
+                },
+                "checkoutDate": {
+                    "type": "string"
+                },
+                "adults": {
+                    "type": "number",
+                    "format": "int32"
+                },
+                "children": {
+                    "type": "number",
+                    "format": "int32"
+                },
+                "infants": {
+                    "type": "number",
+                    "format": "int32"
                 }
             }
         },
@@ -6619,7 +6667,7 @@
                 "cars": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/CarBookingDTO"
+                        "$ref": "#/definitions/CarBookingDto"
                     }
                 },
                 "dropoffDate": {
@@ -6810,13 +6858,7 @@
                     "format": "date-time"
                 },
                 "status": {
-                    "$ref": "#/definitions/RoomBookingStatusEnum",
-                    "enum": [
-                        "RESERVED",
-                        "CHECKED_IN",
-                        "CHECKED_OUT",
-                        "NO_SHOW"
-                    ]
+                    "$ref": "#/definitions/RoomBookingStatusEnum"
                 },
                 "unavailable": {
                     "type": "boolean"
@@ -6953,11 +6995,7 @@
                     "format": "int32"
                 },
                 "distanceUnit": {
-                    "$ref": "#/definitions/DistanceUnitEnum",
-                    "enum": [
-                        "METERS",
-                        "KILOMETERS"
-                    ]
+                    "$ref": "#/definitions/DistanceUnitEnum"
                 },
                 "externalId": {
                     "type": "string"
@@ -7237,12 +7275,7 @@
                     "$ref": "#/definitions/AvailablePathDto"
                 },
                 "resultsType": {
-                    "$ref": "#/definitions/RouteResultsType",
-                    "enum": [
-                        "MULTIPLE_ROUTES",
-                        "SINGLE_ROUTE",
-                        "SINGLE_ROUTE_FLEX"
-                    ]
+                    "$ref": "#/definitions/RouteResultsType"
                 },
                 "returnPath": {
                     "$ref": "#/definitions/AvailablePathDto"
@@ -7309,11 +7342,7 @@
                     "format": "int32"
                 },
                 "capacityType": {
-                    "$ref": "#/definitions/CapacityTypeEnum",
-                    "enum": [
-                        "LIMITED",
-                        "UNLIMITED"
-                    ]
+                    "$ref": "#/definitions/CapacityTypeEnum"
                 }
             }
         },
@@ -7442,23 +7471,7 @@
                     "format": "int64"
                 },
                 "costItemType": {
-                    "$ref": "#/definitions/CostItemTypeEnum",
-                    "enum": [
-                        "ROOM_TYPE",
-                        "ROOM_RATE",
-                        "PRICING_CATEGORY",
-                        "DEPARTURE_PRICING_CATEGORY",
-                        "VEHICLE_TYPE",
-                        "PICKUP",
-                        "DEPARTURE_PICKUP",
-                        "DROPOFF",
-                        "DEPARTURE_DROPOFF",
-                        "PICKUP_AND_DROPOFF",
-                        "PRICING_CATEGORY_PEAK",
-                        "PRICING_CATEGORY_FARECLASS",
-                        "PRICING_CATEGORY_FARECLASS_PEAK",
-                        "EXTRA"
-                    ]
+                    "$ref": "#/definitions/CostItemTypeEnum"
                 },
                 "costMatrixId": {
                     "type": "integer",
@@ -7827,12 +7840,7 @@
                     "format": "int64"
                 },
                 "weightType": {
-                    "$ref": "#/definitions/RouteWeightType",
-                    "enum": [
-                        "LEGS",
-                        "DURATION",
-                        "PRICE"
-                    ]
+                    "$ref": "#/definitions/RouteWeightType"
                 }
             }
         },
@@ -7970,11 +7978,7 @@
                     "format": "int32"
                 },
                 "capacityType": {
-                    "$ref": "#/definitions/CapacityTypeEnum",
-                    "enum": [
-                        "LIMITED",
-                        "UNLIMITED"
-                    ]
+                    "$ref": "#/definitions/CapacityTypeEnum"
                 },
                 "id": {
                     "type": "integer",
@@ -8183,16 +8187,7 @@
                     }
                 },
                 "paidType": {
-                    "$ref": "#/definitions/PaymentPaidTypeEnum",
-                    "enum": [
-                        "PAID_IN_FULL",
-                        "DEPOSIT",
-                        "FREE",
-                        "NOT_PAID",
-                        "OVERPAID",
-                        "REFUND",
-                        "INVOICED"
-                    ]
+                    "$ref": "#/definitions/PaymentPaidTypeEnum"
                 },
                 "parentBooking": {
                     "$ref": "#/definitions/booking"
@@ -8235,18 +8230,7 @@
                     "format": "date-time"
                 },
                 "status": {
-                    "$ref": "#/definitions/BookingStatusEnum",
-                    "enum": [
-                        "CART",
-                        "RESERVED",
-                        "CONFIRMED",
-                        "TIMEOUT",
-                        "ABORTED",
-                        "CANCELLED",
-                        "ERROR",
-                        "ARRIVED",
-                        "NO_SHOW"
-                    ]
+                    "$ref": "#/definitions/BookingStatusEnum"
                 },
                 "supplier": {
                     "$ref": "#/definitions/VendorWithLinksDto"
@@ -8365,20 +8349,10 @@
                     "type": "string"
                 },
                 "bookedDropoffPricingType": {
-                    "$ref": "#/definitions/PickupPricingTypeEnum",
-                    "enum": [
-                        "FREE",
-                        "PER_BOOKING",
-                        "PER_PERSON"
-                    ]
+                    "$ref": "#/definitions/PickupPricingTypeEnum"
                 },
                 "bookedPickupPricingType": {
-                    "$ref": "#/definitions/PickupPricingTypeEnum",
-                    "enum": [
-                        "FREE",
-                        "PER_BOOKING",
-                        "PER_PERSON"
-                    ]
+                    "$ref": "#/definitions/PickupPricingTypeEnum"
                 },
                 "bookedPricingCategories": {
                     "type": "array",
@@ -8481,16 +8455,7 @@
                     }
                 },
                 "paidType": {
-                    "$ref": "#/definitions/PaymentPaidTypeEnum",
-                    "enum": [
-                        "PAID_IN_FULL",
-                        "DEPOSIT",
-                        "FREE",
-                        "NOT_PAID",
-                        "OVERPAID",
-                        "REFUND",
-                        "INVOICED"
-                    ]
+                    "$ref": "#/definitions/PaymentPaidTypeEnum"
                 },
                 "parentBooking": {
                     "$ref": "#/definitions/booking"
@@ -8530,7 +8495,11 @@
                     "type": "string"
                 },
                 "quantityByPricingCategory": {
-                    "$ref": "#/definitions/Map[long,int]"
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "number",
+                        "format": "int32"
+                    }
                 },
                 "savedAmount": {
                     "type": "number"
@@ -8553,18 +8522,7 @@
                     "format": "int64"
                 },
                 "status": {
-                    "$ref": "#/definitions/BookingStatusEnum",
-                    "enum": [
-                        "CART",
-                        "RESERVED",
-                        "CONFIRMED",
-                        "TIMEOUT",
-                        "ABORTED",
-                        "CANCELLED",
-                        "ERROR",
-                        "ARRIVED",
-                        "NO_SHOW"
-                    ]
+                    "$ref": "#/definitions/BookingStatusEnum"
                 },
                 "supplier": {
                     "$ref": "#/definitions/VendorWithLinksDto"
@@ -8833,14 +8791,7 @@
                     }
                 },
                 "status": {
-                    "$ref": "#/definitions/Status",
-                    "enum": [
-                        "NEW",
-                        "FINISHED",
-                        "FAILED",
-                        "NOT_FOUND",
-                        "ERROR"
-                    ]
+                    "$ref": "#/definitions/Status"
                 }
             }
         },
@@ -9229,16 +9180,7 @@
                     }
                 },
                 "paidType": {
-                    "$ref": "#/definitions/PaymentPaidTypeEnum",
-                    "enum": [
-                        "PAID_IN_FULL",
-                        "DEPOSIT",
-                        "FREE",
-                        "NOT_PAID",
-                        "OVERPAID",
-                        "REFUND",
-                        "INVOICED"
-                    ]
+                    "$ref": "#/definitions/PaymentPaidTypeEnum"
                 },
                 "parentBooking": {
                     "$ref": "#/definitions/booking"
@@ -9274,18 +9216,7 @@
                     "format": "date-time"
                 },
                 "status": {
-                    "$ref": "#/definitions/BookingStatusEnum",
-                    "enum": [
-                        "CART",
-                        "RESERVED",
-                        "CONFIRMED",
-                        "TIMEOUT",
-                        "ABORTED",
-                        "CANCELLED",
-                        "ERROR",
-                        "ARRIVED",
-                        "NO_SHOW"
-                    ]
+                    "$ref": "#/definitions/BookingStatusEnum"
                 },
                 "supplier": {
                     "$ref": "#/definitions/VendorWithLinksDto"
@@ -9455,13 +9386,7 @@
                     "format": "int64"
                 },
                 "lineItemType": {
-                    "$ref": "#/definitions/CustomLineItemTypeEnum",
-                    "enum": [
-                        "BOOKING_FEE",
-                        "CUSTOM_PRICE",
-                        "DISCOUNT",
-                        "OTHER"
-                    ]
+                    "$ref": "#/definitions/CustomLineItemTypeEnum"
                 },
                 "quantity": {
                     "type": "integer",
@@ -9777,13 +9702,7 @@
                     "type": "string"
                 },
                 "paymentType": {
-                    "$ref": "#/definitions/PaymentTypeEnum",
-                    "enum": [
-                        "WEB_PAYMENT",
-                        "POINT_OF_SALE",
-                        "CASH",
-                        "VOUCHER"
-                    ]
+                    "$ref": "#/definitions/PaymentTypeEnum"
                 },
                 "transactionDate": {
                     "type": "string",
@@ -9888,12 +9807,7 @@
                     "type": "string"
                 },
                 "role": {
-                    "$ref": "#/definitions/ExtranetUserRoleEnum",
-                    "enum": [
-                        "VENDOR",
-                        "BOOKING_AGENT",
-                        "ADMIN"
-                    ]
+                    "$ref": "#/definitions/ExtranetUserRoleEnum"
                 },
                 "termsOfServiceAgreedDate": {
                     "type": "string",
@@ -10072,11 +9986,7 @@
                     }
                 },
                 "bookingRole": {
-                    "$ref": "#/definitions/BookingRoleEnum",
-                    "enum": [
-                        "SUPPLIER",
-                        "SELLER"
-                    ]
+                    "$ref": "#/definitions/BookingRoleEnum"
                 },
                 "bookingStatuses": {
                     "type": "array",
@@ -10266,13 +10176,7 @@
                     "$ref": "#/definitions/BookingItemInfoDto"
                 },
                 "productCategory": {
-                    "$ref": "#/definitions/ProductCategoryEnum",
-                    "enum": [
-                        "ACCOMMODATION",
-                        "ACTIVITIES",
-                        "CAR_RENTALS",
-                        "TRANSPORT"
-                    ]
+                    "$ref": "#/definitions/ProductCategoryEnum"
                 },
                 "productConfirmationCode": {
                     "type": "string"
@@ -10405,13 +10309,7 @@
                     "format": "int64"
                 },
                 "productCategory": {
-                    "$ref": "#/definitions/ProductCategoryEnum",
-                    "enum": [
-                        "ACCOMMODATION",
-                        "ACTIVITIES",
-                        "CAR_RENTALS",
-                        "TRANSPORT"
-                    ]
+                    "$ref": "#/definitions/ProductCategoryEnum"
                 },
                 "productConfirmationCode": {
                     "type": "string"
@@ -10552,14 +10450,7 @@
                     "type": "string"
                 },
                 "type": {
-                    "$ref": "#/definitions/ResourceTypeEnum",
-                    "enum": [
-                        "DRIVER",
-                        "VEHICLE",
-                        "GUIDE",
-                        "ROOM",
-                        "EQUIPMENT"
-                    ]
+                    "$ref": "#/definitions/ResourceTypeEnum"
                 }
             }
         },
@@ -10642,13 +10533,7 @@
                     "format": "date-time"
                 },
                 "status": {
-                    "$ref": "#/definitions/RoomBookingStatusEnum",
-                    "enum": [
-                        "RESERVED",
-                        "CHECKED_IN",
-                        "CHECKED_OUT",
-                        "NO_SHOW"
-                    ]
+                    "$ref": "#/definitions/RoomBookingStatusEnum"
                 }
             }
         },
@@ -10783,16 +10668,7 @@
                     }
                 },
                 "paidType": {
-                    "$ref": "#/definitions/PaymentPaidTypeEnum",
-                    "enum": [
-                        "PAID_IN_FULL",
-                        "DEPOSIT",
-                        "FREE",
-                        "NOT_PAID",
-                        "OVERPAID",
-                        "REFUND",
-                        "INVOICED"
-                    ]
+                    "$ref": "#/definitions/PaymentPaidTypeEnum"
                 },
                 "parentBooking": {
                     "$ref": "#/definitions/booking"
@@ -10839,18 +10715,7 @@
                     "format": "double"
                 },
                 "status": {
-                    "$ref": "#/definitions/BookingStatusEnum",
-                    "enum": [
-                        "CART",
-                        "RESERVED",
-                        "CONFIRMED",
-                        "TIMEOUT",
-                        "ABORTED",
-                        "CANCELLED",
-                        "ERROR",
-                        "ARRIVED",
-                        "NO_SHOW"
-                    ]
+                    "$ref": "#/definitions/BookingStatusEnum"
                 },
                 "supplier": {
                     "$ref": "#/definitions/VendorWithLinksDto"
@@ -10902,21 +10767,10 @@
                     "type": "string"
                 },
                 "paymentOption": {
-                    "$ref": "#/definitions/BookingPaymentOption",
-                    "enum": [
-                        "NOT_PAID",
-                        "ENTER_MANUALLY",
-                        "PROCESS_ONLINE"
-                    ]
+                    "$ref": "#/definitions/BookingPaymentOption"
                 },
                 "roomBookingStatus": {
-                    "$ref": "#/definitions/RoomBookingStatusEnum",
-                    "enum": [
-                        "RESERVED",
-                        "CHECKED_IN",
-                        "CHECKED_OUT",
-                        "NO_SHOW"
-                    ]
+                    "$ref": "#/definitions/RoomBookingStatusEnum"
                 },
                 "sendCustomerNotification": {
                     "type": "boolean"
@@ -10959,12 +10813,7 @@
                     "type": "string"
                 },
                 "paymentOption": {
-                    "$ref": "#/definitions/BookingPaymentOption",
-                    "enum": [
-                        "NOT_PAID",
-                        "ENTER_MANUALLY",
-                        "PROCESS_ONLINE"
-                    ]
+                    "$ref": "#/definitions/BookingPaymentOption"
                 },
                 "sendCustomerNotification": {
                     "type": "boolean"
@@ -11007,12 +10856,7 @@
                     "type": "string"
                 },
                 "paymentOption": {
-                    "$ref": "#/definitions/BookingPaymentOption",
-                    "enum": [
-                        "NOT_PAID",
-                        "ENTER_MANUALLY",
-                        "PROCESS_ONLINE"
-                    ]
+                    "$ref": "#/definitions/BookingPaymentOption"
                 },
                 "sendCustomerNotification": {
                     "type": "boolean"
@@ -11029,7 +10873,7 @@
         "SingleTransportBookingRequestDto": {
             "properties": {
                 "routeRequest": {
-                    "$ref": "#/definitions/TransportBookingRequestDto "
+                    "$ref": "#/definitions/TransportBookingRequestDto"
                 },
                 "chargeRequest": {
                     "$ref": "#/definitions/ChargeRequest"
@@ -11055,12 +10899,7 @@
                     "type": "string"
                 },
                 "paymentOption": {
-                    "$ref": "#/definitions/BookingPaymentOption",
-                    "enum": [
-                        "NOT_PAID",
-                        "ENTER_MANUALLY",
-                        "PROCESS_ONLINE"
-                    ]
+                    "$ref": "#/definitions/BookingPaymentOption"
                 },
                 "sendCustomerNotification": {
                     "type": "boolean"
@@ -11080,11 +10919,7 @@
                     "type": "string"
                 },
                 "order": {
-                    "$ref": "#/definitions/SortOrder",
-                    "enum": [
-                        "ASC",
-                        "DESC"
-                    ]
+                    "$ref": "#/definitions/SortOrder"
                 }
             }
         },
@@ -11271,16 +11106,7 @@
                     "type": "string"
                 },
                 "paymentType": {
-                    "$ref": "#/definitions/PaymentPaidTypeEnum",
-                    "enum": [
-                        "PAID_IN_FULL",
-                        "DEPOSIT",
-                        "FREE",
-                        "NOT_PAID",
-                        "OVERPAID",
-                        "REFUND",
-                        "INVOICED"
-                    ]
+                    "$ref": "#/definitions/PaymentPaidTypeEnum"
                 },
                 "qrCodeUrl": {
                     "type": "string"
@@ -11295,18 +11121,7 @@
                     "$ref": "#/definitions/VendorDto"
                 },
                 "status": {
-                    "$ref": "#/definitions/BookingStatusEnum",
-                    "enum": [
-                        "CART",
-                        "RESERVED",
-                        "CONFIRMED",
-                        "TIMEOUT",
-                        "ABORTED",
-                        "CANCELLED",
-                        "ERROR",
-                        "ARRIVED",
-                        "NO_SHOW"
-                    ]
+                    "$ref": "#/definitions/BookingStatusEnum"
                 },
                 "systemConfig": {
                     "$ref": "#/definitions/IntegratedSystemConfigDto"
@@ -11401,12 +11216,7 @@
                     "type": "string"
                 },
                 "type": {
-                    "$ref": "#/definitions/BookingNoteTypeEnum",
-                    "enum": [
-                        "GENERAL",
-                        "FINANCE",
-                        "OPERATIONS"
-                    ]
+                    "$ref": "#/definitions/BookingNoteTypeEnum"
                 },
                 "voucherAttached": {
                     "type": "boolean"
@@ -11554,13 +11364,7 @@
                     "$ref": "#/definitions/ActivityDto"
                 },
                 "productCategory": {
-                    "$ref": "#/definitions/ProductCategoryEnum",
-                    "enum": [
-                        "ACCOMMODATION",
-                        "ACTIVITIES",
-                        "CAR_RENTALS",
-                        "TRANSPORT"
-                    ]
+                    "$ref": "#/definitions/ProductCategoryEnum"
                 },
                 "vehicle": {
                     "$ref": "#/definitions/CarTypeDto"
@@ -11576,6 +11380,233 @@
                     "type": "string"
                 }
             }
+        },
+        "ProductCategoryEnum": {
+            "type": "string",
+            "enum": [
+                "ACCOMMODATION",
+                "ACTIVITIES",
+                "CAR_RENTALS",
+                "TRANSPORT"
+            ]
+        },
+        "TagGroupSubcategoryEnum": {
+            "type": "string",
+            "enum": [
+                "NONE",
+                "ITEM"
+            ]
+        },
+        "RentalPricingModeEnum": {
+            "type": "string",
+            "enum": [
+                "USE_PRICE_OF_FIRST_UNIT_FOR_ALL",
+                "CALCULATE_EACH_UNIT"
+            ]
+        },
+        "PickupPricingTypeEnum": {
+            "type": "string",
+            "enum": [
+                "FREE",
+                "PER_BOOKING",
+                "PER_PERSON"
+            ]
+        },
+        "ActivitySortField": {
+            "type": "string",
+            "enum": [
+                "BEST_SELLING_GLOBAL",
+                "BEST_SELLING_IN_CHANNEL",
+                "ALPHABETIC",
+                "RANDOM"
+            ]
+        },
+        "TravelTypeEnum": {
+            "type": "string",
+            "enum": [
+                "BUSINESS",
+                "LEISURE",
+                "CONFERENCE"
+            ]
+        },
+        "RoomBookingStatusEnum": {
+            "type": "string",
+            "enum": [
+                "RESERVED",
+                "CHECKED_IN",
+                "CHECKED_OUT",
+                "NO_SHOW"
+            ]
+        },
+        "DistanceUnitEnum": {
+            "type": "string",
+            "enum": [
+                "METERS",
+                "KILOMETERS"
+            ]
+        },
+        "RouteResultsType": {
+            "type": "string",
+            "enum": [
+                "MULTIPLE_ROUTES",
+                "SINGLE_ROUTE",
+                "SINGLE_ROUTE_FLEX"
+            ]
+        },
+        "CapacityTypeEnum": {
+            "type": "string",
+            "enum": [
+                "LIMITED",
+                "UNLIMITED"
+            ]
+        },
+        "CostItemTypeEnum": {
+            "type": "string",
+            "enum": [
+                "ROOM_TYPE",
+                "ROOM_RATE",
+                "PRICING_CATEGORY",
+                "DEPARTURE_PRICING_CATEGORY",
+                "VEHICLE_TYPE",
+                "PICKUP",
+                "DEPARTURE_PICKUP",
+                "DROPOFF",
+                "DEPARTURE_DROPOFF",
+                "PICKUP_AND_DROPOFF",
+                "PRICING_CATEGORY_PEAK",
+                "PRICING_CATEGORY_FARECLASS",
+                "PRICING_CATEGORY_FARECLASS_PEAK",
+                "EXTRA"
+            ]
+        },
+        "RouteWeightType": {
+            "type": "string",
+            "enum": [
+                "LEGS",
+                "DURATION",
+                "PRICE"
+            ]
+        },
+        "PaymentPaidTypeEnum": {
+            "type": "string",
+            "enum": [
+                "PAID_IN_FULL",
+                "DEPOSIT",
+                "FREE",
+                "NOT_PAID",
+                "OVERPAID",
+                "REFUND",
+                "INVOICED"
+            ]
+        },
+        "BookingStatusEnum": {
+            "type": "string",
+            "enum": [
+                "CART",
+                "RESERVED",
+                "CONFIRMED",
+                "TIMEOUT",
+                "ABORTED",
+                "CANCELLED",
+                "ERROR",
+                "ARRIVED",
+                "NO_SHOW"
+            ]
+        },
+        "Status": {
+            "type": "string",
+            "enum": [
+                "NEW",
+                "FINISHED",
+                "FAILED",
+                "NOT_FOUND",
+                "ERROR"
+            ]
+        },
+        "CustomLineItemTypeEnum": {
+            "type": "string",
+            "enum": [
+                "BOOKING_FEE",
+                "CUSTOM_PRICE",
+                "DISCOUNT",
+                "OTHER"
+            ]
+        },
+        "PaymentTypeEnum": {
+            "type": "string",
+            "enum": [
+                "WEB_PAYMENT",
+                "POINT_OF_SALE",
+                "CASH",
+                "VOUCHER"
+            ]
+        },
+        "ExtranetUserRoleEnum": {
+            "type": "string",
+            "enum": [
+                "VENDOR",
+                "BOOKING_AGENT",
+                "ADMIN"
+            ]
+        },
+        "VendorRoleEnum": {
+            "type": "string",
+            "enum": [
+                "CONTENT_EDITOR",
+                "INVENTORY",
+                "PRICING",
+                "CONTRACTS",
+                "USER_MANAGER",
+                "FINANCE",
+                "DISTRIBUTION",
+                "SALES",
+                "SALES_MANAGER",
+                "INTEGRATION_MANAGER",
+                "SUPPLIER_MANAGER",
+                "TRANSLATOR",
+                "DRIVER",
+                "GUIDE"
+            ]
+        },
+        "BookingRoleEnum": {
+            "type": "string",
+            "enum": [
+                "SUPPLIER",
+                "SELLER"
+            ]
+        },
+        "ResourceTypeEnum": {
+            "type": "string",
+            "enum": [
+                "DRIVER",
+                "VEHICLE",
+                "GUIDE",
+                "ROOM",
+                "EQUIPMENT"
+            ]
+        },
+        "BookingPaymentOption": {
+            "type": "string",
+            "enum": [
+                "NOT_PAID",
+                "ENTER_MANUALLY",
+                "PROCESS_ONLINE"
+            ]
+        },
+        "SortOrder": {
+            "type": "string",
+            "enum": [
+                "ASC",
+                "DESC"
+            ]
+        },
+        "BookingNoteTypeEnum": {
+            "type": "string",
+            "enum": [
+                "GENERAL",
+                "FINANCE",
+                "OPERATIONS"
+            ]
         }
     }
 }

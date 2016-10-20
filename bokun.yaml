@@ -2403,7 +2403,10 @@ definitions:
       price:
         type: number
       ratePrices:
-        $ref: '#/definitions/Map[long,BigDecimal]'
+        type: object
+        additionalProperties:
+          type: number
+          format: double
   AvailableRoomDto:
     properties:
       availabilities:
@@ -2411,7 +2414,10 @@ definitions:
         items:
           $ref: '#/definitions/AvailabilityInfoDto'
       extraPrices:
-        $ref: '#/definitions/Map[long,BigDecimal]'
+        type: object
+        additionalProperties:
+          type: number
+          format: double
       guestCounts:
         type: array
         items:
@@ -2424,7 +2430,10 @@ definitions:
         type: integer
         format: int32
       rateTotalPrices:
-        $ref: '#/definitions/Map[long,BigDecimal]'
+        type: object
+        additionalProperties:
+          type: number
+          format: double
       roomType:
         $ref: '#/definitions/RoomTypeDto'
       totalPrice:
@@ -2928,18 +2937,10 @@ definitions:
         format: int64
       productCategory:
         $ref: '#/definitions/ProductCategoryEnum'
-        enum:
-          - ACCOMMODATION
-          - ACTIVITIES
-          - CAR_RENTALS
-          - TRANSPORT
       sharedWithSuppliers:
         type: boolean
       subCategory:
         $ref: '#/definitions/TagGroupSubcategoryEnum'
-        enum:
-          - NONE
-          - ITEM
       tag:
         type: array
         items:
@@ -3221,9 +3222,6 @@ definitions:
           $ref: '#/definitions/CarRentalLocationDto'
       pricingMode:
         $ref: '#/definitions/RentalPricingModeEnum'
-        enum:
-          - USE_PRICE_OF_FIRST_UNIT_FOR_ALL
-          - CALCULATE_EACH_UNIT
       productCategory:
         type: string
       productGroupId:
@@ -3495,9 +3493,15 @@ definitions:
       dropoffPrice:
         type: number
       dropoffPricesByCategory:
-        $ref: '#/definitions/Map[long,BigDecimal]'
+        type: object
+        additionalProperties:
+          type: number
+          format: double
       extraPrices:
-        $ref: '#/definitions/Map[long,BigDecimal]'
+        type: object
+        additionalProperties:
+          type: number
+          format: double
       flags:
         type: array
         items:
@@ -3519,9 +3523,15 @@ definitions:
       pickupPrice:
         type: number
       pickupPricesByCategory:
-        $ref: '#/definitions/Map[long,BigDecimal]'
+        type: object
+        additionalProperties:
+          type: number
+          format: double
       pricesByCategory:
-        $ref: '#/definitions/Map[long,BigDecimal]'
+        type: object
+        additionalProperties:
+          type: number
+          format: double
       soldOut:
         type: boolean
       startTime:
@@ -3673,10 +3683,6 @@ definitions:
           type: string
       dropoffPricingType:
         $ref: '#/definitions/PickupPricingTypeEnum'
-        enum:
-          - FREE
-          - PER_BOOKING
-          - PER_PERSON
       dropoffService:
         type: boolean
       duration:
@@ -3745,10 +3751,6 @@ definitions:
         format: int32
       pickupPricingType:
         $ref: '#/definitions/PickupPricingTypeEnum'
-        enum:
-          - FREE
-          - PER_BOOKING
-          - PER_PERSON
       pickupService:
         type: boolean
       pricingCategories:
@@ -3886,11 +3888,6 @@ definitions:
         type: string
       sortField:
         $ref: '#/definitions/ActivitySortField'
-        enum:
-          - BEST_SELLING_GLOBAL
-          - BEST_SELLING_IN_CHANNEL
-          - ALPHABETIC
-          - RANDOM
       sortOrder:
         type: string
       startDate:
@@ -4328,10 +4325,6 @@ definitions:
           $ref: '#/definitions/RoomBookingRequestDto'
       travelType:
         $ref: '#/definitions/TravelTypeEnum'
-        enum:
-          - BUSINESS
-          - LEISURE
-          - CONFERENCE
   ActivityBookingRequestDto:
     properties:
       activityId:
@@ -4608,11 +4601,6 @@ definitions:
         format: date-time
       status:
         $ref: '#/definitions/RoomBookingStatusEnum'
-        enum:
-          - RESERVED
-          - CHECKED_IN
-          - CHECKED_OUT
-          - NO_SHOW
       unavailable:
         type: boolean
   RouteBookingDto:
@@ -4705,9 +4693,6 @@ definitions:
         format: int32
       distanceUnit:
         $ref: '#/definitions/DistanceUnitEnum'
-        enum:
-          - METERS
-          - KILOMETERS
       externalId:
         type: string
       flag:
@@ -4894,10 +4879,6 @@ definitions:
         $ref: '#/definitions/AvailablePathDto'
       resultsType:
         $ref: '#/definitions/RouteResultsType'
-        enum:
-          - MULTIPLE_ROUTES
-          - SINGLE_ROUTE
-          - SINGLE_ROUTE_FLEX
       returnPath:
         $ref: '#/definitions/AvailablePathDto'
   AvailableLegDto:
@@ -4940,9 +4921,6 @@ definitions:
         format: int32
       capacityType:
         $ref: '#/definitions/CapacityTypeEnum'
-        enum:
-          - LIMITED
-          - UNLIMITED
   CurrencyUnit:
     properties:
       code:
@@ -5030,21 +5008,6 @@ definitions:
         format: int64
       costItemType:
         $ref: '#/definitions/CostItemTypeEnum'
-        enum:
-          - ROOM_TYPE
-          - ROOM_RATE
-          - PRICING_CATEGORY
-          - DEPARTURE_PRICING_CATEGORY
-          - VEHICLE_TYPE
-          - PICKUP
-          - DEPARTURE_PICKUP
-          - DROPOFF
-          - DEPARTURE_DROPOFF
-          - PICKUP_AND_DROPOFF
-          - PRICING_CATEGORY_PEAK
-          - PRICING_CATEGORY_FARECLASS
-          - PRICING_CATEGORY_FARECLASS_PEAK
-          - EXTRA
       costMatrixId:
         type: integer
         format: int64
@@ -5296,10 +5259,6 @@ definitions:
         format: int64
       weightType:
         $ref: '#/definitions/RouteWeightType'
-        enum:
-          - LEGS
-          - DURATION
-          - PRICE
   availabilityClosure:
     properties:
       closedItems:
@@ -5395,9 +5354,6 @@ definitions:
         format: int32
       capacityType:
         $ref: '#/definitions/CapacityTypeEnum'
-        enum:
-          - LIMITED
-          - UNLIMITED
       id:
         type: integer
         format: int64
@@ -5536,14 +5492,6 @@ definitions:
           $ref: '#/definitions/bookingNote'
       paidType:
         $ref: '#/definitions/PaymentPaidTypeEnum'
-        enum:
-          - PAID_IN_FULL
-          - DEPOSIT
-          - FREE
-          - NOT_PAID
-          - OVERPAID
-          - REFUND
-          - INVOICED
       parentBooking:
         $ref: '#/definitions/booking'
       parentBookingId:
@@ -5574,16 +5522,6 @@ definitions:
         format: date-time
       status:
         $ref: '#/definitions/BookingStatusEnum'
-        enum:
-          - CART
-          - RESERVED
-          - CONFIRMED
-          - TIMEOUT
-          - ABORTED
-          - CANCELLED
-          - ERROR
-          - ARRIVED
-          - NO_SHOW
       supplier:
         $ref: '#/definitions/VendorWithLinksDto'
       totalPrice:
@@ -5664,16 +5602,8 @@ definitions:
         type: string
       bookedDropoffPricingType:
         $ref: '#/definitions/PickupPricingTypeEnum'
-        enum:
-          - FREE
-          - PER_BOOKING
-          - PER_PERSON
       bookedPickupPricingType:
         $ref: '#/definitions/PickupPricingTypeEnum'
-        enum:
-          - FREE
-          - PER_BOOKING
-          - PER_PERSON
       bookedPricingCategories:
         type: array
         items:
@@ -5744,14 +5674,6 @@ definitions:
           $ref: '#/definitions/bookingNote'
       paidType:
         $ref: '#/definitions/PaymentPaidTypeEnum'
-        enum:
-          - PAID_IN_FULL
-          - DEPOSIT
-          - FREE
-          - NOT_PAID
-          - OVERPAID
-          - REFUND
-          - INVOICED
       parentBooking:
         $ref: '#/definitions/booking'
       parentBookingId:
@@ -5778,7 +5700,10 @@ definitions:
       productConfirmationCode:
         type: string
       quantityByPricingCategory:
-        $ref: '#/definitions/Map[long,int]'
+        type: object
+        additionalProperties:
+          type: number
+          format: int32
       savedAmount:
         type: number
       selectedFlexDayOption:
@@ -5795,16 +5720,6 @@ definitions:
         format: int64
       status:
         $ref: '#/definitions/BookingStatusEnum'
-        enum:
-          - CART
-          - RESERVED
-          - CONFIRMED
-          - TIMEOUT
-          - ABORTED
-          - CANCELLED
-          - ERROR
-          - ARRIVED
-          - NO_SHOW
       supplier:
         $ref: '#/definitions/VendorWithLinksDto'
       totalParticipants:
@@ -5980,12 +5895,6 @@ definitions:
           $ref: '#/definitions/Action'
       status:
         $ref: '#/definitions/Status'
-        enum:
-          - NEW
-          - FINISHED
-          - FAILED
-          - NOT_FOUND
-          - ERROR
   BookingFieldDto:
     properties:
       name:
@@ -6244,14 +6153,6 @@ definitions:
           $ref: '#/definitions/bookingNote'
       paidType:
         $ref: '#/definitions/PaymentPaidTypeEnum'
-        enum:
-          - PAID_IN_FULL
-          - DEPOSIT
-          - FREE
-          - NOT_PAID
-          - OVERPAID
-          - REFUND
-          - INVOICED
       parentBooking:
         $ref: '#/definitions/booking'
       parentBookingId:
@@ -6277,16 +6178,6 @@ definitions:
         format: date-time
       status:
         $ref: '#/definitions/BookingStatusEnum'
-        enum:
-          - CART
-          - RESERVED
-          - CONFIRMED
-          - TIMEOUT
-          - ABORTED
-          - CANCELLED
-          - ERROR
-          - ARRIVED
-          - NO_SHOW
       supplier:
         $ref: '#/definitions/VendorWithLinksDto'
       totalPrice:
@@ -6399,11 +6290,6 @@ definitions:
         format: int64
       lineItemType:
         $ref: '#/definitions/CustomLineItemTypeEnum'
-        enum:
-          - BOOKING_FEE
-          - CUSTOM_PRICE
-          - DISCOUNT
-          - OTHER
       quantity:
         type: integer
         format: int32
@@ -6616,11 +6502,6 @@ definitions:
         type: string
       paymentType:
         $ref: '#/definitions/PaymentTypeEnum'
-        enum:
-          - WEB_PAYMENT
-          - POINT_OF_SALE
-          - CASH
-          - VOUCHER
       transactionDate:
         type: string
         format: date-time
@@ -6691,10 +6572,6 @@ definitions:
         type: string
       role:
         $ref: '#/definitions/ExtranetUserRoleEnum'
-        enum:
-          - VENDOR
-          - BOOKING_AGENT
-          - ADMIN
       termsOfServiceAgreedDate:
         type: string
         format: date-time
@@ -6812,9 +6689,6 @@ definitions:
           format: int64
       bookingRole:
         $ref: '#/definitions/BookingRoleEnum'
-        enum:
-          - SUPPLIER
-          - SELLER
       bookingStatuses:
         type: array
         items:
@@ -6945,11 +6819,6 @@ definitions:
         $ref: '#/definitions/BookingItemInfoDto'
       productCategory:
         $ref: '#/definitions/ProductCategoryEnum'
-        enum:
-          - ACCOMMODATION
-          - ACTIVITIES
-          - CAR_RENTALS
-          - TRANSPORT
       productConfirmationCode:
         type: string
       productExternalId:
@@ -7040,11 +6909,6 @@ definitions:
         format: int64
       productCategory:
         $ref: '#/definitions/ProductCategoryEnum'
-        enum:
-          - ACCOMMODATION
-          - ACTIVITIES
-          - CAR_RENTALS
-          - TRANSPORT
       productConfirmationCode:
         type: string
       totalAsMoney:
@@ -7140,12 +7004,6 @@ definitions:
         type: string
       type:
         $ref: '#/definitions/ResourceTypeEnum'
-        enum:
-          - DRIVER
-          - VEHICLE
-          - GUIDE
-          - ROOM
-          - EQUIPMENT
   RoomBookingAnswersDto:
     properties:
       answerGroups:
@@ -7203,11 +7061,6 @@ definitions:
         format: date-time
       status:
         $ref: '#/definitions/RoomBookingStatusEnum'
-        enum:
-          - RESERVED
-          - CHECKED_IN
-          - CHECKED_OUT
-          - NO_SHOW
   RoomBookingQuestionsDto:
     properties:
       bookingId:
@@ -7299,14 +7152,6 @@ definitions:
           $ref: '#/definitions/bookingNote'
       paidType:
         $ref: '#/definitions/PaymentPaidTypeEnum'
-        enum:
-          - PAID_IN_FULL
-          - DEPOSIT
-          - FREE
-          - NOT_PAID
-          - OVERPAID
-          - REFUND
-          - INVOICED
       parentBooking:
         $ref: '#/definitions/booking'
       parentBookingId:
@@ -7339,16 +7184,6 @@ definitions:
         format: double
       status:
         $ref: '#/definitions/BookingStatusEnum'
-        enum:
-          - CART
-          - RESERVED
-          - CONFIRMED
-          - TIMEOUT
-          - ABORTED
-          - CANCELLED
-          - ERROR
-          - ARRIVED
-          - NO_SHOW
       supplier:
         $ref: '#/definitions/VendorWithLinksDto'
       totalPrice:
@@ -7383,17 +7218,8 @@ definitions:
         type: string
       paymentOption:
         $ref: '#/definitions/BookingPaymentOption'
-        enum:
-          - NOT_PAID
-          - ENTER_MANUALLY
-          - PROCESS_ONLINE
       roomBookingStatus:
         $ref: '#/definitions/RoomBookingStatusEnum'
-        enum:
-          - RESERVED
-          - CHECKED_IN
-          - CHECKED_OUT
-          - NO_SHOW
       sendCustomerNotification:
         type: boolean
       tokenChargeRequest:
@@ -7423,10 +7249,6 @@ definitions:
         type: string
       paymentOption:
         $ref: '#/definitions/BookingPaymentOption'
-        enum:
-          - NOT_PAID
-          - ENTER_MANUALLY
-          - PROCESS_ONLINE
       sendCustomerNotification:
         type: boolean
       tokenChargeRequest:
@@ -7456,10 +7278,6 @@ definitions:
         type: string
       paymentOption:
         $ref: '#/definitions/BookingPaymentOption'
-        enum:
-          - NOT_PAID
-          - ENTER_MANUALLY
-          - PROCESS_ONLINE
       sendCustomerNotification:
         type: boolean
       tokenChargeRequest:
@@ -7489,10 +7307,6 @@ definitions:
         type: string
       paymentOption:
         $ref: '#/definitions/BookingPaymentOption'
-        enum:
-          - NOT_PAID
-          - ENTER_MANUALLY
-          - PROCESS_ONLINE
       sendCustomerNotification:
         type: boolean
       tokenChargeRequest:
@@ -7506,9 +7320,6 @@ definitions:
         type: string
       order:
         $ref: '#/definitions/SortOrder'
-        enum:
-          - ASC
-          - DESC
   TaxDto:
     properties:
       id:
@@ -7632,14 +7443,6 @@ definitions:
         type: string
       paymentType:
         $ref: '#/definitions/PaymentPaidTypeEnum'
-        enum:
-          - PAID_IN_FULL
-          - DEPOSIT
-          - FREE
-          - NOT_PAID
-          - OVERPAID
-          - REFUND
-          - INVOICED
       qrCodeUrl:
         type: string
       routeBooking:
@@ -7650,16 +7453,6 @@ definitions:
         $ref: '#/definitions/VendorDto'
       status:
         $ref: '#/definitions/BookingStatusEnum'
-        enum:
-          - CART
-          - RESERVED
-          - CONFIRMED
-          - TIMEOUT
-          - ABORTED
-          - CANCELLED
-          - ERROR
-          - ARRIVED
-          - NO_SHOW
       systemConfig:
         $ref: '#/definitions/IntegratedSystemConfigDto'
       totalDue:
@@ -7723,10 +7516,6 @@ definitions:
         type: string
       type:
         $ref: '#/definitions/BookingNoteTypeEnum'
-        enum:
-          - GENERAL
-          - FINANCE
-          - OPERATIONS
       voucherAttached:
         type: boolean
       voucherPricesShown:
@@ -7828,11 +7617,6 @@ definitions:
         $ref: '#/definitions/ActivityDto'
       productCategory:
         $ref: '#/definitions/ProductCategoryEnum'
-        enum:
-          - ACCOMMODATION
-          - ACTIVITIES
-          - CAR_RENTALS
-          - TRANSPORT
       vehicle:
         $ref: '#/definitions/CarTypeDto'
   CountryDto:
@@ -7841,3 +7625,167 @@ definitions:
         type: string
       title:
         type: string
+  ProductCategoryEnum:
+    type: string
+    enum:
+      - ACCOMMODATION
+      - ACTIVITIES
+      - CAR_RENTALS
+      - TRANSPORT
+  TagGroupSubcategoryEnum:
+    type: string
+    enum:
+      - NONE
+      - ITEM
+  RentalPricingModeEnum:
+    type: string
+    enum:
+      - USE_PRICE_OF_FIRST_UNIT_FOR_ALL
+      - CALCULATE_EACH_UNIT
+  PickupPricingTypeEnum:
+    type: string
+    enum:
+      - FREE
+      - PER_BOOKING
+      - PER_PERSON
+  ActivitySortField:
+    type: string
+    enum:
+      - BEST_SELLING_GLOBAL
+      - BEST_SELLING_IN_CHANNEL
+      - ALPHABETIC
+      - RANDOM
+  TravelTypeEnum:
+    type: string
+    enum:
+      - BUSINESS
+      - LEISURE
+      - CONFERENCE
+  RoomBookingStatusEnum:
+    type: string
+    enum:
+      - RESERVED
+      - CHECKED_IN
+      - CHECKED_OUT
+      - NO_SHOW
+  DistanceUnitEnum:
+    type: string
+    enum:
+      - METERS
+      - KILOMETERS
+  RouteResultsType:
+    type: string
+    enum:
+      - MULTIPLE_ROUTES
+      - SINGLE_ROUTE
+      - SINGLE_ROUTE_FLEX
+  CapacityTypeEnum:
+    type: string
+    enum:
+      - LIMITED
+      - UNLIMITED
+  CostItemTypeEnum:
+    type: string
+    enum:
+      - ROOM_TYPE
+      - ROOM_RATE
+      - PRICING_CATEGORY
+      - DEPARTURE_PRICING_CATEGORY
+      - VEHICLE_TYPE
+      - PICKUP
+      - DEPARTURE_PICKUP
+      - DROPOFF
+      - DEPARTURE_DROPOFF
+      - PICKUP_AND_DROPOFF
+      - PRICING_CATEGORY_PEAK
+      - PRICING_CATEGORY_FARECLASS
+      - PRICING_CATEGORY_FARECLASS_PEAK
+      - EXTRA
+  RouteWeightType:
+    type: string
+    enum:
+      - LEGS
+      - DURATION
+      - PRICE
+  PaymentPaidTypeEnum:
+    type: string
+    enum:
+      - PAID_IN_FULL
+      - DEPOSIT
+      - FREE
+      - NOT_PAID
+      - OVERPAID
+      - REFUND
+      - INVOICED
+  BookingStatusEnum:
+    type: string
+    enum:
+      - CART
+      - RESERVED
+      - CONFIRMED
+      - TIMEOUT
+      - ABORTED
+      - CANCELLED
+      - ERROR
+      - ARRIVED
+      - NO_SHOW
+  Status:
+    type: string
+    enum:
+      - NEW
+      - FINISHED
+      - FAILED
+      - NOT_FOUND
+      - ERROR
+  CustomLineItemTypeEnum:
+    type: string
+    enum:
+      - BOOKING_FEE
+      - CUSTOM_PRICE
+      - DISCOUNT
+      - OTHER
+  PaymentTypeEnum:
+    type: string
+    enum:
+      - WEB_PAYMENT
+      - POINT_OF_SALE
+      - CASH
+      - VOUCHER
+  ExtranetUserRoleEnum:
+    type: string
+    enum:
+      - VENDOR
+      - BOOKING_AGENT
+      - ADMIN
+  BookingRoleEnum:
+    type: string
+    enum:
+      - SUPPLIER
+      - SELLER
+  ResourceTypeEnum:
+    type: string
+    enum:
+      - DRIVER
+      - VEHICLE
+      - GUIDE
+      - ROOM
+      - EQUIPMENT
+  BookingPaymentOption:
+    type: string
+    enum:
+      - NOT_PAID
+      - ENTER_MANUALLY
+      - PROCESS_ONLINE
+  SortOrder:
+    type: string
+    enum:
+      - ASC
+      - DESC
+  BookingNoteTypeEnum:
+    type: string
+    enum:
+      - GENERAL
+      - FINANCE
+      - OPERATIONS
+
+

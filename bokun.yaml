@@ -953,7 +953,7 @@ paths:
           type: string
         - in: path
           description: The booking type
-          name: btype
+          name: bType
           required: true
           type: string
         - in: path
@@ -1220,7 +1220,7 @@ paths:
           type: string
         - in: path
           description: The booking type
-          name: btype
+          name: bType
           required: true
           type: string
         - in: path
@@ -1513,7 +1513,7 @@ paths:
       parameters:
         - in: path
           description: The confirmation code for the booking that you want to cancel
-          name: bookingConfirmationCode
+          name: confirmationCode
           required: true
           type: string
         - in: body
@@ -2231,7 +2231,7 @@ definitions:
       accommodations:
         type: array
         items:
-          $ref: '#/definitions/AccommodationReport'
+          $ref: '#/definitions/AccommodationAvailabilityReportDto'
       endDate:
         type: string
       startDate:
@@ -4325,6 +4325,44 @@ definitions:
           $ref: '#/definitions/RoomBookingRequestDto'
       travelType:
         $ref: '#/definitions/TravelTypeEnum'
+  RoomBookingRequestDto:
+    properties:
+      roomTypeId:
+        type: integer
+        format: int64
+      roomRateId:
+        type: integer
+        format: int64
+      roomId:
+        type: integer
+        format: int64
+      guests:
+        type: array
+        items:
+          $ref: '#/definitions/CustomerDto'
+      extras:
+        type: array
+        items:
+          $ref: '#/definitions/ExtraBookingRequestDto'
+      answers:
+        type: array
+        items:
+          $ref: '#/definitions/RoomBookingAnswersDto'
+      externalReference:
+        type: string
+      checkinDate:
+        type: string
+      checkoutDate:
+        type: string
+      adults:
+        type: number
+        format: int32
+      children:
+        type: number
+        format: int32
+      infants:
+        type: number
+        format: int32
   ActivityBookingRequestDto:
     properties:
       activityId:
@@ -4472,7 +4510,7 @@ definitions:
       cars:
         type: array
         items:
-          $ref: '#/definitions/CarBookingDTO'
+          $ref: '#/definitions/CarBookingDto'
       dropoffDate:
         type: string
       dropoffLocationId:
@@ -7288,7 +7326,7 @@ definitions:
   SingleTransportBookingRequestDto:
     properties:
       routeRequest:
-        $ref: '#/definitions/TransportBookingRequestDto '
+        $ref: '#/definitions/TransportBookingRequestDto'
       chargeRequest:
         $ref: '#/definitions/ChargeRequest'
       customer:
@@ -7757,6 +7795,23 @@ definitions:
       - VENDOR
       - BOOKING_AGENT
       - ADMIN
+  VendorRoleEnum:
+    type: string
+    enum:
+      - CONTENT_EDITOR
+      - INVENTORY
+      - PRICING
+      - CONTRACTS
+      - USER_MANAGER
+      - FINANCE
+      - DISTRIBUTION
+      - SALES
+      - SALES_MANAGER
+      - INTEGRATION_MANAGER
+      - SUPPLIER_MANAGER
+      - TRANSLATOR
+      - DRIVER
+      - GUIDE
   BookingRoleEnum:
     type: string
     enum:

@@ -1529,7 +1529,7 @@ paths:
           description: No response was specified
           schema:
             $ref: '#/definitions/ApiResponse'
-  '/booking.json/accommodation-booking/{confirmationCode}':
+  '/booking.json/accommodation-booking/{id}':
     get:
       produces:
         - application/json
@@ -1539,8 +1539,8 @@ paths:
       summary: Show accommodation booking information
       parameters:
         - in: path
-          description: The confirmation code for the product booking
-          name: confirmationCode
+          description: The id or confirmation code for the product booking
+          name: id
           required: true
           type: string
       responses:
@@ -1724,7 +1724,39 @@ paths:
           description: No response was specified
           schema:
             $ref: '#/definitions/booking'
-  '/booking.json/activity-booking/{confirmationCode}':
+  '/booking.json/{bookingId}':
+    get:
+      produces:
+        - application/json
+      tags:
+        - booking
+      operationId: GET_controllers_webservices_BookingApiController$_booking
+      summary: Fetch a booking by id
+      parameters:
+        - in: path
+          description: The ID of the booking
+          name: bookingId
+          required: true
+          type: integer
+          format: int64
+        - in: query
+          description: The currency code to use for calculating prices.
+          name: currency
+          required: false
+          type: string
+          default: ISK
+        - in: query
+          description: The language the content should be served in
+          name: lang
+          required: false
+          type: string
+          default: IS
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/booking'
+  '/booking.json/activity-booking/{id}':
     get:
       produces:
         - application/json
@@ -1734,8 +1766,8 @@ paths:
       summary: Show activity booking information
       parameters:
         - in: path
-          description: The confirmation code for the product booking
-          name: confirmationCode
+          description: The id or confirmation code for the product booking
+          name: id
           required: true
           type: string
       responses:
@@ -1994,7 +2026,7 @@ paths:
           description: No response was specified
           schema:
             $ref: '#/definitions/booking'
-  '/booking.json/route-booking/{confirmationCode}':
+  '/booking.json/route-booking/{id}':
     get:
       produces:
         - application/json
@@ -2004,8 +2036,8 @@ paths:
       summary: Show route booking information
       parameters:
         - in: path
-          description: The confirmation code for the product booking
-          name: confirmationCode
+          description: The id or confirmation code for the product booking
+          name: id
           required: true
           type: string
       responses:
@@ -2107,7 +2139,7 @@ paths:
       responses:
         '200':
           description: No response was specified
-  '/booking.json/car-rental-booking/{confirmationCode}':
+  '/booking.json/car-rental-booking/{id}':
     get:
       produces:
         - application/json
@@ -2117,8 +2149,8 @@ paths:
       summary: Show car rental booking information
       parameters:
         - in: path
-          description: The confirmation code for the product booking
-          name: confirmationCode
+          description: The id or confirmation code for the product booking
+          name: id
           required: true
           type: string
       responses:

@@ -2530,7 +2530,7 @@
                 }
             }
         },
-        "/booking.json/{bookingId}": {
+        "/booking.json/booking/{bookingId}": {
             "get": {
                 "produces": [
                     "application/json"

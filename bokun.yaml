@@ -1724,7 +1724,7 @@ paths:
           description: No response was specified
           schema:
             $ref: '#/definitions/booking'
-  '/booking.json/{bookingId}':
+  '/booking.json/booking/{bookingId}':
     get:
       produces:
         - application/json

@@ -5,10 +5,10 @@
         "description": "Documentation for the Bokun API.",
         "version": "1.0"
     },
-    "host": "api.bokun.io",
     "schemes": [
         "https"
     ],
+    "host": "api.bokun.io",
     "tags": [
         {
             "name": "accommodation",
@@ -2239,7 +2239,7 @@
                 }
             }
         },
-        "/booking.json/accommodation-booking/{confirmationCode}": {
+        "/booking.json/accommodation-booking/{id}": {
             "get": {
                 "produces": [
                     "application/json"
@@ -2252,8 +2252,8 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "description": "The confirmation code for the product booking",
-                        "name": "confirmationCode",
+                        "description": "The id or confirmation code for the product booking",
+                        "name": "id",
                         "required": true,
                         "type": "string"
                     }
@@ -2530,7 +2530,53 @@
                 }
             }
         },
-        "/booking.json/activity-booking/{confirmationCode}": {
+        "/booking.json/booking/{bookingId}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "booking"
+                ],
+                "operationId": "GET_controllers_webservices_BookingApiController$_booking",
+                "summary": "Fetch a booking by id",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "description": "The ID of the booking",
+                        "name": "bookingId",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "query",
+                        "description": "The currency code to use for calculating prices.",
+                        "name": "currency",
+                        "required": false,
+                        "type": "string",
+                        "default": "ISK"
+                    },
+                    {
+                        "in": "query",
+                        "description": "The language the content should be served in",
+                        "name": "lang",
+                        "required": false,
+                        "type": "string",
+                        "default": "IS"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "No response was specified",
+                        "schema": {
+                            "$ref": "#/definitions/booking"
+                        }
+                    }
+                }
+            }
+        },
+        "/booking.json/activity-booking/{id}": {
             "get": {
                 "produces": [
                     "application/json"
@@ -2543,8 +2589,8 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "description": "The confirmation code for the product booking",
-                        "name": "confirmationCode",
+                        "description": "The id or confirmation code for the product booking",
+                        "name": "id",
                         "required": true,
                         "type": "string"
                     }
@@ -2931,7 +2977,7 @@
                 }
             }
         },
-        "/booking.json/route-booking/{confirmationCode}": {
+        "/booking.json/route-booking/{id}": {
             "get": {
                 "produces": [
                     "application/json"
@@ -2944,8 +2990,8 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "description": "The confirmation code for the product booking",
-                        "name": "confirmationCode",
+                        "description": "The id or confirmation code for the product booking",
+                        "name": "id",
                         "required": true,
                         "type": "string"
                     }
@@ -3103,7 +3149,7 @@
                 }
             }
         },
-        "/booking.json/car-rental-booking/{confirmationCode}": {
+        "/booking.json/car-rental-booking/{id}": {
             "get": {
                 "produces": [
                     "application/json"
@@ -3116,8 +3162,8 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "description": "The confirmation code for the product booking",
-                        "name": "confirmationCode",
+                        "description": "The id or confirmation code for the product booking",
+                        "name": "id",
                         "required": true,
                         "type": "string"
                     }

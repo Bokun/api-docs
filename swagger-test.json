@@ -8,7 +8,7 @@
     "schemes": [
         "https"
     ],
-    "host": "api.bokundemo.com",
+    "host": "api.bokuntest.com",
     "tags": [
         {
             "name": "accommodation",

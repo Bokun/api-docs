@@ -2179,6 +2179,11 @@ paths:
           type: string
           default: ISK
         - in: query
+          description: Comma separated list of required flags
+          name: flags
+          required: false
+          type: string
+        - in: query
           description: The language the content should be served in
           name: lang
           required: false
@@ -2232,6 +2237,11 @@ paths:
           required: false
           type: string
           default: ISK
+        - in: query
+          description: Comma separated list of required flags
+          name: flags
+          required: false
+          type: string
         - in: query
           description: The language the content should be served in
           name: lang
@@ -7876,5 +7886,3 @@ definitions:
       - GENERAL
       - FINANCE
       - OPERATIONS
-
-

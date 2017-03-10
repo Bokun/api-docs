@@ -6704,6 +6704,24 @@
                 }
             }
         },
+        "CarBookingRequestDto": {
+            "properties": {
+                "carTypeId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "unitCount": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "extras": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ExtraBookingRequestDto"
+                    }
+                }
+            }
+        },
         "CarRentalBookingRequestDto": {
             "properties": {
                 "carRentalId": {
@@ -6713,7 +6731,7 @@
                 "cars": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/CarBookingDto"
+                        "$ref": "#/definitions/CarBookingRequestDto"
                     }
                 },
                 "dropoffDate": {

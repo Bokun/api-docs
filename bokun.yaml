@@ -2299,6 +2299,9 @@ definitions:
     properties:
       actualVendor:
         $ref: '#/definitions/VendorDto'
+      actualId:
+        type: integer
+        format: int64
       baseLanguage:
         type: string
       bookableExtras:
@@ -2312,7 +2315,7 @@ definitions:
         format: int64
       boxedVendor:
         $ref: '#/definitions/VendorDto'
-      category:
+      categories:
         type: array
         items:
           $ref: '#/definitions/CategoryDto'
@@ -2328,11 +2331,11 @@ definitions:
       checkOutMinute:
         type: integer
         format: int32
-      currency:
+      paymentCurrencies:
         type: array
         items:
           type: string
-      customField:
+      customFields:
         type: array
         items:
           $ref: '#/definitions/CustomFieldDto'
@@ -2342,7 +2345,7 @@ definitions:
         type: string
       externalId:
         type: string
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -2351,11 +2354,11 @@ definitions:
         format: int64
       keyPhoto:
         $ref: '#/definitions/PhotoDto'
-      keyword:
+      keywords:
         type: array
         items:
           type: string
-      language:
+      languages:
         type: array
         items:
           type: string
@@ -2363,7 +2366,7 @@ definitions:
         type: string
       location:
         $ref: '#/definitions/LocationDto'
-      photo:
+      photos:
         type: array
         items:
           $ref: '#/definitions/PhotoDto'
@@ -2381,7 +2384,7 @@ definitions:
           $ref: '#/definitions/RoomTypeDto'
       slug:
         type: string
-      tagGroup:
+      tagGroups:
         type: array
         items:
           $ref: '#/definitions/TagGroupDto'
@@ -2389,10 +2392,14 @@ definitions:
         type: string
       vendor:
         $ref: '#/definitions/VendorDto'
-      video:
+      videos:
         type: array
         items:
           $ref: '#/definitions/VideoDto'
+      cancellationPolicy:
+        $ref: '#/definitions/CancellationPolicyDto'
+      storedExternally:
+        type: boolean
   AccommodationQuery:
     properties:
       accommodationId:
@@ -2486,7 +2493,7 @@ definitions:
     properties:
       externalId:
         type: string
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -2510,7 +2517,7 @@ definitions:
         type: string
       pricingTypeLabel:
         type: string
-      question:
+      questions:
         type: array
         items:
           $ref: '#/definitions/QuestionDto'
@@ -2520,11 +2527,11 @@ definitions:
     properties:
       allowsSelectingMultipleChildren:
         type: boolean
-      category:
+      categories:
         type: array
         items:
           $ref: '#/definitions/CategoryDto'
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -2535,7 +2542,7 @@ definitions:
         type: string
   CustomFieldDto:
     properties:
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -2600,7 +2607,7 @@ definitions:
     properties:
       externalId:
         type: string
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -2672,13 +2679,13 @@ definitions:
     properties:
       alternateText:
         type: string
-      derivedPhoto:
+      derived:
         type: array
         items:
           $ref: '#/definitions/DerivedPhotoDto'
       description:
         type: string
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -2702,7 +2709,7 @@ definitions:
         type: boolean
       answerRequired:
         type: boolean
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -2757,6 +2764,8 @@ definitions:
           format: int32
       title:
         type: string
+      cancellationPolicy:
+        $ref: '#/definitions/CancellationPolicyDto'
   RoomTypeDto:
     properties:
       accommodationId:
@@ -2770,7 +2779,7 @@ definitions:
       capacity:
         type: integer
         format: int32
-      category:
+      categories:
         type: array
         items:
           $ref: '#/definitions/CategoryDto'
@@ -2795,7 +2804,7 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/BookableExtraDto'
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -2812,14 +2821,14 @@ definitions:
       largeDoubleBedCount:
         type: integer
         format: int32
-      photo:
+      photos:
         type: array
         items:
           $ref: '#/definitions/PhotoDto'
       roomCount:
         type: integer
         format: int32
-      roomRate:
+      roomRates:
         type: array
         items:
           $ref: '#/definitions/RoomRateDto'
@@ -2831,7 +2840,7 @@ definitions:
       sofaBedCount:
         type: integer
         format: int32
-      tag:
+      tags:
         type: array
         items:
           $ref: '#/definitions/TagGroupDto'
@@ -2941,7 +2950,7 @@ definitions:
         type: boolean
       facetName:
         type: string
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -2967,7 +2976,7 @@ definitions:
         type: string
       facetName:
         type: string
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -2985,7 +2994,7 @@ definitions:
         type: boolean
       subCategory:
         $ref: '#/definitions/TagGroupSubcategoryEnum'
-      tag:
+      tags:
         type: array
         items:
           $ref: '#/definitions/TagDto'
@@ -3197,15 +3206,15 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/CarTypeDto'
-      category:
+      categories:
         type: array
         items:
           $ref: '#/definitions/CategoryDto'
-      currency:
+      paymentCurrencies:
         type: array
         items:
           type: string
-      customField:
+      customFields:
         type: array
         items:
           $ref: '#/definitions/CustomFieldDto'
@@ -3237,7 +3246,7 @@ definitions:
         type: string
       externalId:
         type: string
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -3246,17 +3255,17 @@ definitions:
         format: int64
       keyPhoto:
         $ref: '#/definitions/PhotoDto'
-      keyword:
+      keywords:
         type: array
         items:
           type: string
-      language:
+      languages:
         type: array
         items:
           type: string
       lastPublished:
         type: string
-      photo:
+      photos:
         type: array
         items:
           $ref: '#/definitions/PhotoDto'
@@ -3273,7 +3282,7 @@ definitions:
         format: int64
       slug:
         type: string
-      tagGroup:
+      tagGroups:
         type: array
         items:
           $ref: '#/definitions/TagGroupDto'
@@ -3281,10 +3290,14 @@ definitions:
         type: string
       vendor:
         $ref: '#/definitions/VendorDto'
-      video:
+      videos:
         type: array
         items:
           $ref: '#/definitions/VideoDto'
+      cancellationPolicy:
+        $ref: '#/definitions/CancellationPolicyDto'
+      storedExternally:
+        type: boolean
   CarRentalLocationDto:
     properties:
       allDay:
@@ -3292,7 +3305,7 @@ definitions:
       closingHour:
         type: integer
         format: int32
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -3363,14 +3376,14 @@ definitions:
         format: int32
       carRental:
         $ref: '#/definitions/ItemDto'
-      category:
+      categories:
         type: array
         items:
           $ref: '#/definitions/CategoryDto'
       co2Emission:
         type: number
         format: double
-      currency:
+      paymentCurrencies:
         type: array
         items:
           type: string
@@ -3401,7 +3414,7 @@ definitions:
         format: int32
       driveType:
         type: string
-      dropoffLocation:
+      dropoffLocations:
         type: array
         items:
           $ref: '#/definitions/CarRentalLocationDto'
@@ -3415,7 +3428,7 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/BookableExtraDto'
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -3431,11 +3444,11 @@ definitions:
         type: number
       keyPhoto:
         $ref: '#/definitions/PhotoDto'
-      keyword:
+      keywords:
         type: array
         items:
           type: string
-      language:
+      languages:
         type: array
         items:
           type: string
@@ -3457,11 +3470,11 @@ definitions:
       passengerCapacity:
         type: integer
         format: int32
-      photo:
+      photos:
         type: array
         items:
           $ref: '#/definitions/PhotoDto'
-      pickupLocation:
+      pickupLocations:
         type: array
         items:
           $ref: '#/definitions/CarRentalLocationDto'
@@ -3474,7 +3487,7 @@ definitions:
         type: boolean
       summary:
         type: string
-      tagGroup:
+      tagGroups:
         type: array
         items:
           $ref: '#/definitions/TagGroupDto'
@@ -3662,6 +3675,9 @@ definitions:
     properties:
       actualVendor:
         $ref: '#/definitions/VendorDto'
+      actualId:
+        type: integer
+        format: int64
       agendaItems:
         type: array
         items:
@@ -3693,19 +3709,19 @@ definitions:
         format: int64
       boxedVendor:
         $ref: '#/definitions/VendorDto'
-      category:
+      categories:
         type: array
         items:
           $ref: '#/definitions/CategoryDto'
       comboActivity:
         type: boolean
-      currency:
+      paymentCurrencies:
         type: array
         items:
           type: string
       customDropoffAllowed:
         type: boolean
-      customField:
+      customFields:
         type: array
         items:
           $ref: '#/definitions/CustomFieldDto'
@@ -3750,7 +3766,7 @@ definitions:
         type: string
       externalId:
         type: string
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -3761,11 +3777,11 @@ definitions:
         type: string
       keyPhoto:
         $ref: '#/definitions/PhotoDto'
-      keyword:
+      keywords:
         type: array
         items:
           type: string
-      language:
+      languages:
         type: array
         items:
           type: string
@@ -3780,7 +3796,7 @@ definitions:
         type: number
       noPickupMsg:
         type: string
-      photo:
+      photos:
         type: array
         items:
           $ref: '#/definitions/PhotoDto'
@@ -3836,7 +3852,7 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/StartTimeDto'
-      tagGroup:
+      tagGroups:
         type: array
         items:
           $ref: '#/definitions/TagGroupDto'
@@ -3846,7 +3862,7 @@ definitions:
         type: boolean
       vendor:
         $ref: '#/definitions/VendorDto'
-      video:
+      videos:
         type: array
         items:
           $ref: '#/definitions/VideoDto'
@@ -3854,6 +3870,10 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/WeekdayDto'
+      cancellationPolicy:
+        $ref: '#/definitions/CancellationPolicyDto'
+      storedExternally:
+        type: boolean
   ActivityPlacesDto:
     properties:
       dropoffPlaces:
@@ -3866,7 +3886,7 @@ definitions:
           $ref: '#/definitions/PickupPlaceDto'
   ActivityPricingCategoryBookingDto:
     properties:
-      answer:
+      answers:
         type: array
         items:
           $ref: '#/definitions/BookingAnswerDto'
@@ -3878,11 +3898,11 @@ definitions:
         type: number
       bookedTitle:
         type: string
-      extraBooking:
+      extras:
         type: array
         items:
           $ref: '#/definitions/ExtraBookingDetailsDto'
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -3966,7 +3986,7 @@ definitions:
         type: string
       excerpt:
         type: string
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -3978,7 +3998,7 @@ definitions:
         format: int32
       keyPhoto:
         $ref: '#/definitions/PhotoDto'
-      photo:
+      photos:
         type: array
         items:
           $ref: '#/definitions/PhotoDto'
@@ -4023,7 +4043,7 @@ definitions:
     properties:
       answer:
         type: string
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -4041,7 +4061,7 @@ definitions:
         type: string
   BookingItemInfoDto:
     properties:
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -4065,7 +4085,7 @@ definitions:
         format: int64
   ExtraBookingDetailsDto:
     properties:
-      answer:
+      answers:
         type: array
         items:
           $ref: '#/definitions/BookingAnswerWithIdDto'
@@ -4113,7 +4133,7 @@ definitions:
         type: boolean
       externalId:
         type: string
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -4132,7 +4152,7 @@ definitions:
         type: boolean
       dependent:
         type: boolean
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -4166,7 +4186,7 @@ definitions:
     properties:
       externalId:
         type: string
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -4212,7 +4232,7 @@ definitions:
       durationWeeks:
         type: integer
         format: int32
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -4242,7 +4262,7 @@ definitions:
         type: string
   HarbourDto:
     properties:
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -4274,7 +4294,7 @@ definitions:
     properties:
       affiliate:
         $ref: '#/definitions/affiliate'
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -4291,7 +4311,7 @@ definitions:
     properties:
       externalId:
         type: string
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -4630,7 +4650,7 @@ definitions:
     properties:
       defaultClass:
         type: boolean
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -4649,7 +4669,7 @@ definitions:
         format: int32
   RegionDto:
     properties:
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -4789,7 +4809,7 @@ definitions:
         $ref: '#/definitions/DistanceUnitEnum'
       externalId:
         type: string
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -4800,7 +4820,7 @@ definitions:
       id:
         type: integer
         format: int64
-      schedule:
+      schedules:
         type: array
         items:
           $ref: '#/definitions/RouteScheduleDto'
@@ -4864,7 +4884,7 @@ definitions:
         format: int32
       departureTimeStr:
         type: string
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -4877,7 +4897,7 @@ definitions:
     properties:
       airportStation:
         type: boolean
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -4886,7 +4906,7 @@ definitions:
         format: int64
       location:
         $ref: '#/definitions/LocationDto'
-      pickupFlag:
+      pickupFlags:
         type: array
         items:
           type: string
@@ -4895,7 +4915,7 @@ definitions:
         format: int64
       pickupStation:
         type: boolean
-      region:
+      regions:
         type: array
         items:
           $ref: '#/definitions/RegionDto'
@@ -5184,7 +5204,7 @@ definitions:
     properties:
       actualVendor:
         $ref: '#/definitions/VendorDto'
-      availabilityExpression:
+      availabilityExpressions:
         type: array
         items:
           $ref: '#/definitions/availabilityExpression'
@@ -5194,19 +5214,19 @@ definitions:
         type: boolean
       boxedVendor:
         $ref: '#/definitions/VendorDto'
-      category:
+      categories:
         type: array
         items:
           $ref: '#/definitions/CategoryDto'
-      closure:
+      closures:
         type: array
         items:
           $ref: '#/definitions/availabilityClosure'
-      currency:
+      paymentCurrencies:
         type: array
         items:
           type: string
-      customField:
+      customFields:
         type: array
         items:
           $ref: '#/definitions/CustomFieldDto'
@@ -5218,7 +5238,7 @@ definitions:
         format: int64
       description:
         type: string
-      endStationId:
+      endStationIds:
         type: array
         items:
           type: integer
@@ -5227,7 +5247,7 @@ definitions:
         type: string
       externalId:
         type: string
-      fareClass:
+      fareClasses:
         type: array
         items:
           $ref: '#/definitions/FareClassDto'
@@ -5235,7 +5255,7 @@ definitions:
         type: boolean
       fareClassPricing:
         type: boolean
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -5246,27 +5266,27 @@ definitions:
         format: int64
       keyPhoto:
         $ref: '#/definitions/PhotoDto'
-      keyword:
+      keywords:
         type: array
         items:
           type: string
-      language:
+      languages:
         type: array
         items:
           type: string
       lastPublished:
         type: string
-      leg:
+      legs:
         type: array
         items:
           $ref: '#/definitions/RouteLegDto'
       peakPricing:
         type: boolean
-      photo:
+      photos:
         type: array
         items:
           $ref: '#/definitions/PhotoDto'
-      pricingCategory:
+      pricingCategories:
         type: array
         items:
           $ref: '#/definitions/PricingCategoryDto'
@@ -5281,7 +5301,7 @@ definitions:
         type: string
       stationGroups:
         type: string
-      tagGroup:
+      tagGroups:
         type: array
         items:
           $ref: '#/definitions/TagGroupDto'
@@ -5291,10 +5311,14 @@ definitions:
         type: string
       vendor:
         $ref: '#/definitions/VendorDto'
-      video:
+      videos:
         type: array
         items:
           $ref: '#/definitions/VideoDto'
+      cancellationPolicy:
+        $ref: '#/definitions/CancellationPolicyDto'
+      storedExternally:
+        type: boolean
   TransportPricesDto:
     properties:
       passengerCategoryPrices:
@@ -5370,7 +5394,7 @@ definitions:
       endDate:
         type: string
         format: date-time
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -5413,7 +5437,7 @@ definitions:
       endDate:
         type: string
         format: date-time
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -5530,7 +5554,7 @@ definitions:
         format: double
       allotment:
         $ref: '#/definitions/AllotmentDto'
-      answer:
+      answers:
         type: array
         items:
           $ref: '#/definitions/BookingAnswerDto'
@@ -5557,14 +5581,18 @@ definitions:
       endDate:
         type: string
         format: date-time
-      externalProductLink:
+      linksToExternalProducts:
         type: array
         items:
           $ref: '#/definitions/IntegratedSystemProductLinkDto'
       firstStartDate:
         type: string
         format: date-time
-      flag:
+      supplierContractFlags:
+        type: array
+        items:
+          type: string
+      sellerContractFlags:
         type: array
         items:
           type: string
@@ -5580,7 +5608,7 @@ definitions:
         format: date-time
       lodgingTax:
         $ref: '#/definitions/Money'
-      note:
+      notes:
         type: array
         items:
           $ref: '#/definitions/bookingNote'
@@ -5688,7 +5716,7 @@ definitions:
       agentCommission:
         type: number
         format: double
-      answer:
+      answers:
         type: array
         items:
           $ref: '#/definitions/BookingAnswerDto'
@@ -5713,7 +5741,7 @@ definitions:
         format: date-time
       cancelledBy:
         type: string
-      comboBooking:
+      comboChildBookings:
         type: array
         items:
           $ref: '#/definitions/ProductBookingBasicsDto'
@@ -5737,19 +5765,23 @@ definitions:
         $ref: '#/definitions/PickupPlaceDto'
       dropoffPlaceDescription:
         type: string
-      externalProductLink:
+      linksToExternalProducts:
         type: array
         items:
           $ref: '#/definitions/IntegratedSystemProductLinkDto'
-      extraBooking:
+      extras:
         type: array
         items:
           $ref: '#/definitions/ExtraBookingDetailsDto'
-      field:
+      bookingFields:
         type: array
         items:
           $ref: '#/definitions/BookingFieldDto'
-      flag:
+      supplierContractFlags:
+        type: array
+        items:
+          type: string
+      sellerContractFlags:
         type: array
         items:
           type: string
@@ -5762,7 +5794,7 @@ definitions:
         type: boolean
       invoice:
         $ref: '#/definitions/ProductInvoiceDto'
-      note:
+      notes:
         type: array
         items:
           $ref: '#/definitions/bookingNote'
@@ -5785,7 +5817,7 @@ definitions:
         type: string
       priceWithDiscount:
         type: number
-      pricingCategoryBooking:
+      pricingCategoryBookings:
         type: array
         items:
           $ref: '#/definitions/ActivityPricingCategoryBookingDto'
@@ -6124,7 +6156,7 @@ definitions:
           $ref: '#/definitions/ExtraBookingAnswersDto'
   CarBookingDetailsDto:
     properties:
-      answer:
+      answers:
         type: array
         items:
           $ref: '#/definitions/BookingAnswerDto'
@@ -6133,11 +6165,11 @@ definitions:
       dayCount:
         type: integer
         format: int32
-      extraBooking:
+      extras:
         type: array
         items:
           $ref: '#/definitions/ExtraBookingDetailsDto'
-      field:
+      bookingFields:
         type: array
         items:
           $ref: '#/definitions/BookingFieldDto'
@@ -6188,7 +6220,7 @@ definitions:
       agentCommission:
         type: number
         format: double
-      answer:
+      answers:
         type: array
         items:
           $ref: '#/definitions/BookingAnswerDto'
@@ -6205,7 +6237,7 @@ definitions:
         format: date-time
       cancelledBy:
         type: string
-      carBooking:
+      carBookings:
         type: array
         items:
           $ref: '#/definitions/CarBookingDetailsDto'
@@ -6226,11 +6258,15 @@ definitions:
       endDate:
         type: string
         format: date-time
-      externalProductLink:
+      linksToExternalProducts:
         type: array
         items:
           $ref: '#/definitions/IntegratedSystemProductLinkDto'
-      flag:
+      supplierContractFlags:
+        type: array
+        items:
+          type: string
+      sellerContractFlags:
         type: array
         items:
           type: string
@@ -6241,7 +6277,7 @@ definitions:
         type: boolean
       invoice:
         $ref: '#/definitions/ProductInvoiceDto'
-      note:
+      notes:
         type: array
         items:
           $ref: '#/definitions/bookingNote'
@@ -6690,7 +6726,7 @@ definitions:
         type: string
       externalProductTitle:
         type: string
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -6726,7 +6762,7 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/BookableExtraDto'
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -6747,7 +6783,7 @@ definitions:
         type: string
       externalDepartmentId:
         type: string
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -7125,15 +7161,15 @@ definitions:
       endDate:
         type: string
         format: date-time
-      extraBooking:
+      extras:
         type: array
         items:
           $ref: '#/definitions/ExtraBookingDetailsDto'
-      field:
+      bookingFields:
         type: array
         items:
           $ref: '#/definitions/BookingFieldDto'
-      guest:
+      guests:
         type: array
         items:
           $ref: '#/definitions/CustomerDto'
@@ -7192,7 +7228,7 @@ definitions:
       agentCommission:
         type: number
         format: double
-      answer:
+      answers:
         type: array
         items:
           $ref: '#/definitions/BookingAnswerDto'
@@ -7219,11 +7255,15 @@ definitions:
       discountPercentage:
         type: number
         format: double
-      externalProductLink:
+      linksToExternalProducts:
         type: array
         items:
           $ref: '#/definitions/IntegratedSystemProductLinkDto'
-      flag:
+      supplierContractFlags:
+        type: array
+        items:
+          type: string
+      sellerContractFlags:
         type: array
         items:
           type: string
@@ -7236,11 +7276,11 @@ definitions:
         type: boolean
       invoice:
         $ref: '#/definitions/ProductInvoiceDto'
-      legBooking:
+      legBookings:
         type: array
         items:
           $ref: '#/definitions/RouteLegBookingDto'
-      note:
+      notes:
         type: array
         items:
           $ref: '#/definitions/bookingNote'
@@ -7251,7 +7291,7 @@ definitions:
       parentBookingId:
         type: integer
         format: int64
-      passengerBooking:
+      passengerBookings:
         type: array
         items:
           $ref: '#/definitions/RoutePassengerBookingDto'
@@ -7487,11 +7527,11 @@ definitions:
         type: string
   booking:
     properties:
-      accommodationBooking:
+      accommodationBookings:
         type: array
         items:
           $ref: '#/definitions/AccommodationBookingDetailsDto'
-      activityBooking:
+      activityBookings:
         type: array
         items:
           $ref: '#/definitions/ActivityBookingDetailsDto'
@@ -7501,11 +7541,11 @@ definitions:
         $ref: '#/definitions/BookingAgentWithLinksDto'
       bookingChannel:
         $ref: '#/definitions/bookingChannel'
-      bookingField:
+      bookingFields:
         type: array
         items:
           $ref: '#/definitions/BookingFieldDto'
-      carRentalBooking:
+      carRentalBookings:
         type: array
         items:
           $ref: '#/definitions/CarRentalBookingDetailsDto'
@@ -7518,7 +7558,7 @@ definitions:
         type: string
       customer:
         $ref: '#/definitions/CustomerDto'
-      customerPayment:
+      customerPayments:
         type: array
         items:
           $ref: '#/definitions/CustomerPaymentDto'
@@ -7539,7 +7579,7 @@ definitions:
         $ref: '#/definitions/PaymentPaidTypeEnum'
       qrCodeUrl:
         type: string
-      routeBooking:
+      routeBookings:
         type: array
         items:
           $ref: '#/definitions/RouteBookingDetailsDto'
@@ -7565,7 +7605,7 @@ definitions:
         type: boolean
       externalId:
         type: string
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -7718,6 +7758,32 @@ definitions:
       isoCode:
         type: string
       title:
+        type: string
+  CancellationPolicyDto:
+    properties:
+      id:
+        type: integer
+        format: int64
+      title:
+        type: string
+      penaltyRules:
+        type: array
+        items:
+          $ref: '#/definitions/PenaltyRuleDto'
+      tax:
+        $ref: '#/definitions/TaxDto'
+  PenaltyRuleDto:
+    properties:
+      id:
+        type: integer
+        format: int64
+      cutoffHours:
+        type: integer
+        format: int32
+      charge:
+        type: number
+        format: double
+      chargeType:
         type: string
   ProductCategoryEnum:
     type: string

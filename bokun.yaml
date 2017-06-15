@@ -4646,19 +4646,6 @@ definitions:
       unitCount:
         type: integer
         format: int32
-  FareClassDto:
-    properties:
-      defaultClass:
-        type: boolean
-      flags:
-        type: array
-        items:
-          type: string
-      id:
-        type: integer
-        format: int64
-      title:
-        type: string
   PricingCategoryPassengerSpecificationDto:
     properties:
       categoryId:
@@ -4765,8 +4752,6 @@ definitions:
         $ref: '#/definitions/VendorDto'
   RouteBookingLineItemSpecDto:
     properties:
-      fareClass:
-        $ref: '#/definitions/FareClassDto'
       pricePerPassenger:
         type: number
       pricingCategory:
@@ -4828,8 +4813,6 @@ definitions:
         $ref: '#/definitions/RouteStationDto'
   RoutePassengerBookingDto:
     properties:
-      fareClass:
-        $ref: '#/definitions/FareClassDto'
       id:
         type: integer
         format: int64
@@ -4927,9 +4910,6 @@ definitions:
         type: string
   SegmentPassengerSpecificationDto:
     properties:
-      fareClassId:
-        type: integer
-        format: int64
       passengerSpecifications:
         type: array
         items:
@@ -5026,8 +5006,6 @@ definitions:
     properties:
       capacity:
         $ref: '#/definitions/CapacityDto'
-      fareClassId:
-        type: string
   CapacityDto:
     properties:
       capacity:
@@ -5101,8 +5079,6 @@ definitions:
         type: boolean
   PassengerCategoryPricesDto:
     properties:
-      fareClass:
-        $ref: '#/definitions/FareClassDto'
       peak:
         type: boolean
       price:
@@ -5247,15 +5223,7 @@ definitions:
         type: string
       externalId:
         type: string
-      fareClasses:
-        type: array
-        items:
-          $ref: '#/definitions/FareClassDto'
-      fareClassCapacity:
-        type: boolean
-      fareClassPricing:
-        type: boolean
-      flags:
+      flag:
         type: array
         items:
           type: string
@@ -5335,9 +5303,6 @@ definitions:
         type: integer
         format: int64
       destStationId:
-        type: integer
-        format: int64
-      fareClassId:
         type: integer
         format: int64
       maxLegs:
@@ -7858,8 +7823,6 @@ definitions:
       - DEPARTURE_DROPOFF
       - PICKUP_AND_DROPOFF
       - PRICING_CATEGORY_PEAK
-      - PRICING_CATEGORY_FARECLASS
-      - PRICING_CATEGORY_FARECLASS_PEAK
       - EXTRA
   RouteWeightType:
     type: string

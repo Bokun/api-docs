@@ -5305,17 +5305,6 @@ definitions:
       destStationId:
         type: integer
         format: int64
-      maxLegs:
-        type: integer
-        format: int32
-      maxPaths:
-        type: integer
-        format: int32
-      maxRoutes:
-        type: integer
-        format: int32
-      maxStopoverDuration:
-        type: string
       maxTotalDuration:
         type: string
       passengers:

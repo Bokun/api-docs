@@ -4778,8 +4778,6 @@ definitions:
         format: int64
       leg:
         $ref: '#/definitions/RouteLegDto'
-      peak:
-        type: boolean
       pickupPlaceId:
         type: integer
         format: int64
@@ -4874,8 +4872,6 @@ definitions:
       id:
         type: integer
         format: int64
-      peak:
-        type: boolean
   RouteStationDto:
     properties:
       airportStation:
@@ -5076,8 +5072,6 @@ definitions:
         type: boolean
   PassengerCategoryPricesDto:
     properties:
-      peak:
-        type: boolean
       price:
         $ref: '#/definitions/PriceModulationOutput'
       pricingCategory:
@@ -5245,8 +5239,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/RouteLegDto'
-      peakPricing:
-        type: boolean
       photos:
         type: array
         items:
@@ -7808,7 +7800,6 @@ definitions:
       - DROPOFF
       - DEPARTURE_DROPOFF
       - PICKUP_AND_DROPOFF
-      - PRICING_CATEGORY_PEAK
       - EXTRA
   RouteWeightType:
     type: string

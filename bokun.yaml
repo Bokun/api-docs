@@ -4893,15 +4893,12 @@ definitions:
         type: array
         items:
           type: string
-      pickupPlaceId:
-        type: integer
-        format: int64
       pickupStation:
         type: boolean
-      regions:
+      pickupPlaces:
         type: array
         items:
-          $ref: '#/definitions/RegionDto'
+          $ref: '#/definitions/PickupPlaceDto'
       shortOrLongTitle:
         type: string
       shortTitle:

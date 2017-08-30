@@ -4947,12 +4947,16 @@ definitions:
     properties:
       departureDate:
         type: string
+      returnDate:
+        type: string
       pathSegments:
         type: array
         items:
           $ref: '#/definitions/RoutePathSegmentBookingRequest'
-      returnDate:
-        type: string
+      extras:
+        type: array
+        items:
+          $ref: '#/definitions/ExtraBookingRequestDto'
   TranslationLanguageDto:
     properties:
       code:

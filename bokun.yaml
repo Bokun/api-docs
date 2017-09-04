@@ -4816,23 +4816,6 @@ definitions:
         format: int64
       pricingCategory:
         $ref: '#/definitions/PricingCategoryDto'
-  RoutePathSegmentBookingRequest:
-    properties:
-      departureSchedules:
-        type: array
-        items:
-          $ref: '#/definitions/RouteScheduleBookingRequestDto'
-      passengerSpecification:
-        $ref: '#/definitions/SegmentPassengerSpecificationDto'
-      returnSchedules:
-        type: array
-        items:
-          $ref: '#/definitions/RouteScheduleBookingRequestDto'
-      returning:
-        type: boolean
-      routeId:
-        type: integer
-        format: int64
   RouteScheduleBookingRequestDto:
     properties:
       dropoffPlaceId:
@@ -4901,12 +4884,6 @@ definitions:
         type: string
       title:
         type: string
-  SegmentPassengerSpecificationDto:
-    properties:
-      passengerSpecifications:
-        type: array
-        items:
-          $ref: '#/definitions/PricingCategoryPassengerSpecificationDto'
   ShoppingCart:
     properties:
       accommodationBookings:
@@ -4949,14 +4926,21 @@ definitions:
         type: string
       returnDate:
         type: string
-      pathSegments:
-        type: array
-        items:
-          $ref: '#/definitions/RoutePathSegmentBookingRequest'
       extras:
         type: array
         items:
           $ref: '#/definitions/ExtraBookingRequestDto'
+      passengerSpecifications:
+        type: array
+        items:
+          $ref: '#/definitions/PricingCategoryPassengerSpecificationDto'
+      departureSchedule:
+        $ref: '#/definitions/RouteScheduleBookingRequestDto'
+      returnSchedule:
+        $ref: '#/definitions/RouteScheduleBookingRequestDto'
+      routeId:
+        type: integer
+        format: int64
   TranslationLanguageDto:
     properties:
       code:

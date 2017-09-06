@@ -4651,9 +4651,10 @@ definitions:
       categoryId:
         type: integer
         format: int64
-      passengers:
-        type: integer
-        format: int32
+      extras:
+        type: array
+        items:
+          $ref: '#/definitions/ExtraBookingRequestDto'
   RegionDto:
     properties:
       flags:

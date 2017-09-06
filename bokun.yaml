@@ -4869,10 +4869,6 @@ definitions:
         format: int64
       location:
         $ref: '#/definitions/LocationDto'
-      pickupFlags:
-        type: array
-        items:
-          type: string
       pickupStation:
         type: boolean
       pickupPlaces:

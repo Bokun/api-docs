@@ -5314,6 +5314,92 @@
         },
         "unlimitedAvailability": {
           "type": "boolean"
+        },
+        "guidedLanguages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "defaultRateId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "rates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ActivityRateDto"
+          }
+        },
+        "pricesByRate": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ActivityRatePrices"
+          }
+        }
+      }
+    },
+    "ActivityRatePrices": {
+      "properties": {
+        "activityRateId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "pricePerBooking": {
+          "$ref": "#/definitions/SimpleMoney"
+        },
+        "pricePerCategoryUnit": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PriceByItem"
+          }
+        },
+        "pickupPrice": {
+          "$ref": "#/definitions/SimpleMoney"
+        },
+        "pickupPricePerCategoryUnit": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PriceByItem"
+          }
+        },
+        "dropoffPrice": {
+          "$ref": "#/definitions/SimpleMoney"
+        },
+        "dropoffPricePerCategoryUnit": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PriceByItem"
+          }
+        },
+        "extraPricePerUnit": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PriceByItem"
+          }
+        },
+        "extraPricePerCategoryUnit": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PriceByItem"
+          }
+        }
+      }
+    },
+    "PriceByItem": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "amount": {
+          "$ref": "#/definitions/SimpleMoney"
+        },
+        "prices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PriceByItem"
+          }
         }
       }
     },
@@ -5424,6 +5510,68 @@
     },
     "ActivityDto": {
       "properties": {
+        "activityType": {
+          "$ref": "#/definitions/ActivityType"
+        },
+        "bookingType": {
+          "$ref": "#/definitions/ActivityBookingType"
+        },
+        "scheduleType": {
+          "$ref": "#/definitions/ActivityScheduleType"
+        },
+        "capacityType": {
+          "$ref": "#/definitions/ActivityCapacityType"
+        },
+        "passExpiryType": {
+          "$ref": "#/definitions/PassExpiryType"
+        },
+        "meetingType": {
+          "$ref": "#/definitions/ActivityMeetingType"
+        },
+        "passCapacity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "passAvailable": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "dressCode": {
+          "type": "boolean"
+        },
+        "passportRequired": {
+          "type": "boolean"
+        },
+        "supportedAccessibilityTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AccessibilityType"
+          }
+        },
+        "startPoints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Place"
+          }
+        },
+        "guidanceTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Guidance"
+          }
+        },
+        "activityCategories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ActivityCategory"
+          }
+        },
+        "activityAttributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ActivityAttribute"
+          }
+        },
         "actualVendor": {
           "$ref": "#/definitions/VendorDto"
         },
@@ -5715,6 +5863,252 @@
         },
         "storedExternally": {
           "type": "boolean"
+        },
+        "defaultRateId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "rates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ActivityRateDto"
+          }
+        },
+        "hasOpeningHours": {
+          "type": "boolean"
+        },
+        "defaultOpeningHours": {
+          "$ref": "#/definitions/OpeningHours"
+        },
+        "seasonalOpeningHours": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SeasonalOpeningHours"
+          }
+        }
+      }
+    },
+    "OpeningHours": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "monday": {
+          "$ref": "#/definitions/OpeningHoursWeekday"
+        },
+        "tuesday": {
+          "$ref": "#/definitions/OpeningHoursWeekday"
+        },
+        "wednesday": {
+          "$ref": "#/definitions/OpeningHoursWeekday"
+        },
+        "thursday": {
+          "$ref": "#/definitions/OpeningHoursWeekday"
+        },
+        "friday": {
+          "$ref": "#/definitions/OpeningHoursWeekday"
+        },
+        "saturday": {
+          "$ref": "#/definitions/OpeningHoursWeekday"
+        },
+        "sunday": {
+          "$ref": "#/definitions/OpeningHoursWeekday"
+        }
+      }
+    },
+    "SeasonalOpeningHours": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "monday": {
+          "$ref": "#/definitions/OpeningHoursWeekday"
+        },
+        "tuesday": {
+          "$ref": "#/definitions/OpeningHoursWeekday"
+        },
+        "wednesday": {
+          "$ref": "#/definitions/OpeningHoursWeekday"
+        },
+        "thursday": {
+          "$ref": "#/definitions/OpeningHoursWeekday"
+        },
+        "friday": {
+          "$ref": "#/definitions/OpeningHoursWeekday"
+        },
+        "saturday": {
+          "$ref": "#/definitions/OpeningHoursWeekday"
+        },
+        "sunday": {
+          "$ref": "#/definitions/OpeningHoursWeekday"
+        },
+        "startMonth": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "startDay": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "endMonth": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "endDay": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "OpeningHoursWeekday": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "open24Hours": {
+          "type": "boolean"
+        },
+        "timeIntervals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OpeningHoursTimeInterval"
+          }
+        }
+      }
+    },
+    "OpeningHoursTimeInterval": {
+      "properties": {
+        "openFrom": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "openForHours": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "openForMinutes": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "frequency": {
+          "$ref": "#/definitions/Duration"
+        }
+      }
+    },
+    "Duration": {
+      "properties": {
+        "minutes": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "hours": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "days": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "weeks": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "ActivityRateDto": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "index": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "rateCode": {
+          "type": "string"
+        },
+        "pricedPerPerson": {
+          "type": "boolean"
+        },
+        "minPerBooking": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "maxPerBooking": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "cancellationPolicy": {
+          "$ref": "#/definitions/CancellationPolicyDto"
+        },
+        "pickupSelectionType": {
+          "$ref": "#/definitions/AddonSelectionType"
+        },
+        "pickupPricingType": {
+          "$ref": "#/definitions/AddonPricingType"
+        },
+        "pickupPricedPerPerson": {
+          "type": "boolean"
+        },
+        "dropoffSelectionType": {
+          "$ref": "#/definitions/AddonSelectionType"
+        },
+        "dropoffPricingType": {
+          "$ref": "#/definitions/AddonPricingType"
+        },
+        "dropoffPricedPerPerson": {
+          "type": "boolean"
+        },
+        "startTimeIds": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "pricingCategoryIds": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "extraConfigs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ActivityRateExtraConfig"
+          }
+        }
+      }
+    },
+    "ActivityRateExtraConfig": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "activityExtraId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "selectionType": {
+          "$ref": "#/definitions/ExtraSelectionType"
+        },
+        "pricingType": {
+          "$ref": "#/definitions/AddonPricingType"
         }
       }
     },
@@ -7454,6 +7848,16 @@
           "type": "boolean"
         },
         "symbol": {
+          "type": "string"
+        }
+      }
+    },
+    "SimpleMoney": {
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "currency": {
           "type": "string"
         }
       }
@@ -11504,6 +11908,264 @@
           "type": "string"
         }
       }
+    },
+    "Guidance": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "guidanceType": {
+          "$ref": "#/definitions/GuidanceType"
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Address": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "addressLine1": {
+          "type": "string"
+        },
+        "addressLine2": {
+          "type": "string"
+        },
+        "addressLine3": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "countryCode": {
+          "type": "string"
+        },
+        "mapZoomLevel": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "geoPoint": {
+          "$ref": "#/definitions/BomGeoPoint"
+        },
+        "unLocode": {
+          "$ref": "#/definitions/UnLocode"
+        }
+      }
+    },
+    "BomGeoPoint": {
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "format": "double"
+        },
+        "longitude": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "UnLocode": {
+      "properties": {
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        }
+      }
+    },
+    "Place": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "title": {
+          "type": "string"
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        }
+      }
+    },
+    "ActivityType": {
+      "type": "string",
+      "enum": [
+        "DAY_TOUR_OR_ACTIVITY",
+        "MULTI_DAY_TOUR",
+        "ATTRACTION",
+        "EVENT"
+      ]
+    },
+    "ActivityBookingType": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "DATE",
+        "DATE_AND_TIME"
+      ]
+    },
+    "ActivityScheduleType": {
+      "type": "string",
+      "enum": [
+        "FIXED",
+        "RECURRING"
+      ]
+    },
+    "ActivityCapacityType": {
+      "type": "string",
+      "enum": [
+        "FREE_SALE",
+        "LIMITED",
+        "ON_REQUEST"
+      ]
+    },
+    "AccessibilityType": {
+      "type": "string",
+      "enum": [
+        "LIMITED_MOBILITY",
+        "LIMITED_SIGHT",
+        "WHEELCHAIR"
+      ]
+    },
+    "ActivityMeetingType": {
+      "type": "string",
+      "enum": [
+        "MEET_ON_LOCATION",
+        "PICK_UP",
+        "MEET_ON_LOCATION_OR_PICK_UP"
+      ]
+    },
+    "GuidanceType": {
+      "type": "string",
+      "enum": [
+        "GUIDED",
+        "HEADPHONES",
+        "READING_MATERIAL"
+      ]
+    },
+    "ActivityAttribute": {
+      "type": "string",
+      "enum": [
+        "FAMILY_FRIENDLY",
+        "ECO_FRIENDLY",
+        "ROMANTIC",
+        "LUXURY",
+        "RAINY_DAY",
+        "SKIP_THE_LINE",
+        "GROUP_FRIENDLY",
+        "INDOOR",
+        "OUTDOOR",
+        "PRIVATE_ACTIVITY",
+        "TAILOR_MADE",
+        "BEACH"
+      ]
+    },
+    "ActivityCategory": {
+      "type": "string",
+      "enum": [
+        "WALKING_TOUR",
+        "BUS_OR_MINIVAN_TOUR",
+        "AIR_OR_HELICOPTER_TOUR",
+        "SAILING_OR_BOAT_TOUR",
+        "PRIVATE_CAR_TOUR",
+        "SEGWAY_TOUR",
+        "SNOWMOBILE_TOUR",
+        "ATV_OR_QUAD_TOUR",
+        "BIKE_TOUR",
+        "HOP_ON_HOP_OFF_TOUR",
+        "TOURIST_PASS",
+        "RAIL_PASS",
+        "AMUSEMENT_PARK",
+        "AIRPORT_LOUNGE",
+        "SHOWS_AND_MUSICALS",
+        "SPECTATOR_SPORTS",
+        "FESTIVAL",
+        "MUSEUMS_AND_EXHIBITIONS",
+        "SIGHTSEEING_ATTRACTION",
+        "ZOOS_AND_AQUARIUMS",
+        "SIGHTSEEING",
+        "ARTS_AND_CULTURE",
+        "CLASSES_AND_WORKSHOPS",
+        "CULINARY",
+        "NIGHTLIFE",
+        "SHOPPING",
+        "PHOTOGRAPHY",
+        "TV_AND_MOVIES",
+        "ESCAPE_GAME",
+        "SPA_AND_WELLNESS",
+        "ADVENTURE",
+        "WATER",
+        "NATURE",
+        "SAFARI_AND_WILDLIFE",
+        "BIRDWATCHING",
+        "DOLPHIN_OR_WHALEWATCHING",
+        "SURFING",
+        "CANOEING",
+        "CAVING",
+        "CLIMBING",
+        "DIVING",
+        "GLACIER_HIKING",
+        "HIKING",
+        "HORSEBACK_RIDING",
+        "ICE_CLIMBING",
+        "KAYAKING",
+        "RAFTING",
+        "SEA_ANGLING",
+        "HUNTING",
+        "FISHING",
+        "SKIING",
+        "SNORKELING"
+      ]
+    },
+    "PassExpiryType": {
+      "type": "string",
+      "enum": [
+        "NEVER",
+        "FIXED_DATE",
+        "RELATIVE_DATE"
+      ]
+    },
+    "AddonSelectionType": {
+      "type": "string",
+      "enum": [
+        "OPTIONAL",
+        "PRESELECTED",
+        "UNAVAILABLE"
+      ]
+    },
+    "AddonPricingType": {
+      "type": "string",
+      "enum": [
+        "INCLUDED_IN_PRICE",
+        "PRICED_SEPARATELY"
+      ]
+    },
+    "ExtraSelectionType": {
+      "type": "string",
+      "enum": [
+        "OPTIONAL",
+        "PRESELECTED"
+      ]
     },
     "ProductCategoryEnum": {
       "type": "string",

@@ -3737,7 +3737,7 @@ definitions:
       scheduleType:
         $ref: '#/definitions/ActivityScheduleType'
       capacityType:
-        $ref: '#/definitions/CapacityType'
+        $ref: '#/definitions/ActivityCapacityType'
       passExpiryType:
         $ref: '#/definitions/PassExpiryType'
       meetingType:
@@ -5308,7 +5308,7 @@ definitions:
   SimpleMoney:
     properties:
       amount:
-        type: double
+        type: number
       currency:
         type: string
   Money:

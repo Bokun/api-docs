@@ -4917,9 +4917,10 @@ definitions:
       categoryId:
         type: integer
         format: int64
-      passengers:
-        type: integer
-        format: int32
+      extras:
+        type: array
+        items:
+          $ref: '#/definitions/ExtraBookingRequestDto'
   RegionDto:
     properties:
       flags:
@@ -5044,8 +5045,6 @@ definitions:
         format: int64
       leg:
         $ref: '#/definitions/RouteLegDto'
-      peak:
-        type: boolean
       pickupPlaceId:
         type: integer
         format: int64
@@ -5084,23 +5083,6 @@ definitions:
         format: int64
       pricingCategory:
         $ref: '#/definitions/PricingCategoryDto'
-  RoutePathSegmentBookingRequest:
-    properties:
-      departureSchedules:
-        type: array
-        items:
-          $ref: '#/definitions/RouteScheduleBookingRequestDto'
-      passengerSpecification:
-        $ref: '#/definitions/SegmentPassengerSpecificationDto'
-      returnSchedules:
-        type: array
-        items:
-          $ref: '#/definitions/RouteScheduleBookingRequestDto'
-      returning:
-        type: boolean
-      routeId:
-        type: integer
-        format: int64
   RouteScheduleBookingRequestDto:
     properties:
       dropoffPlaceId:
@@ -5140,8 +5122,6 @@ definitions:
       id:
         type: integer
         format: int64
-      peak:
-        type: boolean
   RouteStationDto:
     properties:
       airportStation:
@@ -5155,31 +5135,18 @@ definitions:
         format: int64
       location:
         $ref: '#/definitions/LocationDto'
-      pickupFlags:
-        type: array
-        items:
-          type: string
-      pickupPlaceId:
-        type: integer
-        format: int64
       pickupStation:
         type: boolean
-      regions:
+      pickupPlaces:
         type: array
         items:
-          $ref: '#/definitions/RegionDto'
+          $ref: '#/definitions/PickupPlaceDto'
       shortOrLongTitle:
         type: string
       shortTitle:
         type: string
       title:
         type: string
-  SegmentPassengerSpecificationDto:
-    properties:
-      passengerSpecifications:
-        type: array
-        items:
-          $ref: '#/definitions/PricingCategoryPassengerSpecificationDto'
   ShoppingCart:
     properties:
       accommodationBookings:
@@ -5220,12 +5187,23 @@ definitions:
     properties:
       departureDate:
         type: string
-      pathSegments:
-        type: array
-        items:
-          $ref: '#/definitions/RoutePathSegmentBookingRequest'
       returnDate:
         type: string
+      extras:
+        type: array
+        items:
+          $ref: '#/definitions/ExtraBookingRequestDto'
+      passengerSpecifications:
+        type: array
+        items:
+          $ref: '#/definitions/PricingCategoryPassengerSpecificationDto'
+      departureSchedule:
+        $ref: '#/definitions/RouteScheduleBookingRequestDto'
+      returnSchedule:
+        $ref: '#/definitions/RouteScheduleBookingRequestDto'
+      routeId:
+        type: integer
+        format: int64
   TranslationLanguageDto:
     properties:
       code:
@@ -5351,8 +5329,6 @@ definitions:
         type: boolean
   PassengerCategoryPricesDto:
     properties:
-      peak:
-        type: boolean
       price:
         $ref: '#/definitions/PriceModulationOutput'
       pricingCategory:
@@ -5520,8 +5496,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/RouteLegDto'
-      peakPricing:
-        type: boolean
       photos:
         type: array
         items:
@@ -5577,17 +5551,6 @@ definitions:
       destStationId:
         type: integer
         format: int64
-      maxLegs:
-        type: integer
-        format: int32
-      maxPaths:
-        type: integer
-        format: int32
-      maxRoutes:
-        type: integer
-        format: int32
-      maxStopoverDuration:
-        type: string
       maxTotalDuration:
         type: string
       passengers:
@@ -8292,7 +8255,6 @@ definitions:
       - DROPOFF
       - DEPARTURE_DROPOFF
       - PICKUP_AND_DROPOFF
-      - PRICING_CATEGORY_PEAK
       - EXTRA
   RouteWeightType:
     type: string

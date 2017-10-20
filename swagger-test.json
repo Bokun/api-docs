@@ -7454,9 +7454,6 @@
         "leg": {
           "$ref": "#/definitions/RouteLegDto"
         },
-        "peak": {
-          "type": "boolean"
-        },
         "pickupPlaceId": {
           "type": "integer",
           "format": "int64"
@@ -7516,32 +7513,6 @@
         }
       }
     },
-    "RoutePathSegmentBookingRequest": {
-      "properties": {
-        "departureSchedules": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/RouteScheduleBookingRequestDto"
-          }
-        },
-        "passengerSpecification": {
-          "$ref": "#/definitions/SegmentPassengerSpecificationDto"
-        },
-        "returnSchedules": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/RouteScheduleBookingRequestDto"
-          }
-        },
-        "returning": {
-          "type": "boolean"
-        },
-        "routeId": {
-          "type": "integer",
-          "format": "int64"
-        }
-      }
-    },
     "RouteScheduleBookingRequestDto": {
       "properties": {
         "dropoffPlaceId": {
@@ -7595,9 +7566,6 @@
         "id": {
           "type": "integer",
           "format": "int64"
-        },
-        "peak": {
-          "type": "boolean"
         }
       }
     },
@@ -7625,17 +7593,13 @@
             "type": "string"
           }
         },
-        "pickupPlaceId": {
-          "type": "integer",
-          "format": "int64"
-        },
         "pickupStation": {
           "type": "boolean"
         },
-        "regions": {
+        "pickupPlaces": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/RegionDto"
+            "$ref": "#/definitions/PickupPlaceDto"
           }
         },
         "shortOrLongTitle": {
@@ -7646,16 +7610,6 @@
         },
         "title": {
           "type": "string"
-        }
-      }
-    },
-    "SegmentPassengerSpecificationDto": {
-      "properties": {
-        "passengerSpecifications": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/PricingCategoryPassengerSpecificationDto"
-          }
         }
       }
     },
@@ -7718,14 +7672,30 @@
         "departureDate": {
           "type": "string"
         },
-        "pathSegments": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/RoutePathSegmentBookingRequest"
-          }
-        },
         "returnDate": {
           "type": "string"
+        },
+        "extras": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ExtraBookingRequestDto"
+          }
+        },
+        "passengerSpecifications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PricingCategoryPassengerSpecificationDto"
+          }
+        },
+        "departureSchedule": {
+          "$ref": "#/definitions/RouteScheduleBookingRequestDto"
+        },
+        "returnSchedule": {
+          "$ref": "#/definitions/RouteScheduleBookingRequestDto"
+        },
+        "routeId": {
+          "type": "integer",
+          "format": "int64"
         }
       }
     },
@@ -7919,9 +7889,6 @@
     },
     "PassengerCategoryPricesDto": {
       "properties": {
-        "peak": {
-          "type": "boolean"
-        },
         "price": {
           "$ref": "#/definitions/PriceModulationOutput"
         },
@@ -8169,9 +8136,6 @@
             "$ref": "#/definitions/RouteLegDto"
           }
         },
-        "peakPricing": {
-          "type": "boolean"
-        },
         "photos": {
           "type": "array",
           "items": {
@@ -8254,21 +8218,6 @@
         "destStationId": {
           "type": "integer",
           "format": "int64"
-        },
-        "maxLegs": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "maxPaths": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "maxRoutes": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "maxStopoverDuration": {
-          "type": "string"
         },
         "maxTotalDuration": {
           "type": "string"
@@ -12259,7 +12208,6 @@
         "DROPOFF",
         "DEPARTURE_DROPOFF",
         "PICKUP_AND_DROPOFF",
-        "PRICING_CATEGORY_PEAK",
         "EXTRA"
       ]
     },

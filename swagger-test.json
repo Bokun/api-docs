@@ -8,7 +8,7 @@
   "schemes": [
     "https"
   ],
-  "host": "api.bokuntest.com",
+  "host": "api.bokun.io",
   "tags": [
     {
       "name": "accommodation",
@@ -7267,9 +7267,11 @@
           "type": "integer",
           "format": "int64"
         },
-        "passengers": {
-          "type": "integer",
-          "format": "int32"
+        "extras": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ExtraBookingRequestDto"
+          }
         }
       }
     },
@@ -7587,12 +7589,6 @@
         "location": {
           "$ref": "#/definitions/LocationDto"
         },
-        "pickupFlags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
         "pickupStation": {
           "type": "boolean"
         },
@@ -7758,8 +7754,11 @@
             "$ref": "#/definitions/AvailableSeatsDto"
           }
         },
-        "prices": {
-          "$ref": "#/definitions/TransportPricesDto"
+        "pricesByRate": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TransportRatePrices"
+          }
         },
         "schedule": {
           "$ref": "#/definitions/RouteScheduleDto"
@@ -8193,13 +8192,80 @@
         }
       }
     },
-    "TransportPricesDto": {
+    "TransportRatePrices": {
+      "type": "object",
       "properties": {
-        "passengerCategoryPrices": {
-          "type": "array",
+        "transportRateId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "singleTicket": {
+          "$ref": "#/definitions/TransportJourneyPrices"
+        },
+        "returnTicket": {
+          "$ref": "#/definitions/TransportJourneyPrices"
+        },
+        "pickupPricePerBooking": {
+          "$ref": "#/definitions/PriceModulationOutput"
+        },
+        "pickupPricePerCategoryUnit": {
           "items": {
-            "$ref": "#/definitions/PassengerCategoryPricesDto"
-          }
+            "$ref": "#/definitions/PriceOutputByItem"
+          },
+          "type": "array"
+        },
+        "dropoffPricePerBooking": {
+          "$ref": "#/definitions/PriceModulationOutput"
+        },
+        "dropoffPricePerCategoryUnit": {
+          "items": {
+            "$ref": "#/definitions/PriceOutputByItem"
+          },
+          "type": "array"
+        },
+        "extraPricePerUnit": {
+          "items": {
+            "$ref": "#/definitions/PriceOutputByItem"
+          },
+          "type": "array"
+        },
+        "extraPricePerCategoryUnit": {
+          "items": {
+            "$ref": "#/definitions/PriceOutputByItem"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "TransportJourneyPrices": {
+      "type": "object",
+      "properties": {
+        "pricePerBooking": {
+          "$ref": "#/definitions/PriceModulationOutput"
+        },
+        "pricePerCategoryUnit": {
+          "items": {
+            "$ref": "#/definitions/PriceOutputByItem"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "PriceOutputByItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "output": {
+          "$ref": "#/definitions/PriceModulationOutput"
+        },
+        "prices": {
+          "items": {
+            "$ref": "#/definitions/PriceOutputByItem"
+          },
+          "type": "array"
         }
       }
     },

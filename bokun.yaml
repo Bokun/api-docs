@@ -5242,8 +5242,10 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/AvailableSeatsDto'
-      prices:
-        $ref: '#/definitions/TransportPricesDto'
+      pricesByRate:
+        type: 'array'
+        items:
+          $ref: '#/definitions/TransportRatePrices'
       schedule:
         $ref: '#/definitions/RouteScheduleDto'
   AvailableSeatsDto:
@@ -5533,12 +5535,57 @@ definitions:
         $ref: '#/definitions/CancellationPolicyDto'
       storedExternally:
         type: boolean
-  TransportPricesDto:
+  TransportRatePrices:
+    type: object
     properties:
-      passengerCategoryPrices:
-        type: array
+      transportRateId:
+        format: int64
+        type: integer
+      singleTicket:
+        $ref: '#/definitions/TransportJourneyPrices'
+      returnTicket:
+        $ref: '#/definitions/TransportJourneyPrices'
+      pickupPricePerBooking:
+        $ref: '#/definitions/PriceModulationOutput'
+      pickupPricePerCategoryUnit:
         items:
-          $ref: '#/definitions/PassengerCategoryPricesDto'
+          $ref: '#/definitions/PriceOutputByItem'
+        type: array
+      dropoffPricePerBooking:
+        $ref: '#/definitions/PriceModulationOutput'
+      dropoffPricePerCategoryUnit:
+        items:
+          $ref: '#/definitions/PriceOutputByItem'
+        type: array
+      extraPricePerUnit:
+        items:
+          $ref: '#/definitions/PriceOutputByItem'
+        type: array
+      extraPricePerCategoryUnit:
+        items:
+          $ref: '#/definitions/PriceOutputByItem'
+        type: array
+  TransportJourneyPrices:
+    type: object
+    properties:
+      pricePerBooking:
+        $ref: '#/definitions/PriceModulationOutput'
+      pricePerCategoryUnit:
+        items:
+          $ref: '#/definitions/PriceOutputByItem'
+        type: array
+  PriceOutputByItem:
+    type: object
+    properties:
+      id:
+        format: int64
+        type: integer
+      output:
+        $ref: '#/definitions/PriceModulationOutput'
+      prices:
+        items:
+          $ref: '#/definitions/PriceOutputByItem'
+        type: array
   TransportQuery:
     properties:
       departureDate:

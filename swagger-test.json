@@ -8,7 +8,7 @@
   "schemes": [
     "https"
   ],
-  "host": "api.bokuntest.com",
+  "host": "api.bokun.io",
   "tags": [
     {
       "name": "accommodation",
@@ -3343,18 +3343,96 @@
   },
   "definitions": {
     "AccommodationAvailabilitiesDto": {
+      "type": "object",
       "properties": {
-        "accommodations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/AccommodationAvailabilityReportDto"
-          }
+        "startDate": {
+          "type": "string"
         },
         "endDate": {
           "type": "string"
         },
-        "startDate": {
+        "accommodations": {
+          "items": {
+            "$ref": "#/definitions/AccommodationReport"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "AccommodationReport": {
+      "type": "object",
+      "properties": {
+        "accommodation": {
+          "$ref": "#/definitions/AccommodationDto"
+        },
+        "rooms": {
+          "items": {
+            "$ref": "#/definitions/RoomReport"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "RoomReport": {
+      "type": "object",
+      "properties": {
+        "room": {
+          "$ref": "#/definitions/RoomTypeDto"
+        },
+        "availabilities": {
+          "items": {
+            "$ref": "#/definitions/RoomAvailabilityReport"
+          },
+          "type": "array"
+        },
+        "minimumAvailability": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "RoomAvailabilityReport": {
+      "type": "object",
+      "properties": {
+        "date": {
           "type": "string"
+        },
+        "available": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "price": {
+          "type": "number"
+        },
+        "ratePrices": {
+          "items": {
+            "$ref": "#/definitions/RatePriceReport"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "RatePriceReport": {
+      "type": "object",
+      "properties": {
+        "rateId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "price": {
+          "type": "number"
+        },
+        "closed": {
+          "default": false,
+          "type": "boolean"
+        },
+        "closedForArrival": {
+          "default": false,
+          "type": "boolean"
+        },
+        "closedForDeparture": {
+          "default": false,
+          "type": "boolean"
         }
       }
     },

@@ -11662,7 +11662,7 @@
         "harbour": {
           "$ref": "#/definitions/HarbourDto"
         },
-        "id": {
+        "bookingId": {
           "type": "integer",
           "format": "int64"
         },

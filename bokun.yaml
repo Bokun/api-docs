@@ -641,7 +641,9 @@ paths:
         '200':
           description: No response was specified
           schema:
-            $ref: '#/definitions/ActivityAvailabilityDto'
+            type: array
+            items:
+              $ref: '#/definitions/ActivityAvailabilityDto'
   '/activity.json/{id}':
     get:
       produces:

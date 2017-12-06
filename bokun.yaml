@@ -1398,6 +1398,146 @@ paths:
           description: No response was specified
           schema:
             $ref: '#/definitions/RouteDto'
+
+  '/route.json/{id}/availabilities':
+    get:
+      produces:
+        - application/json
+      tags:
+        - route
+      operationId: GET_controllers_webservices_TransportApiController$_getAvailabilities
+      summary: Get availabilities for a given route
+      parameters:
+        - in: path
+          description: ID of transport route to be fetched
+          name: id
+          required: true
+          type: integer
+          format: int64
+        - in: query
+          description: Start date for the range of availabilities to return
+          name: start
+          required: false
+          type: string
+          format: date-time
+          default: today
+        - in: query
+          description: End date for the range of availabilities to return
+          name: end
+          required: false
+          type: string
+          format: date-time
+          default: today
+        - in: query
+          description: The currency code to use for calculating prices.
+          name: currency
+          required: false
+          type: string
+          default: ISK
+        - in: query
+          description: The language the content should be served in
+          name: lang
+          required: false
+          type: string
+          default: EN
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/TransportAvailabilityResults'
+
+  '/route.json/{id}/{originId}/{destinationId}/availabilities':
+    get:
+      produces:
+        - application/json
+      tags:
+        - route
+      operationId: GET_controllers_webservices_TransportApiController$_getLegAvailabilities
+      summary: Get availabilities for a given route
+      parameters:
+        - in: path
+          description: ID of transport route to be fetched
+          name: id
+          required: true
+          type: integer
+          format: int64
+        - in: path
+          description: ID of station to travel from
+          name: originId
+          required: true
+          type: integer
+          format: int64
+        - in: path
+          description: ID of station to travel to
+          name: destinationId
+          required: true
+          type: integer
+          format: int64
+        - in: query
+          description: Start date for the range of availabilities to return
+          name: start
+          required: false
+          type: string
+          format: date-time
+          default: today
+        - in: query
+          description: End date for the range of availabilities to return
+          name: end
+          required: false
+          type: string
+          format: date-time
+          default: today
+        - in: query
+          description: The currency code to use for calculating prices.
+          name: currency
+          required: false
+          type: string
+          default: ISK
+        - in: query
+          description: The language the content should be served in
+          name: lang
+          required: false
+          type: string
+          default: EN
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/TransportAvailabilityResults'
+
+  '/route.json/invoice-preview':
+    post:
+      produces:
+        - application/json
+      tags:
+        - booking
+      operationId: GET_controllers_webservices_TransportApiController$_invoicePreview
+      summary: Calculate invoice prices for the given route booking
+      parameters:
+        - in: body
+          description: 'JSON object describing the route booking request'
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/TransportBookingRequestDto'
+        - in: query
+          description: The currency code to use for calculating prices.
+          name: currency
+          required: false
+          type: string
+          default: ISK
+        - in: query
+          description: The language the content should be served in
+          name: lang
+          required: false
+          type: string
+          default: EN
+      responses:
+        '200':
+          description: Invoice with prices for the given booking
+          schema:
+            $ref: '#/definitions/CustomerInvoiceDto'
+
   '/booking.json/{bookingId}/charge-card':
     post:
       produces:
@@ -5679,6 +5819,63 @@ definitions:
         format: int64
       weightType:
         $ref: '#/definitions/RouteWeightType'
+
+  TransportAvailabilityResults:
+    type: object
+    properties:
+      routeId:
+        format: int64
+        type: integer
+      startDate:
+        type: string
+      endDate:
+        type: string
+      availabilities:
+        items:
+          $ref: '#/definitions/TransportAvailabilityDto'
+        type: array
+  TransportAvailabilityDto:
+    type: object
+    properties:
+      date:
+        format: date
+        type: string
+      dateString:
+        type: string
+      legs:
+        items:
+          $ref: '#/definitions/LegAvailabilityDto'
+        type: array
+  LegAvailabilityDto:
+    type: object
+    properties:
+      legId:
+        format: int64
+        type: integer
+      from:
+        format: int64
+        type: integer
+      to:
+        format: int64
+        type: integer
+      pricesByRate:
+        items:
+          $ref: '#/definitions/TransportRatePrices'
+        type: array
+      capacity:
+        $ref: '#/definitions/CapacityDto'
+      availableDepartures:
+        items:
+          $ref: '#/definitions/TransportScheduleAvailabilityDto'
+        type: array
+  TransportScheduleAvailabilityDto:
+    type: object
+    properties:
+      schedule:
+        $ref: '#/definitions/RouteScheduleDto'
+      capacity:
+        $ref: '#/definitions/CapacityDto'
+
   availabilityClosure:
     properties:
       closedItems:

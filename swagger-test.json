@@ -5957,7 +5957,7 @@
         },
         "dayOptions": {
           "type": "array",
-          "description": "Deprecated."
+          "description": "Deprecated.",
           "items": {
             "type": "string"
           }

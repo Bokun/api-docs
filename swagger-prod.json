@@ -2314,11 +2314,10 @@
         "parameters": [
           {
             "in": "path",
-            "description": "The ID of the booking",
-            "name": "bookingId",
+            "description": "The confirmation code of the booking. The booking ID can also be used.",
+            "name": "confirmationCode",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           },
           {
             "in": "query",
@@ -2482,11 +2481,10 @@
         "parameters": [
           {
             "in": "path",
-            "description": "The ID of the booking",
-            "name": "bookingId",
+            "description": "The confirmation code of the booking. The booking ID can also be used.",
+            "name": "confirmationCode",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           },
           {
             "in": "query",
@@ -2532,7 +2530,7 @@
         }
       }
     },
-    "/booking.json/booking/{bookingId}": {
+    "/booking.json/booking/{confirmationCode}": {
       "get": {
         "produces": [
           "application/json"
@@ -2541,15 +2539,14 @@
           "booking"
         ],
         "operationId": "GET_controllers_webservices_BookingApiController$_booking",
-        "summary": "Fetch a booking by id",
+        "summary": "Fetch a booking by confirmation code",
         "parameters": [
           {
             "in": "path",
-            "description": "The ID of the booking",
-            "name": "bookingId",
+            "description": "The confirmation code of the booking.",
+            "name": "confirmationCode",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           },
           {
             "in": "query",
@@ -2643,7 +2640,7 @@
         }
       }
     },
-    "/booking.json/{bookingId}/payment-error": {
+    "/booking.json/{confirmationCode}/payment-error": {
       "post": {
         "produces": [
           "application/json"
@@ -2656,11 +2653,10 @@
         "parameters": [
           {
             "in": "path",
-            "description": "The ID of the booking",
-            "name": "bookingId",
+            "description": "The confirmation code of the booking. The booking ID can also be used.",
+            "name": "confirmationCode",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           },
           {
             "in": "body",
@@ -2828,7 +2824,7 @@
         }
       }
     },
-    "/booking.json/{bookingId}/move-back-to-cart/session/{sessionId}": {
+    "/booking.json/{confirmationCode}/move-back-to-cart/session/{sessionId}": {
       "get": {
         "produces": [
           "application/json"
@@ -2848,11 +2844,10 @@
           },
           {
             "in": "path",
-            "description": "The ID of the booking",
-            "name": "bookingId",
+            "description": "The confirmation code of the booking. The booking ID can also be used.",
+            "name": "confirmationCode",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           },
           {
             "in": "query",
@@ -9328,6 +9323,7 @@
     },
     "BookingConfirmationDto": {
       "properties": {
+        "externalBookingReference": { "type": "string" },
         "bookingFields": {
           "type": "array",
           "items": {

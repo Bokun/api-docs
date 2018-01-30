@@ -2633,7 +2633,7 @@
         }
       }
     },
-    "/booking.json/accommodation-booking/{id}/ticket": {
+    "/booking.json/accommodation-booking/{productConfirmationCode}/ticket": {
       "get": {
         "produces": [
           "application/pdf"
@@ -2646,11 +2646,10 @@
         "parameters": [
           {
             "in": "path",
-            "description": "The id of the accommodation booking",
-            "name": "id",
+            "description": "The confirmation code of the accommodation booking",
+            "name": "productConfirmationCode",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           }
         ],
         "responses": {
@@ -2955,7 +2954,7 @@
         }
       }
     },
-    "/booking.json/transport-booking/{id}/ticket": {
+    "/booking.json/transport-booking/{productConfirmationCode}/ticket": {
       "get": {
         "produces": [
           "application/pdf"
@@ -2968,11 +2967,10 @@
         "parameters": [
           {
             "in": "path",
-            "description": "The id of the transport booking",
-            "name": "id",
+            "description": "The confirmation code of the transport booking",
+            "name": "productConfirmationCode",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           }
         ],
         "responses": {
@@ -3253,7 +3251,7 @@
         }
       }
     },
-    "/booking.json/car-rental-booking/{id}/ticket": {
+    "/booking.json/car-rental-booking/{productConfirmationCode}/ticket": {
       "get": {
         "produces": [
           "application/pdf"
@@ -3266,11 +3264,10 @@
         "parameters": [
           {
             "in": "path",
-            "description": "The id of the car rental booking",
-            "name": "id",
+            "description": "The confirmation code of the car rental booking",
+            "name": "productConfirmationCode",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           }
         ],
         "responses": {
@@ -3311,7 +3308,7 @@
         }
       }
     },
-    "/booking.json/activity-booking/{id}/ticket": {
+    "/booking.json/activity-booking/{productConfirmationCode}/ticket": {
       "get": {
         "produces": [
           "application/pdf"
@@ -3324,11 +3321,10 @@
         "parameters": [
           {
             "in": "path",
-            "description": "The id of the activity booking",
+            "description": "The confirmation code of the activity booking",
             "name": "id",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           }
         ],
         "responses": {
@@ -5819,6 +5815,10 @@
           "type": "boolean",
           "description": "Whether passenger needs to bring their passport for this activity."
         },
+        "ticketPerPerson": {
+          "type": "boolean",
+          "description": "Whether ticket is generated per person or per booking."
+        },
         "supportedAccessibilityTypes": {
           "type": "array",
           "description": "Specifies whether the activity is suitable for individuals with accessibility issues.",
@@ -6029,7 +6029,8 @@
           "description": "Unique identifier for this product"
         },
         "included": {
-          "type": "string"
+          "type": "string",
+          "description": "Text describing what is included when you book this product. May contain HTML markup."
         },
         "keyPhoto": {
           "$ref": "#/definitions/PhotoDto",
@@ -6481,6 +6482,9 @@
           "items": {
             "$ref": "#/definitions/BookingAnswerDto"
           }
+        },
+        "barcode": {
+          "$ref": "#/definitions/BarcodeValueDto"
         },
         "bookedDropoffPrice": {
           "type": "number"
@@ -7359,6 +7363,29 @@
         }
       }
     },
+    "BarcodeTypeEnum": {
+      "type": "string",
+      "enum": [
+        "QR_CODE",
+        "CODE_128",
+        "PDF_417",
+        "DATA_MATRIX",
+        "AZTEC"
+      ]
+    },
+    "BarcodeValueDto": {
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "offlineCode": {
+          "type": "string"
+        },
+        "barcodeType": {
+          "$ref": "#/definitions/BarcodeTypeEnum"
+        }
+      }
+    },
     "BookingAnswerWithIdGroupDto": {
       "properties": {
         "answers": {
@@ -7858,6 +7885,9 @@
         },
         "pricingCategory": {
           "$ref": "#/definitions/PricingCategoryDto"
+        },
+        "barcode": {
+          "$ref": "#/definitions/BarcodeValueDto"
         }
       }
     },
@@ -9022,8 +9052,8 @@
             "$ref": "#/definitions/BookingAnswerDto"
           }
         },
-        "barcodeUrl": {
-          "type": "string"
+        "barcode": {
+          "$ref": "#/definitions/BarcodeValueDto"
         },
         "boxBooking": {
           "type": "boolean"
@@ -9259,8 +9289,8 @@
             "$ref": "#/definitions/BookingAnswerDto"
           }
         },
-        "barcodeUrl": {
-          "type": "string"
+        "barcode": {
+          "$ref": "#/definitions/BarcodeValueDto"
         },
         "bookedDropoffPricingType": {
           "$ref": "#/definitions/PickupPricingTypeEnum"
@@ -10023,8 +10053,8 @@
             "$ref": "#/definitions/BookingAnswerDto"
           }
         },
-        "barcodeUrl": {
-          "type": "string"
+        "barcode": {
+          "$ref": "#/definitions/BarcodeValueDto"
         },
         "boxBooking": {
           "type": "boolean"
@@ -11524,8 +11554,8 @@
             "$ref": "#/definitions/BookingAnswerDto"
           }
         },
-        "barcodeUrl": {
-          "type": "string"
+        "barcode": {
+          "$ref": "#/definitions/BarcodeValueDto"
         },
         "boxBooking": {
           "type": "boolean"

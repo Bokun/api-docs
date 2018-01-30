@@ -2441,7 +2441,7 @@
         }
       }
     },
-    "/booking.json/accommodation-booking/{id}/ticket": {
+    "/booking.json/accommodation-booking/{productConfirmationCode}/ticket": {
       "get": {
         "produces": [
           "application/pdf"
@@ -2454,11 +2454,10 @@
         "parameters": [
           {
             "in": "path",
-            "description": "The id of the accommodation booking",
-            "name": "id",
+            "description": "The confirmation code of the accommodation booking",
+            "name": "productConfirmationCode",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           }
         ],
         "responses": {
@@ -2763,7 +2762,7 @@
         }
       }
     },
-    "/booking.json/transport-booking/{id}/ticket": {
+    "/booking.json/transport-booking/{productConfirmationCode}/ticket": {
       "get": {
         "produces": [
           "application/pdf"
@@ -2776,11 +2775,10 @@
         "parameters": [
           {
             "in": "path",
-            "description": "The id of the transport booking",
-            "name": "id",
+            "description": "The confirmation code of the transport booking",
+            "name": "productConfirmationCode",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           }
         ],
         "responses": {
@@ -3061,7 +3059,7 @@
         }
       }
     },
-    "/booking.json/car-rental-booking/{id}/ticket": {
+    "/booking.json/car-rental-booking/{productConfirmationCode}/ticket": {
       "get": {
         "produces": [
           "application/pdf"
@@ -3074,11 +3072,10 @@
         "parameters": [
           {
             "in": "path",
-            "description": "The id of the car rental booking",
-            "name": "id",
+            "description": "The confirmation code of the car rental booking",
+            "name": "productConfirmationCode",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           }
         ],
         "responses": {
@@ -3119,7 +3116,7 @@
         }
       }
     },
-    "/booking.json/activity-booking/{id}/ticket": {
+    "/booking.json/activity-booking/{productConfirmationCode}/ticket": {
       "get": {
         "produces": [
           "application/pdf"
@@ -3132,11 +3129,10 @@
         "parameters": [
           {
             "in": "path",
-            "description": "The id of the activity booking",
+            "description": "The confirmation code of the activity booking",
             "name": "id",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string"
           }
         ],
         "responses": {
@@ -5586,63 +5582,82 @@
     "ActivityDto": {
       "properties": {
         "activityType": {
-          "$ref": "#/definitions/ActivityType"
+          "$ref": "#/definitions/ActivityType",
+          "description": "Specifies the type of the activity."
         },
         "bookingType": {
-          "$ref": "#/definitions/ActivityBookingType"
+          "$ref": "#/definitions/ActivityBookingType",
+          "description": "Specifies how the activity is booked: as a pass, date based, or date and time based."
         },
         "scheduleType": {
-          "$ref": "#/definitions/ActivityScheduleType"
+          "$ref": "#/definitions/ActivityScheduleType",
+          "description": "Specifies how activity start times are scheduled. Only used if bookingType != PASS."
         },
         "capacityType": {
-          "$ref": "#/definitions/ActivityCapacityType"
+          "$ref": "#/definitions/ActivityCapacityType",
+          "description": "Specifies whether capacity is limited, free sell, or on request."
         },
         "passExpiryType": {
-          "$ref": "#/definitions/PassExpiryType"
+          "$ref": "#/definitions/PassExpiryType",
+          "description": "Only used if bookingType == PASS. Specifies how the pass expires after purchase."
         },
         "meetingType": {
-          "$ref": "#/definitions/ActivityMeetingType"
+          "$ref": "#/definitions/ActivityMeetingType",
+          "description": "Describes how passengers meet at the beginning of a tour/activity."
         },
         "passCapacity": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Only used if bookingType == PASS and capacityType == LIMITED. Since passes are not date based, this is simply the global capacity for selling the pass: specifies how many total passes can be sold."
         },
         "passAvailable": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Only used if bookingType == PASS and capacityType == LIMITED. Specifies how many passes are currently available for booking."
         },
         "dressCode": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Specifies if there is a particular dress code that the participants need to adhere to. The type of dress code should be described in text items."
         },
         "passportRequired": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Whether passenger needs to bring their passport for this activity."
+        },
+        "ticketPerPerson": {
+          "type": "boolean",
+          "description": "Whether ticket is generated per person or per booking."
         },
         "supportedAccessibilityTypes": {
           "type": "array",
+          "description": "Specifies whether the activity is suitable for individuals with accessibility issues.",
           "items": {
             "$ref": "#/definitions/AccessibilityType"
           }
         },
         "startPoints": {
           "type": "array",
+          "description": "Only relevant if meetingType == MEET_ON_LOCATION or MEET_ON_LOCATION_OR_PICK_UP. List of all places where this activity can start or be joined.",
           "items": {
             "$ref": "#/definitions/Place"
           }
         },
         "guidanceTypes": {
           "type": "array",
+          "description": "Specifies the types of guidance on offer, along with what languages each is offered in.",
           "items": {
             "$ref": "#/definitions/Guidance"
           }
         },
         "activityCategories": {
           "type": "array",
+          "description": "A list of categories that the tour/activity/attraction falls into.",
           "items": {
             "$ref": "#/definitions/ActivityCategory"
           }
         },
         "activityAttributes": {
           "type": "array",
+          "description": "Attributes that describe the tour/activity/attraction.",
           "items": {
             "$ref": "#/definitions/ActivityAttribute"
           }
@@ -5656,47 +5671,58 @@
         },
         "agendaItems": {
           "type": "array",
+          "description": "An optional list of agenda / itinerary items for this tour/activity.",
           "items": {
             "$ref": "#/definitions/AgendaItemDto"
           }
         },
         "attention": {
-          "type": "string"
+          "type": "string",
+          "description": "Text describing any points that need special attention for the passengers. May contain HTML."
         },
         "baseLanguage": {
-          "type": "string"
+          "type": "string",
+          "description": "The language that the product description is written in. There may also be translations available."
         },
         "bookableExtras": {
           "type": "array",
+          "description": "A list of extras available for this product. Note that not all of these extras may be available for all bookable items. For example, different rates may offer different extras.",
           "items": {
             "$ref": "#/definitions/BookableExtraDto"
           }
         },
         "bookingCutoffDays": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "The number of days before the activity when we stop accepting bookings."
         },
         "bookingCutoffHours": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "The number of hours before the activity when we stop accepting bookings."
         },
         "bookingCutoffMinutes": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "The number of minutes before the activity when we stop accepting bookings."
         },
         "bookingCutoffWeeks": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "The number of weeks before the activity when we stop accepting bookings."
         },
         "box": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Specifies whether this is a boxed version of another product."
         },
         "boxedActivityId": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": "If this is a box, then this field holds the ID of the activity inside the box."
         },
         "boxedVendor": {
-          "$ref": "#/definitions/VendorDto"
+          "$ref": "#/definitions/VendorDto",
+          "description": "If this is a box, then this field holds the ID of the vendor that owns the activity inside the box."
         },
         "categories": {
           "type": "array",
@@ -5705,7 +5731,8 @@
           }
         },
         "comboActivity": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Specifies whether this is a combo activity."
         },
         "paymentCurrencies": {
           "type": "array",
@@ -5714,7 +5741,8 @@
           }
         },
         "customDropoffAllowed": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Only relevant if dropoffService is TRUE. Specifies whether the customer should be allowed to enter their drop off place in free text."
         },
         "customFields": {
           "type": "array",
@@ -5723,22 +5751,27 @@
           }
         },
         "customPickupAllowed": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Only used if meetingType != MEET_ON_LOCATION. Specifies whether the customer should be allowed to enter their pick up place in free text."
         },
         "dayBasedAvailability": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Deprecated."
         },
         "dayOptions": {
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "description": "Deprecated."
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "description": "Text describing this product. May contain HTML markup."
         },
         "difficultyLevel": {
-          "type": "string"
+          "type": "string",
+          "description": "Specifies how physically demanding this tour/activity is."
         },
         "dropoffFlags": {
           "type": "array",
@@ -5747,58 +5780,73 @@
           }
         },
         "dropoffPricingType": {
-          "$ref": "#/definitions/PickupPricingTypeEnum"
+          "$ref": "#/definitions/PickupPricingTypeEnum",
+          "description": "Deprecated. Pricing type for drop off is now specified in the rate."
         },
         "dropoffService": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Specifies whether this activity offers drop off service."
         },
         "duration": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Deprecated. Use duration minutes, hours, days and weeks instead."
         },
         "durationDays": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Duration in days. Total duration is calculated by summing the duration in minutes, hours, days, weeks."
         },
         "durationHours": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Duration in hours. Total duration is calculated by summing the duration in minutes, hours, days, weeks."
         },
         "durationMinutes": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Duration in minutes. Total duration is calculated by summing the duration in minutes, hours, days, weeks."
         },
         "durationType": {
-          "type": "string"
+          "type": "string",
+          "description": "Deprecated. Use duration minutes, hours, days and weeks instead."
         },
         "durationWeeks": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Duration in weeks. Total duration is calculated by summing the duration in minutes, hours, days, weeks."
         },
         "excerpt": {
-          "type": "string"
+          "type": "string",
+          "description": "A short, non-HTML text (max 255 chars) describing the product."
         },
         "externalId": {
-          "type": "string"
+          "type": "string",
+          "description": "A short unique code for the product. Also called product code."
         },
         "flags": {
           "type": "array",
+          "description": "Optional list of flags which the product owner has added to the product. Flags are just simple text labels.",
           "items": {
             "type": "string"
           }
         },
         "id": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": "Unique identifier for this product"
         },
         "included": {
-          "type": "string"
+          "type": "string",
+          "description": "Text describing what is included when you book this product. May contain HTML markup."
         },
         "keyPhoto": {
-          "$ref": "#/definitions/PhotoDto"
+          "$ref": "#/definitions/PhotoDto",
+          "description": "The photo selected for use as the key photo for the product in lists and overviews."
         },
         "keywords": {
           "type": "array",
+          "description": "A list of keywords describing the product.",
           "items": {
             "type": "string"
           }
@@ -5807,32 +5855,39 @@
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "description": "A list of languages which the product content is available in."
         },
         "lastPublished": {
-          "type": "string"
+          "type": "string",
+          "description": "The date that the product content was last changed."
         },
         "locationCode": {
-          "$ref": "#/definitions/LocationCodeDto"
+          "$ref": "#/definitions/LocationCodeDto",
+          "description": "The city that represents the main location for this activity. Specified as a location from the United Nations Code for Trade and Transport Locations (UN/LOCODE)."
         },
         "minAge": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Represents the age limit for the activity, if any."
         },
         "nextDefaultPrice": {
-          "type": "number"
+          "type": "number",
+          "description": "The price for 1 person in the default category, assuming the future departure date nearest in time to the current time."
         },
         "noPickupMsg": {
           "type": "string"
         },
         "photos": {
           "type": "array",
+          "description": "A list of photos showcasing this product.",
           "items": {
             "$ref": "#/definitions/PhotoDto"
           }
         },
         "pickupAllotment": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Whether pick up has separate capacity from the activity (for example, activity can take 60 pax but the pick up bus can only take 30)."
         },
         "pickupFlags": {
           "type": "array",
@@ -5842,54 +5897,68 @@
         },
         "pickupMinutesBefore": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Specifies how many minutes before departure the pick up service starts."
         },
         "pickupPricingType": {
-          "$ref": "#/definitions/PickupPricingTypeEnum"
+          "$ref": "#/definitions/PickupPricingTypeEnum",
+          "description": "Deprecated. Pick up pricing is now specified in the rate."
         },
         "pickupService": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Deprecated. Pick up service is now specified in meetingType."
         },
         "pricingCategories": {
           "type": "array",
+          "description": "A list of all pricing categories offered by this product.",
           "items": {
             "$ref": "#/definitions/PricingCategoryDto"
           }
         },
         "productCategory": {
-          "type": "string"
+          "type": "string",
+          "description": "The product category, will be one of: ACTIVITIES, ACCOMMODATION, TRANSPORT, CAR_RENTALS"
         },
         "productGroupId": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": "The commission group this product belongs to, if any."
         },
         "requirements": {
-          "type": "string"
+          "type": "string",
+          "description": "A text describing what you need to bring for this activity. May contain HTML."
         },
         "route": {
-          "$ref": "#/definitions/ActivityRouteDto"
+          "$ref": "#/definitions/ActivityRouteDto",
+          "description": "Optional travel directions that show the start point, end point, and any waypoints in between."
         },
         "seasonAllYear": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Deprecated."
         },
         "seasonEndDate": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Deprecated."
         },
         "seasonEndMonth": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Deprecated."
         },
         "seasonStartDate": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Deprecated."
         },
         "seasonStartMonth": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Deprecated."
         },
         "selectFromDayOptions": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Deprecated."
         },
         "showGlobalPickupMsg": {
           "type": "boolean"
@@ -5898,10 +5967,12 @@
           "type": "boolean"
         },
         "slug": {
-          "type": "string"
+          "type": "string",
+          "description": "Human readable string that may be used to identify the product."
         },
         "startTimes": {
           "type": "array",
+          "description": "Only used if bookingType == DATE_AND_TIME. A list of scheduled start times for this tour/activity.",
           "items": {
             "$ref": "#/definitions/StartTimeDto"
           }
@@ -5913,16 +5984,19 @@
           }
         },
         "title": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the product."
         },
         "useComponentPickupAllotments": {
           "type": "boolean"
         },
         "vendor": {
-          "$ref": "#/definitions/VendorDto"
+          "$ref": "#/definitions/VendorDto",
+          "description": "The company that operates this activity."
         },
         "videos": {
           "type": "array",
+          "description": "A list of videos showcasing the product.",
           "items": {
             "$ref": "#/definitions/VideoDto"
           }
@@ -5934,29 +6008,35 @@
           }
         },
         "cancellationPolicy": {
-          "$ref": "#/definitions/CancellationPolicyDto"
+          "$ref": "#/definitions/CancellationPolicyDto",
+          "description": "A cancellation policy, describing any cancellation fees incurred when cancelling bookings."
         },
         "storedExternally": {
           "type": "boolean"
         },
         "defaultRateId": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": "The ID of the default rate for this activity."
         },
         "rates": {
           "type": "array",
+          "description": "A list of all rates offered by the product.",
           "items": {
             "$ref": "#/definitions/ActivityRateDto"
           }
         },
         "hasOpeningHours": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Specifies whether this product has specific opening hours."
         },
         "defaultOpeningHours": {
-          "$ref": "#/definitions/OpeningHours"
+          "$ref": "#/definitions/OpeningHours",
+          "description": "Only used if hasOpeningHours == true. The default opening hours by weekday. These may be overridden by seasonal opening hours."
         },
         "seasonalOpeningHours": {
           "type": "array",
+          "description": "Optional seasonal opening hours. If date falls within the season then this will override the default opening hours.",
           "items": {
             "$ref": "#/definitions/SeasonalOpeningHours"
           }
@@ -6210,6 +6290,9 @@
           "items": {
             "$ref": "#/definitions/BookingAnswerDto"
           }
+        },
+        "barcode": {
+          "$ref": "#/definitions/BarcodeValueDto"
         },
         "bookedDropoffPrice": {
           "type": "number"
@@ -7088,6 +7171,29 @@
         }
       }
     },
+    "BarcodeTypeEnum": {
+      "type": "string",
+      "enum": [
+        "QR_CODE",
+        "CODE_128",
+        "PDF_417",
+        "DATA_MATRIX",
+        "AZTEC"
+      ]
+    },
+    "BarcodeValueDto": {
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "offlineCode": {
+          "type": "string"
+        },
+        "barcodeType": {
+          "$ref": "#/definitions/BarcodeTypeEnum"
+        }
+      }
+    },
     "BookingAnswerWithIdGroupDto": {
       "properties": {
         "answers": {
@@ -7588,6 +7694,9 @@
         },
         "pricingCategory": {
           "$ref": "#/definitions/PricingCategoryDto"
+        },
+        "barcode": {
+          "$ref": "#/definitions/BarcodeValueDto"
         }
       }
     },
@@ -8654,8 +8763,8 @@
             "$ref": "#/definitions/BookingAnswerDto"
           }
         },
-        "barcodeUrl": {
-          "type": "string"
+        "barcode": {
+          "$ref": "#/definitions/BarcodeValueDto"
         },
         "boxBooking": {
           "type": "boolean"
@@ -8891,8 +9000,8 @@
             "$ref": "#/definitions/BookingAnswerDto"
           }
         },
-        "barcodeUrl": {
-          "type": "string"
+        "barcode": {
+          "$ref": "#/definitions/BarcodeValueDto"
         },
         "bookedDropoffPricingType": {
           "$ref": "#/definitions/PickupPricingTypeEnum"
@@ -9655,8 +9764,8 @@
             "$ref": "#/definitions/BookingAnswerDto"
           }
         },
-        "barcodeUrl": {
-          "type": "string"
+        "barcode": {
+          "$ref": "#/definitions/BarcodeValueDto"
         },
         "boxBooking": {
           "type": "boolean"
@@ -11156,8 +11265,8 @@
             "$ref": "#/definitions/BookingAnswerDto"
           }
         },
-        "barcodeUrl": {
-          "type": "string"
+        "barcode": {
+          "$ref": "#/definitions/BarcodeValueDto"
         },
         "boxBooking": {
           "type": "boolean"

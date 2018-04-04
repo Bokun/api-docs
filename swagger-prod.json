@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Bokun API",
-    "description": "Documentation for the Bokun API.",
+    "description": "<p>Further documentation of this api is available <a href=\"https://docs.google.com/document/d/1tkLLqeAvVtRrDpsM1uJZJvhHg3EfsMw1z_SN8Lbe2Rs/pub\" target=\"_blank\">here</a>.</p> <p>You can generate a client in your preferred language using <a href=\"http://editor.swagger.io/#/?import=https://bokun.github.io/api-docs/bokun.yaml\">swagger editor</a></p>",
     "version": "1.0"
   },
   "schemes": [

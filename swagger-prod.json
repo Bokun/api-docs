@@ -945,6 +945,7 @@
         ],
         "responses": {
           "200": {
+            "description": "Activity availability response.",
             "schema": {
               "type": "array",
               "items": {

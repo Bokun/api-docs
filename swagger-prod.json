@@ -8417,21 +8417,7 @@
     "TransportPricesDto": {
       "properties": {
         "passengerCategoryPrices": {
-          "type": "array"
-        }
-      }
-    },
-    "PriceOutputByItem": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int64",
-          "type": "integer"
-        },
-        "output": {
-          "$ref": "#/definitions/PriceModulationOutput"
-        },
-        "prices": {
+          "type": "array",
           "items": {
             "$ref": "#/definitions/PassengerCategoryPricesDto"
           }

@@ -5414,10 +5414,8 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/AvailableSeatsDto'
-      pricesByRate:
-        type: 'array'
-        items:
-          $ref: '#/definitions/TransportRatePrices'
+      prices:
+        $ref: '#/definitions/TransportPricesDto'
       schedule:
         $ref: '#/definitions/RouteScheduleDto'
   AvailableSeatsDto:
@@ -5711,44 +5709,9 @@ definitions:
         $ref: '#/definitions/CancellationPolicyDto'
       storedExternally:
         type: boolean
-  TransportRatePrices:
-    type: object
+  TransportPricesDto:
     properties:
-      transportRateId:
-        format: int64
-        type: integer
-      singleTicket:
-        $ref: '#/definitions/TransportJourneyPrices'
-      returnTicket:
-        $ref: '#/definitions/TransportJourneyPrices'
-      pickupPricePerBooking:
-        $ref: '#/definitions/PriceModulationOutput'
-      pickupPricePerCategoryUnit:
-        items:
-          $ref: '#/definitions/PriceOutputByItem'
-        type: array
-      dropoffPricePerBooking:
-        $ref: '#/definitions/PriceModulationOutput'
-      dropoffPricePerCategoryUnit:
-        items:
-          $ref: '#/definitions/PriceOutputByItem'
-        type: array
-      extraPricePerUnit:
-        items:
-          $ref: '#/definitions/PriceOutputByItem'
-        type: array
-      extraPricePerCategoryUnit:
-        items:
-          $ref: '#/definitions/PriceOutputByItem'
-        type: array
-  TransportJourneyPrices:
-    type: object
-    properties:
-      pricePerBooking:
-        $ref: '#/definitions/PriceModulationOutput'
-      pricePerCategoryUnit:
-        items:
-          $ref: '#/definitions/PriceOutputByItem'
+      passengerCategoryPrices:
         type: array
   PriceOutputByItem:
     type: object
@@ -5760,8 +5723,7 @@ definitions:
         $ref: '#/definitions/PriceModulationOutput'
       prices:
         items:
-          $ref: '#/definitions/PriceOutputByItem'
-        type: array
+          $ref: '#/definitions/PassengerCategoryPricesDto'
   TransportQuery:
     properties:
       departureDate:

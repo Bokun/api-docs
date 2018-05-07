@@ -270,7 +270,7 @@
         "tags": [
           "accommodation"
         ],
-        "operationId": "getAvailabilities",
+        "operationId": "getAccommodationAvailabilities",
         "summary": "Get room availabilities for one or more accommodations over an interval",
         "parameters": [
           {
@@ -893,7 +893,7 @@
         "tags": [
           "activity"
         ],
-        "operationId": "getAvailabilities",
+        "operationId": "getActivityAvailabilities",
         "summary": "Get Activity availabilities for an interval",
         "parameters": [
           {

@@ -174,7 +174,7 @@ paths:
         - application/json
       tags:
         - accommodation
-      operationId: getAvailabilities
+      operationId: getAccommodationAvailabilities
       summary: Get room availabilities for one or more accommodations over an interval
       parameters:
         - in: query
@@ -601,7 +601,7 @@ paths:
         - application/json
       tags:
         - activity
-      operationId: getAvailabilities
+      operationId: getActivityAvailabilities
       summary: Get Activity availabilities for an interval
       parameters:
         - in: path

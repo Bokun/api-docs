@@ -1711,7 +1711,7 @@ paths:
           description: No response was specified
           schema:
             $ref: '#/definitions/booking'
-  '/booking.json/{bookingId}/abort-reserved':
+  '/booking.json/{confirmationCode}/abort-reserved':
     get:
       produces:
         - application/json
@@ -1721,11 +1721,10 @@ paths:
       summary: Abort a reserved booking
       parameters:
         - in: path
-          description: The ID of the booking
-          name: bookingId
+          description: The confirmation code of the booking. The booking ID can also be used.
+          name: confirmationCode
           required: true
-          type: integer
-          format: int64
+          type: string
         - in: query
           description: Specifies whether the booking is aborted due to a timeout.
           name: timeout
@@ -1823,7 +1822,7 @@ paths:
       responses:
         '200':
           description: No response was specified
-  '/booking.json/{bookingId}/confirm':
+  '/booking.json/{confirmationCode}/confirm':
     post:
       produces:
         - application/json
@@ -1833,11 +1832,10 @@ paths:
       summary: Confirm a booking (after payment)
       parameters:
         - in: path
-          description: The ID of the booking
-          name: bookingId
+          description: The confirmation code of the booking. The booking ID can also be used.
+          name: confirmationCode
           required: true
-          type: integer
-          format: int64
+          type: string
         - in: query
           description: The currency code to use for calculating prices.
           name: currency
@@ -1867,21 +1865,20 @@ paths:
           description: No response was specified
           schema:
             $ref: '#/definitions/booking'
-  '/booking.json/booking/{bookingId}':
+  '/booking.json/booking/{confirmationCode}':
     get:
       produces:
         - application/json
       tags:
         - booking
       operationId: booking
-      summary: Fetch a booking by id
+      summary: Fetch a booking by confirmation code
       parameters:
         - in: path
-          description: The ID of the booking
-          name: bookingId
+          description: The confirmation code of the booking
+          name: confirmationCode
           required: true
-          type: integer
-          format: int64
+          type: string
         - in: query
           description: The currency code to use for calculating prices.
           name: currency
@@ -1942,7 +1939,7 @@ paths:
           description: No response was specified
           schema:
             $ref: '#/definitions/RouteBookingDetailsDto'
-  '/booking.json/{bookingId}/payment-error':
+  '/booking.json/{confirmationCode}/payment-error':
     post:
       produces:
         - application/json
@@ -1952,11 +1949,10 @@ paths:
       summary: Indicate that an error occurred in payment
       parameters:
         - in: path
-          description: The ID of the booking
-          name: bookingId
+          description: The confirmation code of the booking. The booking ID can also be used.
+          name: confirmationCode
           required: true
-          type: integer
-          format: int64
+          type: string
         - in: body
           description: JSON object describing the error
           name: body
@@ -2065,7 +2061,7 @@ paths:
             type: array
             items:
               $ref: '#/definitions/ProductBookingSearchResultsDto'
-  '/booking.json/{bookingId}/move-back-to-cart/session/{sessionId}':
+  '/booking.json/{confirmationCode}/move-back-to-cart/session/{sessionId}':
     get:
       produces:
         - application/json
@@ -2080,11 +2076,10 @@ paths:
           required: true
           type: string
         - in: path
-          description: The ID of the booking
-          name: bookingId
+          description: The confirmation code of the booking. The booking ID can also be used.
+          name: confirmationCode
           required: true
-          type: integer
-          format: int64
+          type: string
         - in: query
           description: The currency code to use for calculating prices.
           name: currency
@@ -6507,6 +6502,8 @@ definitions:
           $ref: '#/definitions/RouteBookingAnswersDto'
   BookingConfirmationDto:
     properties:
+      externalBookingReference:
+        type: string
       bookingFields:
         type: array
         items:

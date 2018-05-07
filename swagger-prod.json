@@ -72,7 +72,7 @@
         "tags": [
           "accommodation"
         ],
-        "operationId": "POST_controllers_webservices_AccommodationApiController$_search",
+        "operationId": "accommodationSearch",
         "summary": "Search accommodations and availability",
         "parameters": [
           {
@@ -118,7 +118,7 @@
         "tags": [
           "accommodation"
         ],
-        "operationId": "POST_controllers_webservices_AccommodationApiController$_checkRoomAvailability",
+        "operationId": "checkRoomAvailability",
         "summary": "Get a list of all rooms available for a given stay interval.",
         "parameters": [
           {
@@ -148,7 +148,7 @@
         "tags": [
           "accommodation"
         ],
-        "operationId": "POST_controllers_webservices_AccommodationApiController$_checkAccommodationAvailability",
+        "operationId": "checkAccommodationAvailability",
         "summary": "Check availability for a selected Accommodation",
         "parameters": [
           {
@@ -202,7 +202,7 @@
         "tags": [
           "accommodation"
         ],
-        "operationId": "GET_controllers_webservices_AccommodationApiController$_getAccommodation",
+        "operationId": "getAccommodation",
         "summary": "Get Accommodation by ID",
         "parameters": [
           {
@@ -240,7 +240,7 @@
         "tags": [
           "accommodation"
         ],
-        "operationId": "GET_controllers_webservices_AccommodationApiController$_getRoomsByRoomType",
+        "operationId": "getRoomsByRoomType",
         "summary": "Get a list of all rooms for a particular Accommodation.",
         "parameters": [
           {
@@ -270,7 +270,7 @@
         "tags": [
           "accommodation"
         ],
-        "operationId": "GET_controllers_webservices_AccommodationApiController$_getAvailabilities",
+        "operationId": "getAvailabilities",
         "summary": "Get room availabilities for one or more accommodations over an interval",
         "parameters": [
           {
@@ -313,7 +313,7 @@
         ],
         "responses": {
           "200": {
-            "description": "No response was specified",
+            "description": "Activity availability response.",
             "schema": {
               "$ref": "#/definitions/AccommodationAvailabilitiesDto"
             }
@@ -329,7 +329,7 @@
         "tags": [
           "accommodation"
         ],
-        "operationId": "GET_controllers_webservices_AccommodationApiController$_findAccommodationBySlug",
+        "operationId": "findAccommodationBySlug",
         "summary": "Look up Accommodation by slug",
         "parameters": [
           {
@@ -366,7 +366,7 @@
         "tags": [
           "car-rental"
         ],
-        "operationId": "GET_controllers_webservices_CarRentalApiController$_listCarRentals",
+        "operationId": "listCarRentals",
         "summary": "List all car rentals",
         "parameters": [
           {
@@ -404,7 +404,7 @@
         "tags": [
           "car-rental"
         ],
-        "operationId": "GET_controllers_webservices_CarRentalApiController$_findCarRentalBySlug",
+        "operationId": "findCarRentalBySlug",
         "summary": "Look up Car Rental by slug",
         "parameters": [
           {
@@ -449,7 +449,7 @@
         "tags": [
           "car-rental"
         ],
-        "operationId": "GET_controllers_webservices_CarRentalApiController$_getCarRental",
+        "operationId": "getCarRental",
         "summary": "Get Car Rental by ID",
         "parameters": [
           {
@@ -495,7 +495,7 @@
         "tags": [
           "car-rental"
         ],
-        "operationId": "POST_controllers_webservices_CarRentalApiController$_searchCars",
+        "operationId": "searchCars",
         "summary": "Search types of rental cars",
         "parameters": [
           {
@@ -541,7 +541,7 @@
         "tags": [
           "currency"
         ],
-        "operationId": "GET_controllers_webservices_CurrencyApiController$_findAll",
+        "operationId": "allCurrencies",
         "summary": "Get all Supported Currencies",
         "description": "Get a list of all the available currencies, along with conversion rates.",
         "responses": {
@@ -565,7 +565,7 @@
         "tags": [
           "tag"
         ],
-        "operationId": "GET_controllers_webservices_TagApiController$_groups",
+        "operationId": "getTagGroups",
         "summary": "Get the tag groups",
         "parameters": [
           {
@@ -605,7 +605,7 @@
         "tags": [
           "category"
         ],
-        "operationId": "GET_controllers_webservices_CategoryApiController$_categoriesByProductType",
+        "operationId": "categoriesByProductType",
         "summary": "Get all categories for the specified product type",
         "parameters": [
           {
@@ -659,7 +659,7 @@
         "tags": [
           "activity"
         ],
-        "operationId": "POST_controllers_webservices_ActivityApiController$_checkPrices",
+        "operationId": "checkActivityPrices",
         "summary": "Check Activity prices",
         "parameters": [
           {
@@ -709,7 +709,7 @@
         "tags": [
           "activity"
         ],
-        "operationId": "GET_controllers_webservices_ActivityApiController$_getUpcomingAvailabilities",
+        "operationId": "getUpcomingAvailabilities",
         "summary": "Get the next upcoming Activity availabilities",
         "parameters": [
           {
@@ -763,7 +763,7 @@
         "tags": [
           "activity"
         ],
-        "operationId": "GET_controllers_webservices_ActivityApiController$_findActivityBySlug",
+        "operationId": "findActivityBySlug",
         "summary": "Look up Activity by slug",
         "parameters": [
           {
@@ -800,7 +800,7 @@
         "tags": [
           "activity"
         ],
-        "operationId": "GET_controllers_webservices_ActivityApiController$_getPickupPlaces",
+        "operationId": "getPickupPlaces",
         "summary": "Get Pickup / Dropoff places for an Activity",
         "parameters": [
           {
@@ -846,7 +846,7 @@
         "tags": [
           "activity"
         ],
-        "operationId": "POST_controllers_webservices_ActivityApiController$_search",
+        "operationId": "activitySearch",
         "summary": "Search activities and availability",
         "parameters": [
           {
@@ -893,7 +893,7 @@
         "tags": [
           "activity"
         ],
-        "operationId": "GET_controllers_webservices_ActivityApiController$_getAvailabilities",
+        "operationId": "getAvailabilities",
         "summary": "Get Activity availabilities for an interval",
         "parameters": [
           {
@@ -945,7 +945,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Activity availability response.",
+            "description": "No response was specified",
             "schema": {
               "type": "array",
               "items": {
@@ -964,7 +964,7 @@
         "tags": [
           "activity"
         ],
-        "operationId": "GET_controllers_webservices_ActivityApiController$_getActivity",
+        "operationId": "getActivity",
         "summary": "Get Activity by ID",
         "parameters": [
           {
@@ -1010,7 +1010,7 @@
         "tags": [
           "shore-excursions"
         ],
-        "operationId": "GET_controllers_webservices_ShoreExcursionsApiController$_findHarbours",
+        "operationId": "findHarbours",
         "summary": "Get all Harbours on this Channel",
         "responses": {
           "200": {
@@ -1033,7 +1033,7 @@
         "tags": [
           "shore-excursions"
         ],
-        "operationId": "GET_controllers_webservices_ShoreExcursionsApiController$_findHarboursByVessel",
+        "operationId": "findHarboursByVessel",
         "summary": "Get all upcoming Harbours for the Vessel supplied",
         "parameters": [
           {
@@ -1066,7 +1066,7 @@
         "tags": [
           "shore-excursions"
         ],
-        "operationId": "GET_controllers_webservices_ShoreExcursionsApiController$_findVessels",
+        "operationId": "findVessels",
         "summary": "Get all Vessels on this Channel",
         "responses": {
           "200": {
@@ -1089,7 +1089,7 @@
         "tags": [
           "shopping-cart"
         ],
-        "operationId": "POST_controllers_webservices_ShoppingCartApiController$_addCarRentalToSessionCart",
+        "operationId": "addCarRentalToSessionCart",
         "summary": "Add car rental booking to a session cart",
         "parameters": [
           {
@@ -1166,7 +1166,7 @@
         "tags": [
           "shopping-cart"
         ],
-        "operationId": "GET_controllers_webservices_ShoppingCartApiController$_getSessionCart",
+        "operationId": "getSessionCart",
         "summary": "Get a session shopping cart",
         "parameters": [
           {
@@ -1211,7 +1211,7 @@
         "tags": [
           "shopping-cart"
         ],
-        "operationId": "GET_controllers_webservices_ShoppingCartApiController$_removeCarFromSessionCart",
+        "operationId": "removeCarFromSessionCart",
         "summary": "Remove a car booking from a session cart",
         "parameters": [
           {
@@ -1264,7 +1264,7 @@
         "tags": [
           "shopping-cart"
         ],
-        "operationId": "POST_controllers_webservices_ShoppingCartApiController$_addRouteToSessionCart",
+        "operationId": "addRouteToSessionCart",
         "summary": "Add route booking to a session cart",
         "parameters": [
           {
@@ -1341,7 +1341,7 @@
         "tags": [
           "shopping-cart"
         ],
-        "operationId": "GET_controllers_webservices_ShoppingCartApiController$_removeRoomFromSessionCart",
+        "operationId": "removeRoomFromSessionCart",
         "summary": "Remove a room booking from a session cart",
         "parameters": [
           {
@@ -1394,7 +1394,7 @@
         "tags": [
           "shopping-cart"
         ],
-        "operationId": "GET_controllers_webservices_ShoppingCartApiController$_removeExtraBookingFromSessionCart",
+        "operationId": "removeExtraBookingFromSessionCart",
         "summary": "Remove an extra booking from an existing parent booking in a session cart",
         "parameters": [
           {
@@ -1462,7 +1462,7 @@
         "tags": [
           "shopping-cart"
         ],
-        "operationId": "POST_controllers_webservices_ShoppingCartApiController$_addAccommodationToSessionCart",
+        "operationId": "addAccommodationToSessionCart",
         "summary": "Add accommodation booking to a session cart",
         "parameters": [
           {
@@ -1539,7 +1539,7 @@
         "tags": [
           "shopping-cart"
         ],
-        "operationId": "POST_controllers_webservices_ShoppingCartApiController$_addActivityToSessionCart",
+        "operationId": "addActivityToSessionCart",
         "summary": "Add activity booking to a session cart",
         "parameters": [
           {
@@ -1616,7 +1616,7 @@
         "tags": [
           "shopping-cart"
         ],
-        "operationId": "GET_controllers_webservices_ShoppingCartApiController$_removeAccommodationFromSessionCart",
+        "operationId": "removeAccommodationFromSessionCart",
         "summary": "Remove an accommodation booking from a session cart",
         "parameters": [
           {
@@ -1669,7 +1669,7 @@
         "tags": [
           "shopping-cart"
         ],
-        "operationId": "GET_controllers_webservices_ShoppingCartApiController$_removeActivityFromSessionCart",
+        "operationId": "removeActivityFromSessionCart",
         "summary": "Remove an activity booking from a session cart",
         "parameters": [
           {
@@ -1722,7 +1722,7 @@
         "tags": [
           "shopping-cart"
         ],
-        "operationId": "GET_controllers_webservices_ShoppingCartApiController$_removeCarRentalFromSessionCart",
+        "operationId": "removeCarRentalFromSessionCart",
         "summary": "Remove a car rental booking from a session cart",
         "parameters": [
           {
@@ -1775,7 +1775,7 @@
         "tags": [
           "shopping-cart"
         ],
-        "operationId": "POST_controllers_webservices_ShoppingCartApiController$_addOrUpdateExtraBookingInSessionCart",
+        "operationId": "addOrUpdateExtraBookingInSessionCart",
         "summary": "Add or update an extra booking for an existing parent booking in a session cart",
         "parameters": [
           {
@@ -1844,7 +1844,7 @@
         "tags": [
           "shopping-cart"
         ],
-        "operationId": "GET_controllers_webservices_ShoppingCartApiController$_removeRouteFromSessionCart",
+        "operationId": "removeRouteFromSessionCart",
         "summary": "Remove a route booking from a session cart",
         "parameters": [
           {
@@ -1897,7 +1897,7 @@
         "tags": [
           "language"
         ],
-        "operationId": "GET_controllers_webservices_LangApiController$_findAll",
+        "operationId": "allLanguages",
         "summary": "Get all Languages supported by the Channel",
         "responses": {
           "200": {
@@ -1920,7 +1920,7 @@
         "tags": [
           "route"
         ],
-        "operationId": "GET_controllers_webservices_TransportApiController$_listRoutes",
+        "operationId": "listRoutes",
         "summary": "List ",
         "parameters": [
           {
@@ -1958,7 +1958,7 @@
         "tags": [
           "route"
         ],
-        "operationId": "POST_controllers_webservices_TransportApiController$_checkAvailability",
+        "operationId": "checkRouteAvailability",
         "summary": "Get availability report for a particular route",
         "parameters": [
           {
@@ -2005,7 +2005,7 @@
         "tags": [
           "route"
         ],
-        "operationId": "GET_controllers_webservices_TransportApiController$_getRoute",
+        "operationId": "getRoute",
         "summary": "Get Route by ID",
         "parameters": [
           {
@@ -2051,7 +2051,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "POST_controllers_webservices_BookingApiController$_chargeCardForBooking",
+        "operationId": "chargeCardForBooking",
         "summary": "Charge a card to pay for a booking",
         "parameters": [
           {
@@ -2098,7 +2098,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "GET_controllers_webservices_BookingApiController$_guestGetReserved",
+        "operationId": "guestGetReserved",
         "summary": "Get a list of reserved bookings for the guest (if any exist)",
         "parameters": [
           {
@@ -2138,7 +2138,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "GET_controllers_webservices_BookingApiController$_setActivityBookingCustomerStatus",
+        "operationId": "setActivityBookingCustomerStatus",
         "summary": "Change the arrived status of an activity booking",
         "parameters": [
           {
@@ -2174,7 +2174,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "POST_controllers_webservices_BookingApiController$_cancelProductBooking",
+        "operationId": "cancelProductBooking",
         "summary": "Cancel for given product booking",
         "parameters": [
           {
@@ -2212,7 +2212,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "POST_controllers_webservices_BookingApiController$_cancelBooking",
+        "operationId": "cancelBooking",
         "summary": "Cancel for given booking",
         "parameters": [
           {
@@ -2250,7 +2250,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "GET_controllers_webservices_BookingApiController$_accommodationBooking",
+        "operationId": "accommodationBooking",
         "summary": "Show accommodation booking information",
         "parameters": [
           {
@@ -2279,7 +2279,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "POST_controllers_webservices_BookingApiController$_reserveAndConfirmCarRentalBooking",
+        "operationId": "reserveAndConfirmCarRentalBooking",
         "summary": "Reserve and confirm a single car rental booking (bypasses shopping cart)",
         "parameters": [
           {
@@ -2302,7 +2302,7 @@
         }
       }
     },
-    "/booking.json/{bookingId}/abort-reserved": {
+    "/booking.json/{confirmationCode}/abort-reserved": {
       "get": {
         "produces": [
           "application/json"
@@ -2310,7 +2310,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "GET_controllers_webservices_BookingApiController$_abortReservedBooking",
+        "operationId": "abortReservedBooking",
         "summary": "Abort a reserved booking",
         "parameters": [
           {
@@ -2347,7 +2347,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "GET_controllers_webservices_BookingApiController$_setCarRentalBookingCustomerStatus",
+        "operationId": "setCarRentalBookingCustomerStatus",
         "summary": "Change the arrived status of a car rental booking",
         "parameters": [
           {
@@ -2383,7 +2383,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "GET_controllers_webservices_BookingApiController$_setAccommodationBookingCustomerStatus",
+        "operationId": "setAccommodationBookingCustomerStatus",
         "summary": "Change the arrived status of an accommodation booking",
         "parameters": [
           {
@@ -2419,7 +2419,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "POST_controllers_webservices_BookingApiController$_reserveAndConfirmActivityBooking",
+        "operationId": "reserveAndConfirmActivityBooking",
         "summary": "Reserve and confirm a single activity booking (bypasses shopping cart)",
         "parameters": [
           {
@@ -2450,7 +2450,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "GET_controllers_webservices_BookingApiController$_getAccommodationTicket",
+        "operationId": "getAccommodationTicket",
         "summary": "Get ticket for given accommodation booking",
         "parameters": [
           {
@@ -2468,7 +2468,7 @@
         }
       }
     },
-    "/booking.json/{bookingId}/confirm": {
+    "/booking.json/{confirmationCode}/confirm": {
       "post": {
         "produces": [
           "application/json"
@@ -2476,7 +2476,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "POST_controllers_webservices_BookingApiController$_confirmBooking",
+        "operationId": "confirmBooking",
         "summary": "Confirm a booking (after payment)",
         "parameters": [
           {
@@ -2538,12 +2538,12 @@
         "tags": [
           "booking"
         ],
-        "operationId": "GET_controllers_webservices_BookingApiController$_booking",
+        "operationId": "booking",
         "summary": "Fetch a booking by confirmation code",
         "parameters": [
           {
             "in": "path",
-            "description": "The confirmation code of the booking.",
+            "description": "The confirmation code of the booking",
             "name": "confirmationCode",
             "required": true,
             "type": "string"
@@ -2583,7 +2583,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "GET_controllers_webservices_BookingApiController$_activityBooking",
+        "operationId": "activityBooking",
         "summary": "Show activity booking information",
         "parameters": [
           {
@@ -2612,7 +2612,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "GET_controllers_webservices_BookingApiController$_setRouteBookingCustomerStatus",
+        "operationId": "setRouteBookingCustomerStatus",
         "summary": "Change the arrived status of a route booking",
         "parameters": [
           {
@@ -2648,7 +2648,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "POST_controllers_webservices_BookingApiController$_paymentError",
+        "operationId": "paymentError",
         "summary": "Indicate that an error occurred in payment",
         "parameters": [
           {
@@ -2686,7 +2686,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "POST_controllers_webservices_BookingApiController$_reserveAndConfirmAccommodationBooking",
+        "operationId": "reserveAndConfirmAccommodationBooking",
         "summary": "Reserve and confirm a single accommodation booking (bypasses shopping cart)",
         "parameters": [
           {
@@ -2717,7 +2717,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "POST_controllers_webservices_BookingApiController$_guestReserveChargeAndConfirm",
+        "operationId": "guestReserveChargeAndConfirm",
         "summary": "Reserve the booking for the guest, charge the card and confirm",
         "parameters": [
           {
@@ -2771,7 +2771,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "GET_controllers_webservices_BookingApiController$_getTransportTicket",
+        "operationId": "getTransportTicket",
         "summary": "Get ticket for given transport booking",
         "parameters": [
           {
@@ -2797,7 +2797,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "POST_controllers_webservices_BookingApiController$_productBookingSearch",
+        "operationId": "productBookingSearch",
         "summary": "Search for bookings and return a list of booking information",
         "parameters": [
           {
@@ -2831,7 +2831,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "GET_controllers_webservices_BookingApiController$_moveReservedBookingBackToSessionCart",
+        "operationId": "moveReservedBookingBackToSessionCart",
         "summary": "Move a reserved booking back to a session cart",
         "parameters": [
           {
@@ -2883,7 +2883,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "GET_controllers_webservices_BookingApiController$_guestQuestions",
+        "operationId": "guestQuestions",
         "summary": "Get the info required for booking for the guest",
         "parameters": [
           {
@@ -2928,7 +2928,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "POST_controllers_webservices_BookingApiController$_guestReserve",
+        "operationId": "guestReserve",
         "summary": "Reserve the booking for the guest (before payment)",
         "parameters": [
           {
@@ -2981,7 +2981,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "GET_controllers_webservices_BookingApiController$_routeBooking",
+        "operationId": "routeBooking",
         "summary": "Show route booking information",
         "parameters": [
           {
@@ -3010,7 +3010,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "GET_controllers_webservices_BookingApiController$_getSummary",
+        "operationId": "getSummary",
         "summary": "Get summary for given booking",
         "parameters": [
           {
@@ -3037,7 +3037,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "POST_controllers_webservices_BookingApiController$_bookingExecuteEdit",
+        "operationId": "bookingExecuteEdit",
         "summary": "Edit bookings",
         "parameters": [
           {
@@ -3068,7 +3068,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "GET_controllers_webservices_BookingApiController$_getCarRentalTicket",
+        "operationId": "getCarRentalTicket",
         "summary": "Get ticket for given car rental booking",
         "parameters": [
           {
@@ -3094,7 +3094,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "POST_controllers_webservices_BookingApiController$_reserveAndConfirmRouteBooking",
+        "operationId": "reserveAndConfirmRouteBooking",
         "summary": "Reserve and confirm a single route booking (bypasses shopping cart)",
         "parameters": [
           {
@@ -3125,13 +3125,13 @@
         "tags": [
           "booking"
         ],
-        "operationId": "GET_controllers_webservices_BookingApiController$_getActivityTicket",
+        "operationId": "getActivityTicket",
         "summary": "Get ticket for given activity booking",
         "parameters": [
           {
             "in": "path",
             "description": "The confirmation code of the activity booking",
-            "name": "id",
+            "name": "productConfirmationCode",
             "required": true,
             "type": "string"
           }
@@ -3151,7 +3151,7 @@
         "tags": [
           "booking"
         ],
-        "operationId": "GET_controllers_webservices_BookingApiController$_carRentalBooking",
+        "operationId": "carRentalBooking",
         "summary": "Show car rental booking information",
         "parameters": [
           {
@@ -3180,7 +3180,7 @@
         "tags": [
           "product-list"
         ],
-        "operationId": "GET_controllers_webservices_ProductListApiController$_getProductListBySlug",
+        "operationId": "getProductListBySlug",
         "summary": "Get Product List by slug",
         "parameters": [
           {
@@ -3232,7 +3232,7 @@
         "tags": [
           "product-list"
         ],
-        "operationId": "GET_controllers_webservices_ProductListApiController$_getAllProductLists",
+        "operationId": "getAllProductLists",
         "summary": "Get all available Product Lists",
         "parameters": [
           {
@@ -3265,7 +3265,7 @@
         "tags": [
           "product-list"
         ],
-        "operationId": "GET_controllers_webservices_ProductListApiController$_getProductListById",
+        "operationId": "getProductListById",
         "summary": "Get Product List by ID",
         "parameters": [
           {
@@ -3318,7 +3318,7 @@
         "tags": [
           "country"
         ],
-        "operationId": "GET_controllers_webservices_CountryApiController$_findAll",
+        "operationId": "allCountries",
         "summary": "Get all supported countries/nationalities",
         "description": "Get a list of all the available countries, along with the ISO code for each country.",
         "responses": {
@@ -8417,7 +8417,21 @@
     "TransportPricesDto": {
       "properties": {
         "passengerCategoryPrices": {
-          "type": "array",
+          "type": "array"
+        }
+      }
+    },
+    "PriceOutputByItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "output": {
+          "$ref": "#/definitions/PriceModulationOutput"
+        },
+        "prices": {
           "items": {
             "$ref": "#/definitions/PassengerCategoryPricesDto"
           }
@@ -9433,7 +9447,9 @@
     },
     "BookingConfirmationDto": {
       "properties": {
-        "externalBookingReference": { "type": "string" },
+        "externalBookingReference": {
+          "type": "string"
+        },
         "bookingFields": {
           "type": "array",
           "items": {

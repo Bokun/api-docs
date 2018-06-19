@@ -3601,6 +3601,12 @@
         "cancellationPolicy": {
           "$ref": "#/definitions/CancellationPolicyDto"
         },
+        "barcodeType": {
+          "$ref": "#/definitions/BarcodeTypeEnum"
+        },
+        "timeZone": {
+          "type": "string"
+        },
         "storedExternally": {
           "type": "boolean"
         }
@@ -4944,6 +4950,12 @@
         "cancellationPolicy": {
           "$ref": "#/definitions/CancellationPolicyDto"
         },
+        "barcodeType": {
+          "$ref": "#/definitions/BarcodeTypeEnum"
+        },
+        "timeZone": {
+          "type": "string"
+        },
         "storedExternally": {
           "type": "boolean"
         }
@@ -6011,6 +6023,12 @@
         "cancellationPolicy": {
           "$ref": "#/definitions/CancellationPolicyDto",
           "description": "A cancellation policy, describing any cancellation fees incurred when cancelling bookings."
+        },
+        "barcodeType": {
+          "$ref": "#/definitions/BarcodeTypeEnum"
+        },
+        "timeZone": {
+          "type": "string"
         },
         "storedExternally": {
           "type": "boolean"
@@ -8408,6 +8426,12 @@
         },
         "cancellationPolicy": {
           "$ref": "#/definitions/CancellationPolicyDto"
+        },
+        "barcodeType": {
+          "$ref": "#/definitions/BarcodeTypeEnum"
+        },
+        "timeZone": {
+          "type": "string"
         },
         "storedExternally": {
           "type": "boolean"

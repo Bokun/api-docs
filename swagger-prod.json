@@ -651,56 +651,6 @@
         }
       }
     },
-    "/activity.json/check-prices": {
-      "post": {
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "activity"
-        ],
-        "operationId": "checkActivityPrices",
-        "summary": "Check Activity prices",
-        "parameters": [
-          {
-            "in": "body",
-            "description": "JSON object describing the activity booking request, can be array of such objects",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ActivityBookingRequestDto"
-            }
-          },
-          {
-            "in": "query",
-            "description": "The currency code to use for calculating prices.",
-            "name": "currency",
-            "required": false,
-            "type": "string",
-            "default": "ISK"
-          },
-          {
-            "in": "query",
-            "description": "The language the content should be served in",
-            "name": "lang",
-            "required": false,
-            "type": "string",
-            "default": "EN"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "No response was specified",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ActivityBookingDto"
-              }
-            }
-          }
-        }
-      }
-    },
     "/activity.json/{id}/upcoming-availabilities/{max}": {
       "get": {
         "produces": [
@@ -951,6 +901,43 @@
               "items": {
                 "$ref": "#/definitions/ActivityAvailabilityDto"
               }
+            }
+          }
+        }
+      }
+    },
+    "/activity.json/{id}/price-list": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "activity"
+        ],
+        "operationId": "priceList",
+        "summary": "Get Activity price list",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "ID of activity for which we want prices",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "description": "The currency code in which we want the prices.",
+            "name": "currency",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/ActivityPriceListDto"
             }
           }
         }
@@ -5592,11 +5579,153 @@
         }
       }
     },
+    "ActivityPriceListDto": {
+      "type": "object",
+      "properties": {
+        "activityId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "pricesByDateRange": {
+          "items": {
+            "$ref": "#/definitions/ActivityPriceListDateRange"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "CategoryPriceDto": {
+      "type": "object",
+      "properties": {
+        "pricingCategoryId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "ticketCategory": {
+          "enum": [
+            "ADULT",
+            "CHILD",
+            "TEENAGER",
+            "INFANT",
+            "SENIOR",
+            "STUDENT",
+            "MILITARY",
+            "OTHER"
+          ],
+          "type": "string"
+        },
+        "price": {
+          "$ref": "#/definitions/PriceDto"
+        },
+        "pickupPrice": {
+          "$ref": "#/definitions/PriceDto"
+        },
+        "dropoffPrice": {
+          "$ref": "#/definitions/PriceDto"
+        },
+        "extras": {
+          "items": {
+            "$ref": "#/definitions/ExtraPriceDto"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "ActivityRatePricesDto": {
+      "type": "object",
+      "properties": {
+        "rateId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "price": {
+          "$ref": "#/definitions/PriceDto"
+        },
+        "passengers": {
+          "items": {
+            "$ref": "#/definitions/CategoryPriceDto"
+          },
+          "type": "array"
+        },
+        "pickupPrice": {
+          "$ref": "#/definitions/PriceDto"
+        },
+        "dropoffPrice": {
+          "$ref": "#/definitions/PriceDto"
+        },
+        "extras": {
+          "items": {
+            "$ref": "#/definitions/ExtraPriceDto"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "ActivityPriceListDateRange": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "rates": {
+          "items": {
+            "$ref": "#/definitions/ActivityRatePricesDto"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "PriceDto": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "type": "string"
+        },
+        "amount": {
+          "format": "double",
+          "type": "number"
+        },
+        "ofWhichTax": {
+          "format": "double",
+          "type": "number"
+        },
+        "priceNotFound": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ExtraPriceDto": {
+      "type": "object",
+      "properties": {
+        "extraId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "price": {
+          "$ref": "#/definitions/PriceDto"
+        }
+      }
+    },
     "ActivityDto": {
       "properties": {
         "activityType": {
           "$ref": "#/definitions/ActivityType",
           "description": "Specifies the type of the activity."
+        },
+        "privateActivity": {
+          "type": "boolean"
         },
         "bookingType": {
           "$ref": "#/definitions/ActivityBookingType",
@@ -5688,6 +5817,24 @@
           "items": {
             "$ref": "#/definitions/AgendaItemDto"
           }
+        },
+        "knowBeforeYouGoItems": {
+          "items": {
+            "enum": [
+              "STROLLER_OR_PRAM_ACCESSIBLE",
+              "WHEELCHAIR_ACCESSIBLE",
+              "LIMITED_MOBILITY_ACCESSIBLE",
+              "LIMITED_SIGHT_ACCESSIBLE",
+              "ANIMALS_OR_PETS_ALLOWED",
+              "PUBLIC_TRANSPORTATION_NEARBY",
+              "INFANT_SEATS_AVAILABLE",
+              "INFANTS_MUST_SIT_ON_LAPS",
+              "PASSPORT_REQUIRED",
+              "DRESS_CODE"
+            ],
+            "type": "string"
+          },
+          "type": "array"
         },
         "attention": {
           "type": "string",
@@ -5849,9 +5996,49 @@
           "format": "int64",
           "description": "Unique identifier for this product"
         },
+        "inclusions": {
+          "items": {
+            "enum": [
+              "ENTRY_OR_ADMISSION_FEE",
+              "FUEL_SURCHARGE",
+              "LANDING_AND_FACILITY_FEES",
+              "PARKING_FEES",
+              "ENTRY_TAX",
+              "DEPARTURE_TAX",
+              "NATIONAL_PARK_ENTRANCE_FEE",
+              "GOODS_AND_SERVICES_TAX",
+              "TIP_OR_GRATUITY",
+              "FOOD_AND_DRINKS"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
         "included": {
           "type": "string",
-          "description": "Text describing what is included when you book this product. May contain HTML markup."
+          "description": "Optional text describing what is included when you book this product. May contain HTML markup."
+        },
+        "exclusions": {
+          "items": {
+            "enum": [
+              "ENTRY_OR_ADMISSION_FEE",
+              "FUEL_SURCHARGE",
+              "LANDING_AND_FACILITY_FEES",
+              "PARKING_FEES",
+              "ENTRY_TAX",
+              "DEPARTURE_TAX",
+              "NATIONAL_PARK_ENTRANCE_FEE",
+              "GOODS_AND_SERVICES_TAX",
+              "TIP_OR_GRATUITY",
+              "FOOD_AND_DRINKS"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "excluded": {
+          "type": "string",
+          "description": "Optional text describing what is excluded when you book this product. May contain HTML markup."
         },
         "keyPhoto": {
           "$ref": "#/definitions/PhotoDto",
@@ -6698,6 +6885,9 @@
     },
     "PricingCategoryDto": {
       "properties": {
+        "ticketCategory": {
+          "$ref": "#/definitions/TicketCategoryEnum"
+        },
         "ageQualified": {
           "type": "boolean"
         },
@@ -7189,6 +7379,19 @@
           "type": "string"
         }
       }
+    },
+    "TicketCategoryEnum": {
+      "type": "string",
+      "enum": [
+        "ADULT",
+        "CHILD",
+        "TEENAGER",
+        "INFANT",
+        "SENIOR",
+        "STUDENT",
+        "MILITARY",
+        "OTHER"
+      ]
     },
     "BarcodeTypeEnum": {
       "type": "string",

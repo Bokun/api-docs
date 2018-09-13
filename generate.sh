@@ -4,6 +4,5 @@ set -e
 service=$1; shift
 
 set -x #echo on
-swagger validate bokun.yaml \
-&& swagger bundle bokun.yaml -o swagger-${service}.json
-
+/usr/bin/swagger-cli validate bokun.yaml \
+&& /usr/bin/swagger-cli bundle bokun.yaml -o swagger-${service}.json

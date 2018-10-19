@@ -2218,7 +2218,7 @@
         }
       }
     },
-    "/checkout.json/options/submit": {
+    "/checkout.json/submit": {
       "post": {
         "produces": [
           "application/json"

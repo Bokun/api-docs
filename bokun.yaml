@@ -1514,7 +1514,7 @@ paths:
           description: The checkout options
           schema:
             $ref: '#/definitions/Checkout'
-  '/checkout.json/options/submit':
+  '/checkout.json/submit':
     post:
       produces:
         - application/json

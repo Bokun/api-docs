@@ -668,58 +668,6 @@ paths:
           description: No response was specified
           schema:
             $ref: '#/definitions/ActivityDto'
-  /shore-excursions.json/harbours:
-    get:
-      produces:
-        - application/json
-      tags:
-        - shore-excursions
-      operationId: findHarbours
-      summary: Get all Harbours on this Channel
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/HarbourDto'
-  '/shore-excursions.json/vessels/{id}/harbours':
-    get:
-      produces:
-        - application/json
-      tags:
-        - shore-excursions
-      operationId: findHarboursByVessel
-      summary: Get all upcoming Harbours for the Vessel supplied
-      parameters:
-        - in: path
-          description: ID of the Vessel
-          name: id
-          required: true
-          type: integer
-          format: int64
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/HarbourDto'
-  /shore-excursions.json/vessels:
-    get:
-      produces:
-        - application/json
-      tags:
-        - shore-excursions
-      operationId: findVessels
-      summary: Get all Vessels on this Channel
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/VesselDto'
   '/shopping-cart.json/session/{sessionId}/car-rental':
     post:
       produces:
@@ -1390,38 +1338,203 @@ paths:
           description: No response was specified
           schema:
             $ref: '#/definitions/RouteDto'
-  '/booking.json/{bookingId}/charge-card':
+  '/question.json/shopping-cart/{sessionId}':
+    get:
+      produces:
+        - application/json
+      operationId: forShoppingCart
+      summary: Get questions for the shopping cart specified
+      parameters:
+        - in: path
+          description: The session ID of shopping cart
+          name: sessionId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: The questions
+          schema:
+            $ref: '#/definitions/BookingQuestionsDto'
     post:
       produces:
         - application/json
-      tags:
-        - booking
-      operationId: chargeCardForBooking
-      summary: Charge a card to pay for a booking
+      operationId: answerShoppingCart
+      summary: Answer questions for the shopping cart specified
+      parameters:
+        - in: path
+          description: The session ID of shopping cart
+          name: sessionId
+          required: true
+          type: string
+        - in: body
+          description: The answers
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/BookingAnswersDto'
+      responses:
+        '200':
+          description: API response
+          schema:
+            $ref: '#/definitions/ApiResponse'
+  '/question.json/booking/{bookingId}':
+    get:
+      produces:
+        - application/json
+      operationId: forBooking
+      summary: Get questions for the booking specified
       parameters:
         - in: path
           description: The ID of the booking
           name: bookingId
           required: true
-          type: integer
           format: int64
-        - in: query
-          description: Specifies whether to send email booking confirmation to the customer
-          name: sendCustomerNotification
-          required: false
-          type: boolean
-          default: true
+          type: integer
+      responses:
+        '200':
+          description: The questions
+          schema:
+            $ref: '#/definitions/BookingQuestionsDto'
+    post:
+      produces:
+        - application/json
+      operationId: answerBooking
+      summary: Answer questions for the booking specified
+      parameters:
+        - in: path
+          description: The ID of the booking
+          name: bookingId
+          required: true
+          format: int64
+          type: integer
         - in: body
-          description: The card details and info on what to charge
+          description: The answers
           name: body
           required: true
           schema:
-            $ref: '#/definitions/ChargeRequestDto'
+            $ref: '#/definitions/BookingAnswersDto'
       responses:
         '200':
-          description: No response was specified
+          description: API Response
           schema:
-            $ref: '#/definitions/ChargeDto'
+            $ref: '#/definitions/ApiResponse'
+  '/question.json/activity-booking/{activityBookingId}':
+    get:
+      produces:
+        - application/json
+      operationId: forActivityBooking
+      summary: Get questions for the activity booking specified
+      parameters:
+        - in: path
+          description: The ID of the activity booking
+          name: activityBookingId
+          required: true
+          format: int64
+          type: integer
+      responses:
+        '200':
+          description: Questions
+          schema:
+            $ref: '#/definitions/BookingQuestionsDto'
+    post:
+      produces:
+        - application/json
+      operationId: answerActivityBooking
+      summary: Answer questions for the activity booking specified
+      parameters:
+        - in: path
+          description: The ID of the activity booking
+          name: activityBookingId
+          required: true
+          format: int64
+          type: integer
+        - in: body
+          description: The answers
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/BookingAnswersDto'
+      responses:
+        '200':
+          description: API response
+          schema:
+            $ref: '#/definitions/ApiResponse'
+  '/checkout.json/options/shopping-cart/{sessionId}':
+    get:
+      produces:
+        - application/json
+      operationId: checkoutOptionsForShoppingCart
+      summary: Get checkout options for the shopping cart specified
+      parameters:
+        - in: path
+          description: The session ID of shopping cart
+          name: sessionId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: The checkout options
+          schema:
+            $ref: '#/definitions/Checkout'
+  '/checkout.json/options/booking-request':
+    post:
+      produces:
+        - application/json
+      operationId: checkoutOptionsForBookingRequest
+      summary: Get checkout options for the booking request specified
+      parameters:
+        - in: body
+          description: The booking request
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/BookingRequest'
+      responses:
+        '200':
+          description: The checkout options
+          schema:
+            $ref: '#/definitions/Checkout'
+  '/checkout.json/options/submit':
+    post:
+      produces:
+        - application/json
+      operationId: processCheckout
+      summary: Process the checkout request
+      parameters:
+        - in: body
+          description: The booking request
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/CheckoutRequest'
+      responses:
+        '200':
+          description: The checkout response
+          schema:
+            $ref: '#/definitions/CheckoutResponse'
+  '/checkout.json/confirm-reserved/{code}':
+    post:
+      produces:
+        - application/json
+      operationId: confirmReservedCheckout
+      summary: Confirm a reservation made via checkout
+      parameters:
+        - in: path
+          description: The booking confirmation code
+          name: code
+          required: true
+          type: string
+        - in: body
+          description: The booking request
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/BookingConfirmation'
+      responses:
+        '200':
+          description: The checkout response
+          schema:
+            $ref: '#/definitions/CheckoutResponse'
   '/booking.json/guest/{sessionId}/reserved':
     get:
       produces:
@@ -1946,37 +2059,6 @@ paths:
           description: No response was specified
           schema:
             $ref: '#/definitions/ShoppingCart'
-  '/booking.json/guest/{sessionId}/questions':
-    get:
-      produces:
-        - application/json
-      tags:
-        - booking
-      operationId: guestQuestions
-      summary: Get the info required for booking for the guest
-      parameters:
-        - in: path
-          description: The session ID of the guest
-          name: sessionId
-          required: true
-          type: string
-        - in: query
-          description: The currency code to use for calculating prices.
-          name: currency
-          required: false
-          type: string
-          default: ISK
-        - in: query
-          description: The language the content should be served in
-          name: lang
-          required: false
-          type: string
-          default: IS
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/BookingQuestionsDto'
   '/booking.json/guest/{sessionId}/reserve':
     post:
       produces:
@@ -2255,6 +2337,1215 @@ paths:
             items:
               $ref: '#/definitions/CountryDto'
 definitions:
+  ItemQuestionsDto:
+    type: object
+    properties:
+      bookingId:
+        format: int64
+        type: integer
+      itemTypeId:
+        format: int64
+        type: integer
+      itemTypeTitle:
+        type: string
+      questions:
+        items:
+          $ref: '#/definitions/QuestionSpecificationDto'
+        type: array
+      people:
+        items:
+          $ref: '#/definitions/PersonQuestionsDto'
+        type: array
+      extras:
+        items:
+          $ref: '#/definitions/ExtraQuestionsDto'
+        type: array
+  AccommodationBookingAnswersDto:
+    type: object
+    properties:
+      accommodationId:
+        format: int64
+        type: integer
+      answers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      bookingId:
+        format: int64
+        type: integer
+      rooms:
+        items:
+          $ref: '#/definitions/RoomAnswersDto'
+        type: array
+  RoomBookingRequest:
+    type: object
+    properties:
+      roomTypeId:
+        format: int64
+        type: integer
+      answers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      guests:
+        items:
+          $ref: '#/definitions/PersonAnswersDto'
+        type: array
+      roomRateId:
+        format: int64
+        type: integer
+      roomId:
+        format: int64
+        type: integer
+      externalReference:
+        type: string
+      checkInDate:
+        type: string
+      checkOutDate:
+        type: string
+      adults:
+        format: int32
+        type: integer
+      children:
+        format: int32
+        type: integer
+      infants:
+        format: int32
+        type: integer
+      extras:
+        items:
+          $ref: '#/definitions/ExtraBookingRequest'
+        type: array
+  QuestionSpecificationDto:
+    type: object
+    properties:
+      questionId:
+        type: string
+      questionCode:
+        type: string
+      label:
+        type: string
+      help:
+        type: string
+      placeholder:
+        type: string
+      dataType:
+        enum:
+        - SHORT_TEXT
+        - LONG_TEXT
+        - INT
+        - DOUBLE
+        - BOOLEAN
+        - DATE
+        - DATE_AND_TIME
+        type: string
+      dataFormat:
+        enum:
+        - EMAIL_ADDRESS
+        - URL
+        - PHONE_NUMBER
+        - COUNTRY
+        - LANGUAGE
+        - TIME
+        - DAY_OF_MONTH
+        - MONTH
+        - YEAR
+        - PATTERN
+        type: string
+      pattern:
+        type: string
+      required:
+        type: boolean
+      defaultValue:
+        type: string
+      flags:
+        items:
+          type: string
+        type: array
+      selectFromOptions:
+        type: boolean
+      selectMultiple:
+        type: boolean
+      answerOptions:
+        items:
+          $ref: '#/definitions/AnswerOptionDto'
+        type: array
+      answers:
+        items:
+          type: string
+        type: array
+      originalQuestion:
+        type: string
+  AccommodationBookingQuestionsDto:
+    type: object
+    properties:
+      bookingId:
+        format: int64
+        type: integer
+      accommodationId:
+        format: int64
+        type: integer
+      accommodationTitle:
+        type: string
+      questions:
+        items:
+          $ref: '#/definitions/QuestionSpecificationDto'
+        type: array
+      rooms:
+        items:
+          $ref: '#/definitions/RoomQuestionsDto'
+        type: array
+  AnswerDto:
+    type: object
+    properties:
+      questionId:
+        type: string
+      values:
+        items:
+          type: string
+        type: array
+  ItemBookingRequest:
+    type: object
+    properties:
+      itemTypeId:
+        format: int64
+        type: integer
+      answers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      people:
+        items:
+          $ref: '#/definitions/PersonAnswersDto'
+        type: array
+      quantity:
+        format: int32
+        type: integer
+      extras:
+        items:
+          $ref: '#/definitions/ExtraBookingRequest'
+        type: array
+  BookingDetailsDto:
+    type: object
+    properties:
+      creationDate:
+        format: date-time
+        type: string
+      bookingId:
+        format: int64
+        type: integer
+        xml:
+          name: id
+      language:
+        type: string
+      confirmationCode:
+        type: string
+      externalBookingReference:
+        type: string
+      status:
+        enum:
+        - CART
+        - REQUESTED
+        - RESERVED
+        - CONFIRMED
+        - TIMEOUT
+        - ABORTED
+        - CANCELLED
+        - ERROR
+        - ARRIVED
+        - NO_SHOW
+        - REJECTED
+        type: string
+      qrCodeUrl:
+        type: string
+      currency:
+        type: string
+      totalPrice:
+        type: number
+      totalPaid:
+        type: number
+      totalDue:
+        type: number
+      totalPriceConverted:
+        type: number
+      paymentProviderDetails:
+        $ref: '#/definitions/PaymentProviderDetailsDto'
+      customer:
+        $ref: '#/definitions/CustomerDto'
+      invoice:
+        $ref: '#/definitions/CustomerInvoiceDto'
+      customerPayments:
+        items:
+          $ref: '#/definitions/CustomerPaymentDto'
+          xml:
+            name: customerPayment
+        type: array
+        xml:
+          wrapped: true
+      extranetUser:
+        $ref: '#/definitions/ExtranetUserDto'
+      paymentType:
+        enum:
+        - PAID_IN_FULL
+        - DEPOSIT
+        - FREE
+        - NOT_PAID
+        - OVERPAID
+        - REFUND
+        - INVOICED
+        - GIFT_CARD
+        type: string
+      affiliate:
+        $ref: '#/definitions/AffiliateDto'
+      vessel:
+        $ref: '#/definitions/VesselDto'
+      harbour:
+        $ref: '#/definitions/HarbourDto'
+      agent:
+        $ref: '#/definitions/BookingAgentWithLinksDto'
+      seller:
+        $ref: '#/definitions/VendorDto'
+      bookingChannel:
+        $ref: '#/definitions/BookingChannelDto'
+      systemConfig:
+        $ref: '#/definitions/IntegratedSystemConfigDto'
+      accommodationBookings:
+        items:
+          $ref: '#/definitions/AccommodationBookingDetailsDto'
+          xml:
+            name: accommodationBooking
+        type: array
+        xml:
+          wrapped: true
+      carRentalBookings:
+        items:
+          $ref: '#/definitions/CarRentalBookingDetailsDto'
+          xml:
+            name: carRentalBooking
+        type: array
+        xml:
+          wrapped: true
+      activityBookings:
+        items:
+          $ref: '#/definitions/ActivityBookingDetailsDto'
+          xml:
+            name: activityBooking
+        type: array
+        xml:
+          wrapped: true
+      routeBookings:
+        items:
+          $ref: '#/definitions/RouteBookingDetailsDto'
+          xml:
+            name: routeBooking
+        type: array
+        xml:
+          wrapped: true
+      bookingFields:
+        items:
+          $ref: '#/definitions/BookingFieldDto'
+          xml:
+            name: bookingField
+        type: array
+        xml:
+          wrapped: true
+    xml:
+      name: booking
+  PersonAnswersDto:
+    type: object
+    properties:
+      details:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+  NameValuePairDto:
+    type: object
+    properties:
+      name:
+        type: string
+      value:
+        type: string
+  PaymentProviderDetailsDto:
+    type: object
+    properties:
+      url:
+        type: string
+      supportedMethods:
+        items:
+          type: string
+          xml:
+            name: supportedMethod
+        type: array
+        xml:
+          wrapped: true
+      parameters:
+        items:
+          $ref: '#/definitions/PaymentProviderParam'
+          xml:
+            name: paymentProviderParam
+        type: array
+        xml:
+          wrapped: true
+  PaymentProviderParam:
+    type: object
+    properties:
+      name:
+        type: string
+      value:
+        type: string
+  AffiliateDto:
+    type: object
+    properties:
+      id:
+        format: int64
+        type: integer
+      idNumber:
+        type: string
+      externalId:
+        type: string
+      title:
+        type: string
+      trackingCode:
+        type: string
+      flags:
+        items:
+          type: string
+          xml:
+            name: flag
+        type: array
+        xml:
+          wrapped: true
+    xml:
+      name: affiliate
+  TicketReference:
+    type: object
+    properties:
+      bookingId:
+        format: int64
+        type: integer
+      productTitle:
+        type: string
+      productConfirmationCode:
+        type: string
+      ticket:
+        type: string
+  BookingChannelDto:
+    type: object
+    properties:
+      id:
+        format: int64
+        type: integer
+      externalId:
+        type: string
+      uuid:
+        type: string
+      title:
+        type: string
+      backend:
+        type: boolean
+      overrideVoucherHeader:
+        type: boolean
+      voucherName:
+        type: string
+      voucherPhoneNumber:
+        type: string
+      voucherEmailAddress:
+        type: string
+      voucherLogoStyle:
+        type: string
+      voucherWebsite:
+        type: string
+      voucherLogo:
+        $ref: '#/definitions/PhotoDto'
+      flags:
+        items:
+          type: string
+          xml:
+            name: flag
+        type: array
+        xml:
+          wrapped: true
+    xml:
+      name: bookingChannel
+  OnRequestSettings:
+    type: object
+    properties:
+      responseDeadline:
+        type: string
+      responseCallbackUrl:
+        type: string
+  BookingAnswersDto:
+    type: object
+    properties:
+      mainContactDetails:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      activityBookings:
+        items:
+          $ref: '#/definitions/ActivityBookingAnswersDto'
+        type: array
+      accommodationBookings:
+        items:
+          $ref: '#/definitions/AccommodationBookingAnswersDto'
+        type: array
+      rentalBookings:
+        items:
+          $ref: '#/definitions/RentalBookingAnswersDto'
+        type: array
+      transportBookings:
+        items:
+          $ref: '#/definitions/TransportBookingAnswersDto'
+        type: array
+  ShoppingCartCheckout:
+    type: object
+    properties:
+      uuid:
+        type: string
+      externalBookingReference:
+        type: string
+      bookingAnswers:
+        $ref: '#/definitions/BookingAnswersDto'
+  TransportBookingQuestionsDto:
+    type: object
+    properties:
+      bookingId:
+        format: int64
+        type: integer
+      routeId:
+        format: int64
+        type: integer
+      routeTitle:
+        type: string
+      questions:
+        items:
+          $ref: '#/definitions/QuestionSpecificationDto'
+        type: array
+      passengers:
+        items:
+          $ref: '#/definitions/PassengerQuestionsDto'
+        type: array
+      pickupQuestions:
+        items:
+          $ref: '#/definitions/QuestionSpecificationDto'
+        type: array
+      dropoffQuestions:
+        items:
+          $ref: '#/definitions/QuestionSpecificationDto'
+        type: array
+  RentalBookingQuestionsDto:
+    type: object
+    properties:
+      bookingId:
+        format: int64
+        type: integer
+      rentalId:
+        format: int64
+        type: integer
+      rentalTitle:
+        type: string
+      questions:
+        items:
+          $ref: '#/definitions/QuestionSpecificationDto'
+        type: array
+      items:
+        items:
+          $ref: '#/definitions/ItemQuestionsDto'
+        type: array
+  ActivityBookingRequest:
+    type: object
+    properties:
+      activityId:
+        format: int64
+        type: integer
+      answers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      pickupAnswers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      dropoffAnswers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      rateId:
+        format: int64
+        type: integer
+      startTimeId:
+        format: int64
+        type: integer
+      date:
+        type: string
+      pickup:
+        type: boolean
+      pickupPlaceId:
+        format: int64
+        type: integer
+      pickupDescription:
+        type: string
+      dropoff:
+        type: boolean
+      dropoffPlaceId:
+        format: int64
+        type: integer
+      dropoffDescription:
+        type: string
+      checkedIn:
+        type: boolean
+      note:
+        type: string
+      customized:
+        type: boolean
+      customizedTime:
+        type: string
+      customizedPrice:
+        type: number
+      onRequest:
+        $ref: '#/definitions/OnRequestSettings'
+      passengers:
+        items:
+          $ref: '#/definitions/PassengerBookingRequest'
+        type: array
+  PersonQuestionsDto:
+    type: object
+    properties:
+      personId:
+        format: int64
+        type: integer
+      details:
+        items:
+          $ref: '#/definitions/QuestionSpecificationDto'
+        type: array
+  PassengerBookingRequest:
+    type: object
+    properties:
+      pricingCategoryId:
+        format: int64
+        type: integer
+      passengerDetails:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      answers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      extras:
+        items:
+          $ref: '#/definitions/ExtraBookingRequest'
+        type: array
+  RoomQuestionsDto:
+    type: object
+    properties:
+      bookingId:
+        format: int64
+        type: integer
+      roomTypeId:
+        format: int64
+        type: integer
+      roomTypeTitle:
+        type: string
+      roomRateTitle:
+        type: string
+      startDate:
+        type: string
+      endDate:
+        type: string
+      questions:
+        items:
+          $ref: '#/definitions/QuestionSpecificationDto'
+        type: array
+      guests:
+        items:
+          $ref: '#/definitions/PersonQuestionsDto'
+        type: array
+      extras:
+        items:
+          $ref: '#/definitions/ExtraQuestionsDto'
+        type: array
+  BookingQuestionsDto:
+    type: object
+    properties:
+      mainContactDetails:
+        items:
+          $ref: '#/definitions/QuestionSpecificationDto'
+        type: array
+      activityBookings:
+        items:
+          $ref: '#/definitions/ActivityBookingQuestionsDto'
+        type: array
+      accommodationBookings:
+        items:
+          $ref: '#/definitions/AccommodationBookingQuestionsDto'
+        type: array
+      rentalBookings:
+        items:
+          $ref: '#/definitions/RentalBookingQuestionsDto'
+        type: array
+      transportBookings:
+        items:
+          $ref: '#/definitions/TransportBookingQuestionsDto'
+        type: array
+  CheckoutResponse:
+    type: object
+    properties:
+      redirectRequest:
+        $ref: '#/definitions/RedirectRequest'
+      dccQuote:
+        $ref: '#/definitions/DccQuoteDto'
+      booking:
+        $ref: '#/definitions/BookingDetailsDto'
+      bookingHash:
+        type: string
+      travelDocuments:
+        $ref: '#/definitions/TravelDocuments'
+  BookingConfirmation:
+    type: object
+    properties:
+      externalBookingReference:
+        type: string
+      showPricesInNotification:
+        type: boolean
+      sendNotificationToMainContact:
+        type: boolean
+      transactionDetails:
+        $ref: '#/definitions/TransactionDetails'
+      amount:
+        format: double
+        type: number
+      currency:
+        type: string
+  ActivityBookingQuestionsDto:
+    type: object
+    properties:
+      bookingId:
+        format: int64
+        type: integer
+      activityId:
+        format: int64
+        type: integer
+      activityTitle:
+        type: string
+      questions:
+        items:
+          $ref: '#/definitions/QuestionSpecificationDto'
+        type: array
+      passengers:
+        items:
+          $ref: '#/definitions/PassengerQuestionsDto'
+        type: array
+      pickupQuestions:
+        items:
+          $ref: '#/definitions/QuestionSpecificationDto'
+        type: array
+      dropoffQuestions:
+        items:
+          $ref: '#/definitions/QuestionSpecificationDto'
+        type: array
+  PaymentMethods:
+    type: object
+    properties:
+      allowedMethods:
+        items:
+          enum:
+          - CARD
+          - CASH
+          - VOUCHER
+          - RESERVE_FOR_EXTERNAL_PAYMENT
+          type: string
+        type: array
+      cardProvider:
+        $ref: '#/definitions/CardPaymentProvider'
+  TokenCharge:
+    type: object
+    properties:
+      token:
+        type: string
+  Checkout:
+    type: object
+    properties:
+      options:
+        items:
+          $ref: '#/definitions/CheckoutOption'
+        type: array
+      questions:
+        $ref: '#/definitions/BookingQuestionsDto'
+  CardCharge:
+    type: object
+    properties:
+      name:
+        type: string
+      cardNumber:
+        type: string
+      expiryMonth:
+        format: int32
+        type: integer
+      expiryYear:
+        format: int32
+        type: integer
+      cvc:
+        type: string
+  BookingRequest:
+    type: object
+    properties:
+      mainContactDetails:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      activityBookings:
+        items:
+          $ref: '#/definitions/ActivityBookingRequest'
+        type: array
+      accommodationBookings:
+        items:
+          $ref: '#/definitions/AccommodationBookingRequest'
+        type: array
+      rentalBookings:
+        items:
+          $ref: '#/definitions/RentalBookingRequest'
+        type: array
+      discountPercentage:
+        format: double
+        type: number
+      externalBookingReference:
+        type: string
+      labels:
+        items:
+          type: string
+        type: array
+  RentalBookingRequest:
+    type: object
+    properties:
+      rentalId:
+        format: int64
+        type: integer
+      answers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      pickupDateAndTime:
+        type: string
+      dropoffDateAndTime:
+        type: string
+      pickupPlaceId:
+        format: int64
+        type: integer
+      dropoffPlaceId:
+        format: int64
+        type: integer
+      note:
+        type: string
+      items:
+        items:
+          $ref: '#/definitions/ItemBookingRequest'
+        type: array
+  RoomAnswersDto:
+    type: object
+    properties:
+      roomTypeId:
+        format: int64
+        type: integer
+      answers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      guests:
+        items:
+          $ref: '#/definitions/PersonAnswersDto'
+        type: array
+      bookingId:
+        format: int64
+        type: integer
+      extras:
+        items:
+          $ref: '#/definitions/ExtraAnswersDto'
+        type: array
+  DccQuoteDto:
+    type: object
+    properties:
+      currency:
+        type: string
+      amount:
+        type: number
+      exchangeRate:
+        type: number
+      markup:
+        type: number
+      markupPercentage:
+        type: number
+      fee:
+        type: number
+      message:
+        type: string
+      formattedAmount:
+        type: string
+  RedirectRequest:
+    type: object
+    properties:
+      url:
+        type: string
+      method:
+        type: string
+      parameters:
+        items:
+          $ref: '#/definitions/NameValuePairDto'
+        type: array
+  ItemAnswersDto:
+    type: object
+    properties:
+      itemTypeId:
+        format: int64
+        type: integer
+      answers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      people:
+        items:
+          $ref: '#/definitions/PersonAnswersDto'
+        type: array
+      bookingId:
+        format: int64
+        type: integer
+      extras:
+        items:
+          $ref: '#/definitions/ExtraAnswersDto'
+        type: array
+  CheckoutOption:
+    type: object
+    properties:
+      type:
+        enum:
+        - AGENT_AFFILIATE
+        - AGENT_CUSTOMER
+        - AGENT_RESELLER
+        - CUSTOMER_FULL_PAYMENT
+        - CUSTOMER_PARTIAL_PAYMENT
+        - CUSTOMER_NO_PAYMENT
+        type: string
+      label:
+        type: string
+      questions:
+        items:
+          $ref: '#/definitions/QuestionSpecificationDto'
+        type: array
+      amount:
+        type: number
+      currency:
+        type: string
+      formattedAmount:
+        type: string
+      partialPayment:
+        type: boolean
+      minPartialAmount:
+        type: number
+      formattedMinPartialAmount:
+        type: string
+      invoice:
+        $ref: '#/definitions/CustomerInvoiceDto'
+      paymentMethods:
+        $ref: '#/definitions/PaymentMethods'
+  ExtraBookingRequest:
+    type: object
+    properties:
+      extraId:
+        format: int64
+        type: integer
+      answers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      quantity:
+        format: int32
+        type: integer
+  PassengerAnswersDto:
+    type: object
+    properties:
+      pricingCategoryId:
+        format: int64
+        type: integer
+      passengerDetails:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      answers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      bookingId:
+        format: int64
+        type: integer
+      extras:
+        items:
+          $ref: '#/definitions/ExtraAnswersDto'
+        type: array
+  RentalBookingAnswersDto:
+    type: object
+    properties:
+      rentalId:
+        format: int64
+        type: integer
+      answers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      bookingId:
+        format: int64
+        type: integer
+      items:
+        items:
+          $ref: '#/definitions/ItemAnswersDto'
+        type: array
+  TransactionDetails:
+    type: object
+    properties:
+      transactionDate:
+        type: string
+      transactionId:
+        type: string
+      cardBrand:
+        type: string
+      last4:
+        type: string
+  TravelDocuments:
+    type: object
+    properties:
+      invoice:
+        type: string
+      activityTickets:
+        items:
+          $ref: '#/definitions/TicketReference'
+        type: array
+      accommodationTickets:
+        items:
+          $ref: '#/definitions/TicketReference'
+        type: array
+      rentalTickets:
+        items:
+          $ref: '#/definitions/TicketReference'
+        type: array
+      transportTickets:
+        items:
+          $ref: '#/definitions/TicketReference'
+        type: array
+  ExtraAnswersDto:
+    type: object
+    properties:
+      extraId:
+        format: int64
+        type: integer
+      answers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      bookingId:
+        format: int64
+        type: integer
+  CardPaymentProvider:
+    type: object
+    properties:
+      title:
+        type: string
+      description:
+        type: string
+      logo:
+        type: string
+      providerId:
+        type: string
+      providerType:
+        type: string
+      uti:
+        type: string
+      token:
+        type: string
+      questions:
+        items:
+          $ref: '#/definitions/QuestionSpecificationDto'
+        type: array
+  ActivityBookingAnswersDto:
+    type: object
+    properties:
+      activityId:
+        format: int64
+        type: integer
+      answers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      pickupAnswers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      dropoffAnswers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      bookingId:
+        format: int64
+        type: integer
+      passengers:
+        items:
+          $ref: '#/definitions/PassengerAnswersDto'
+        type: array
+  ExtraQuestionsDto:
+    type: object
+    properties:
+      bookingId:
+        format: int64
+        type: integer
+      extraId:
+        format: int64
+        type: integer
+      extraTitle:
+        type: string
+      questions:
+        items:
+          $ref: '#/definitions/QuestionSpecificationDto'
+        type: array
+  PassengerQuestionsDto:
+    type: object
+    properties:
+      bookingId:
+        format: int64
+        type: integer
+      pricingCategoryId:
+        format: int64
+        type: integer
+      pricingCategoryTitle:
+        type: string
+      passengerDetails:
+        items:
+          $ref: '#/definitions/QuestionSpecificationDto'
+        type: array
+      questions:
+        items:
+          $ref: '#/definitions/QuestionSpecificationDto'
+        type: array
+      extras:
+        items:
+          $ref: '#/definitions/ExtraQuestionsDto'
+        type: array
+  CheckoutRequest:
+    type: object
+    properties:
+      checkoutOption:
+        enum:
+        - AGENT_AFFILIATE
+        - AGENT_CUSTOMER
+        - AGENT_RESELLER
+        - CUSTOMER_FULL_PAYMENT
+        - CUSTOMER_PARTIAL_PAYMENT
+        - CUSTOMER_NO_PAYMENT
+        type: string
+      paymentMethod:
+        enum:
+        - CARD
+        - CASH
+        - VOUCHER
+        - RESERVE_FOR_EXTERNAL_PAYMENT
+        type: string
+      source:
+        enum:
+        - SHOPPING_CART
+        - DIRECT_REQUEST
+        type: string
+      shoppingCart:
+        $ref: '#/definitions/ShoppingCartCheckout'
+      directBooking:
+        $ref: '#/definitions/BookingRequest'
+      sendNotificationToMainContact:
+        type: boolean
+      showPricesInNotification:
+        type: boolean
+      amount:
+        format: double
+        type: number
+      currency:
+        type: string
+      uti:
+        type: string
+      paymentToken:
+        $ref: '#/definitions/TokenCharge'
+      paymentCard:
+        $ref: '#/definitions/CardCharge'
+      transactionDetails:
+        $ref: '#/definitions/TransactionDetails'
+      successUrl:
+        type: string
+      errorUrl:
+        type: string
+      cancelUrl:
+        type: string
+      acceptDccQuote:
+        type: boolean
+      providerPaymentParameters:
+        additionalProperties:
+          type: string
+        type: object
+      cardPaymentProviderAnswers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      checkoutOptionAnswers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+  TransportBookingAnswersDto:
+    type: object
+    properties:
+      bookingId:
+        format: int64
+        type: integer
+      routeId:
+        format: int64
+        type: integer
+      answers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      pickupAnswers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      dropoffAnswers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      passengers:
+        items:
+          $ref: '#/definitions/PassengerAnswersDto'
+        type: array
+  AccommodationBookingRequest:
+    type: object
+    properties:
+      accommodationId:
+        format: int64
+        type: integer
+      answers:
+        items:
+          $ref: '#/definitions/AnswerDto'
+        type: array
+      travelType:
+        enum:
+        - BUSINESS
+        - LEISURE
+        - CONFERENCE
+        type: string
+      note:
+        type: string
+      rooms:
+        items:
+          $ref: '#/definitions/RoomBookingRequest'
+        type: array
+  AnswerOptionDto:
+    type: object
+    properties:
+      value:
+        type: string
+      label:
+        type: string
   AccommodationAvailabilitiesDto:
     type: object
     properties:
@@ -6079,7 +7370,7 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/RoomTypeRooms'
-  AccommodationBookingAnswersDto:
+  OldAccommodationBookingAnswersDto:
     properties:
       answerGroups:
         type: array
@@ -6200,34 +7491,13 @@ definitions:
         $ref: '#/definitions/VendorWithLinksDto'
       totalPrice:
         type: number
-  AccommodationBookingQuestionsDto:
-    properties:
-      accommodation:
-        $ref: '#/definitions/BookingItemInfoDto'
-      bookingId:
-        type: integer
-        format: int64
-      endDate:
-        type: string
-        format: date-time
-      questionGroups:
-        type: array
-        items:
-          $ref: '#/definitions/BookingQuestionGroupDto'
-      roomBookings:
-        type: array
-        items:
-          $ref: '#/definitions/RoomBookingQuestionsDto'
-      startDate:
-        type: string
-        format: date-time
   Action:
     properties:
       type:
         type: string
         description: The discriminator field
     discriminator: type
-  ActivityBookingAnswersDto:
+  OldActivityBookingAnswersDto:
     properties:
       answerGroups:
         type: array
@@ -6405,56 +7675,6 @@ definitions:
         format: int32
       totalPrice:
         type: number
-  ActivityBookingQuestionsDto:
-    properties:
-      activity:
-        $ref: '#/definitions/BookingItemInfoDto'
-      askWhereToDropoff:
-        type: boolean
-      askWhereToPickup:
-        type: boolean
-      bookingId:
-        type: integer
-        format: int64
-      customDropoffAllowed:
-        type: boolean
-      customPickupAllowed:
-        type: boolean
-      date:
-        type: string
-        format: date-time
-      dropoffPlace:
-        $ref: '#/definitions/PickupPlaceDto'
-      dropoffPlaceDescription:
-        type: string
-      dropoffPlaces:
-        type: array
-        items:
-          $ref: '#/definitions/PickupPlaceDto'
-      extraBookings:
-        type: array
-        items:
-          $ref: '#/definitions/ExtraBookingQuestionsDto'
-      pickupPlace:
-        $ref: '#/definitions/PickupPlaceDto'
-      pickupPlaceDescription:
-        type: string
-      pickupPlaceRoomNumber:
-        type: string
-      pickupPlaces:
-        type: array
-        items:
-          $ref: '#/definitions/PickupPlaceDto'
-      pricingCategoryBookings:
-        type: array
-        items:
-          $ref: '#/definitions/ActivityPricingCategoryBookingQuestionsDto'
-      questionGroups:
-        type: array
-        items:
-          $ref: '#/definitions/BookingQuestionGroupDto'
-      time:
-        type: string
   ActivityPricingCategoryBookingAnswersDto:
     properties:
       answerGroups:
@@ -6535,16 +7755,16 @@ definitions:
         type: string
       title:
         type: string
-  BookingAnswersDto:
+  OldBookingAnswersDto:
     properties:
       accommodationsBookings:
         type: array
         items:
-          $ref: '#/definitions/AccommodationBookingAnswersDto'
+          $ref: '#/definitions/OldAccommodationBookingAnswersDto'
       activityBookings:
         type: array
         items:
-          $ref: '#/definitions/ActivityBookingAnswersDto'
+          $ref: '#/definitions/OldActivityBookingAnswersDto'
       answers:
         type: array
         items:
@@ -6645,34 +7865,10 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/BookingQuestionWithIdDto'
-  BookingQuestionsDto:
-    properties:
-      accommodationBookings:
-        type: array
-        items:
-          $ref: '#/definitions/AccommodationBookingQuestionsDto'
-      activityBookings:
-        type: array
-        items:
-          $ref: '#/definitions/ActivityBookingQuestionsDto'
-      carRentalBookings:
-        type: array
-        items:
-          $ref: '#/definitions/CarRentalBookingQuestionsDto'
-      empty:
-        type: boolean
-      questions:
-        type: array
-        items:
-          $ref: '#/definitions/BookingQuestionDto'
-      routeBookings:
-        type: array
-        items:
-          $ref: '#/definitions/RouteBookingQuestionsDto'
   BookingReservationRequestDto:
     properties:
       answers:
-        $ref: '#/definitions/BookingAnswersDto'
+        $ref: '#/definitions/OldBookingAnswersDto'
       bookingFields:
         type: array
         items:
@@ -6912,16 +8108,6 @@ definitions:
       expYear:
         type: string
       name:
-        type: string
-  ChargeDto:
-    properties:
-      amount:
-        type: number
-      card:
-        $ref: '#/definitions/CardDto'
-      creationDate:
-        type: string
-      currency:
         type: string
   ChargeRequest:
     properties:
@@ -7745,24 +8931,6 @@ definitions:
         format: date-time
       status:
         $ref: '#/definitions/RoomBookingStatusEnum'
-  RoomBookingQuestionsDto:
-    properties:
-      bookingId:
-        type: integer
-        format: int64
-      extraBookings:
-        type: array
-        items:
-          $ref: '#/definitions/ExtraBookingQuestionsDto'
-      questionGroups:
-        type: array
-        items:
-          $ref: '#/definitions/BookingQuestionGroupDto'
-      roomType:
-        $ref: '#/definitions/BookingItemInfoDto'
-      unitCount:
-        type: integer
-        format: int32
   RouteBookingAnswersDto:
     properties:
       answerGroups:

@@ -8,7 +8,7 @@
   "schemes": [
     "https"
   ],
-  "host": "api.bokuntest.com",
+  "host": "api.bokun.io",
   "tags": [
     {
       "name": "accommodation",
@@ -3783,20 +3783,7 @@
           "type": "string"
         },
         "status": {
-          "enum": [
-            "CART",
-            "REQUESTED",
-            "RESERVED",
-            "CONFIRMED",
-            "TIMEOUT",
-            "ABORTED",
-            "CANCELLED",
-            "ERROR",
-            "ARRIVED",
-            "NO_SHOW",
-            "REJECTED"
-          ],
-          "type": "string"
+          "$ref": "#/definitions/RoomBookingStatusEnum"
         },
         "qrCodeUrl": {
           "type": "string"
@@ -3841,17 +3828,7 @@
           "$ref": "#/definitions/ExtranetUserDto"
         },
         "paymentType": {
-          "enum": [
-            "PAID_IN_FULL",
-            "DEPOSIT",
-            "FREE",
-            "NOT_PAID",
-            "OVERPAID",
-            "REFUND",
-            "INVOICED",
-            "GIFT_CARD"
-          ],
-          "type": "string"
+          "$ref": "#/definitions/PaymentPaidTypeEnum"
         },
         "affiliate": {
           "$ref": "#/definitions/AffiliateDto"
@@ -7553,17 +7530,7 @@
           "type": "string"
         },
         "ticketCategory": {
-          "enum": [
-            "ADULT",
-            "CHILD",
-            "TEENAGER",
-            "INFANT",
-            "SENIOR",
-            "STUDENT",
-            "MILITARY",
-            "OTHER"
-          ],
-          "type": "string"
+          "$ref": "#/definitions/TicketCategoryEnum"
         },
         "price": {
           "$ref": "#/definitions/PriceDto"
@@ -14457,13 +14424,15 @@
         "NOT_PAID",
         "OVERPAID",
         "REFUND",
-        "INVOICED"
+        "INVOICED",
+        "GIFT_CARD"
       ]
     },
     "BookingStatusEnum": {
       "type": "string",
       "enum": [
         "CART",
+        "REQUESTED",
         "RESERVED",
         "CONFIRMED",
         "TIMEOUT",
@@ -14471,7 +14440,8 @@
         "CANCELLED",
         "ERROR",
         "ARRIVED",
-        "NO_SHOW"
+        "NO_SHOW",
+        "REJECTED"
       ]
     },
     "Status": {

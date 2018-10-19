@@ -1346,6 +1346,8 @@ paths:
     get:
       produces:
         - application/json
+      tags:
+        - question
       operationId: forShoppingCart
       summary: Get questions for the shopping cart specified
       parameters:
@@ -1362,6 +1364,8 @@ paths:
     post:
       produces:
         - application/json
+      tags:
+        - question
       operationId: answerShoppingCart
       summary: Answer questions for the shopping cart specified
       parameters:
@@ -1385,6 +1389,8 @@ paths:
     get:
       produces:
         - application/json
+      tags:
+        - question
       operationId: forBooking
       summary: Get questions for the booking specified
       parameters:
@@ -1402,6 +1408,8 @@ paths:
     post:
       produces:
         - application/json
+      tags:
+        - question
       operationId: answerBooking
       summary: Answer questions for the booking specified
       parameters:
@@ -1426,6 +1434,8 @@ paths:
     get:
       produces:
         - application/json
+      tags:
+        - question
       operationId: forActivityBooking
       summary: Get questions for the activity booking specified
       parameters:
@@ -1443,6 +1453,8 @@ paths:
     post:
       produces:
         - application/json
+      tags:
+        - question
       operationId: answerActivityBooking
       summary: Answer questions for the activity booking specified
       parameters:
@@ -1467,6 +1479,8 @@ paths:
     get:
       produces:
         - application/json
+      tags:
+        - checkout
       operationId: checkoutOptionsForShoppingCart
       summary: Get checkout options for the shopping cart specified
       parameters:
@@ -1484,6 +1498,8 @@ paths:
     post:
       produces:
         - application/json
+      tags:
+        - checkout
       operationId: checkoutOptionsForBookingRequest
       summary: Get checkout options for the booking request specified
       parameters:
@@ -1502,6 +1518,8 @@ paths:
     post:
       produces:
         - application/json
+      tags:
+        - checkout
       operationId: processCheckout
       summary: Process the checkout request
       parameters:
@@ -1520,6 +1538,8 @@ paths:
     post:
       produces:
         - application/json
+      tags:
+        - checkout
       operationId: confirmReservedCheckout
       summary: Confirm a reservation made via checkout
       parameters:

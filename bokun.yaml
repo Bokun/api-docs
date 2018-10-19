@@ -22,6 +22,10 @@ tags:
     description: Operations for countries and nationalities
   - name: currency
     description: Operations for Supported Currencies
+  - name: question
+    description: Operations for Booking questions and answers
+  - name: checkout
+    description: Operations for Checkout
   - name: language
     description: Operations for Supported Languages
   - name: product-list

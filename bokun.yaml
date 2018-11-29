@@ -3,7 +3,7 @@ info:
   title: Bokun API
   description: <p>Further documentation of this api is available <a href="https://docs.google.com/document/d/1tkLLqeAvVtRrDpsM1uJZJvhHg3EfsMw1z_SN8Lbe2Rs/pub" target="_blank">here</a>.</p>
                <p>You can generate a client in your preferred language using <a href="http://editor.swagger.io/#/?import=https://bokun.github.io/api-docs/bokun.yaml">swagger editor</a></p>
-  version: '1.0'
+  version: '1.0-SNAPSHOT'
 schemes:
   - https
 host: api.bokun.io
@@ -3484,9 +3484,9 @@ definitions:
       acceptDccQuote:
         type: boolean
       providerPaymentParameters:
+        type: object
         additionalProperties:
           type: string
-        type: object
       cardPaymentProviderAnswers:
         items:
           $ref: '#/definitions/AnswerDto'
@@ -3859,6 +3859,11 @@ definitions:
           $ref: '#/definitions/QuestionDto'
       title:
         type: string
+      productGroupId:
+        type: integer
+        format: int64
+      limitByPax:
+        type: boolean
   CategoryDto:
     properties:
       allowsSelectingMultipleChildren:
@@ -4185,6 +4190,12 @@ definitions:
       vendorId:
         type: integer
         format: int64
+      productGroupId:
+        type: integer
+        format: int64
+      bookingCutoff:
+        type: integer
+        format: int32
   SearchResultItem:
     properties:
       baseLanguage:
@@ -4206,6 +4217,7 @@ definitions:
       externalId:
         type: string
       fields:
+        type: object
         additionalProperties:
           type: object
       flags:
@@ -4214,6 +4226,8 @@ definitions:
           type: string
       id:
         type: string
+      inventoryLocal:
+        type: boolean
       keyPhoto:
         $ref: '#/definitions/PhotoDto'
       keywords:
@@ -4272,6 +4286,7 @@ definitions:
         items:
           $ref: '#/definitions/TermFilter'
       termFacets:
+        type: object
         additionalProperties:
           $ref: '#/definitions/TermsFacetDto'
       tookInMillis:
@@ -4689,6 +4704,7 @@ definitions:
         items:
           $ref: '#/definitions/TermFilter'
       termFacets:
+        type: object
         additionalProperties:
           $ref: '#/definitions/TermsFacetDto'
       tookInMillis:
@@ -4955,6 +4971,12 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/ActivityRatePrices'
+      productGroupId:
+        type: integer
+        format: int64
+      minParticipantsToBookNow:
+        type: integer
+        format: int32
   ActivityRatePrices:
     properties:
       activityRateId:
@@ -5703,6 +5725,8 @@ definitions:
         $ref: '#/definitions/ExtraSelectionType'
       pricingType:
         $ref: '#/definitions/AddonPricingType'
+      pricedPerPerson:
+        type: boolean
   ActivityPlacesDto:
     properties:
       dropoffPlaces:
@@ -5839,6 +5863,9 @@ definitions:
         type: boolean
       title:
         type: string
+      day:
+        type: integer
+        format: int32
   BookingAnswerDto:
     properties:
       answer:
@@ -6015,6 +6042,9 @@ definitions:
         type: boolean
       title:
         type: string
+      occupancy:
+        type: integer
+        format: int32
   ProductInfoDto:
     properties:
       externalId:
@@ -7014,6 +7044,7 @@ definitions:
         type: string
         format: date-time
       values:
+        type: object
         additionalProperties:
           type: string
       weekDays:
@@ -7091,7 +7122,7 @@ definitions:
         type: string
       externalId:
         type: string
-      flag:
+      flags:
         type: array
         items:
           type: string
@@ -7711,6 +7742,7 @@ definitions:
   ApiResponse:
     properties:
       fields:
+        type: object
         additionalProperties:
           type: object
       message:
@@ -8564,6 +8596,7 @@ definitions:
       excludeComboBookings:
         type: boolean
       fields:
+        type: object
         additionalProperties:
           type: object
       noteQuery:
@@ -8656,6 +8689,7 @@ definitions:
       extranetUser:
         $ref: '#/definitions/ExtranetUserDto'
       fields:
+        type: object
         additionalProperties:
           type: object
       harbour:
@@ -9195,6 +9229,7 @@ definitions:
       paymentToken:
         type: string
       providerPaymentParameters:
+        type: object
         additionalProperties:
           type: string
       uti:

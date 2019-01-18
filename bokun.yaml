@@ -3495,6 +3495,8 @@ definitions:
         items:
           $ref: '#/definitions/AnswerDto'
         type: array
+      affiliateCode:
+        type: string
   TransportBookingAnswersDto:
     type: object
     properties:

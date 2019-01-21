@@ -3118,6 +3118,8 @@ definitions:
         items:
           type: string
         type: array
+      promoCode:
+        type: string
   RentalBookingRequest:
     type: object
     properties:

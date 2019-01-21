@@ -4609,6 +4609,9 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "promoCode": {
+          "type": "string"
         }
       }
     },

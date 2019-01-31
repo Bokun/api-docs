@@ -914,6 +914,71 @@
         }
       }
     },
+    "/activity.json/active-ids": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "activity"
+        ],
+        "operationId": "getActivityIds",
+        "summary": "Get IDs of all active Activities that can be booked",
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/SellableActivities"
+            }
+          }
+        }
+      }
+    },
+    "/activity.json/list-by-id": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "activity"
+        ],
+        "operationId": "activityListByIds",
+        "summary": "Get a list of Activities matching the IDs provided",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Comma separated list of Activity IDs",
+            "name": "ids",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "description": "The currency code to use for calculating prices.",
+            "name": "currency",
+            "required": false,
+            "type": "string",
+            "default": "ISK"
+          },
+          {
+            "in": "query",
+            "description": "The language the content should be served in",
+            "name": "lang",
+            "required": false,
+            "type": "string",
+            "default": "EN"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/SearchResultsDto"
+            }
+          }
+        }
+      }
+    },
     "/activity.json/{id}/price-list": {
       "get": {
         "produces": [
@@ -3488,6 +3553,33 @@
     }
   },
   "definitions": {
+    "ActivitiesBySupplier": {
+      "type": "object",
+      "properties": {
+        "supplierId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "activityIds": {
+          "items": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "type": "array"
+        }
+      }
+    },
+    "SellableActivities": {
+      "type": "object",
+      "properties": {
+        "suppliers": {
+          "items": {
+            "$ref": "#/definitions/ActivitiesBySupplier"
+          },
+          "type": "array"
+        }
+      }
+    },
     "ItemQuestionsDto": {
       "type": "object",
       "properties": {

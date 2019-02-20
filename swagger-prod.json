@@ -8021,7 +8021,9 @@
               "NATIONAL_PARK_ENTRANCE_FEE",
               "GOODS_AND_SERVICES_TAX",
               "TIP_OR_GRATUITY",
-              "FOOD_AND_DRINKS"
+              "FOOD_AND_DRINKS",
+              "WIFI",
+              "BUS_FARE"
             ],
             "type": "string"
           },
@@ -8043,7 +8045,9 @@
               "NATIONAL_PARK_ENTRANCE_FEE",
               "GOODS_AND_SERVICES_TAX",
               "TIP_OR_GRATUITY",
-              "FOOD_AND_DRINKS"
+              "FOOD_AND_DRINKS",
+              "WIFI",
+              "BUS_FARE"
             ],
             "type": "string"
           },

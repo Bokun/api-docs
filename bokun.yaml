@@ -5442,6 +5442,8 @@ definitions:
           - GOODS_AND_SERVICES_TAX
           - TIP_OR_GRATUITY
           - FOOD_AND_DRINKS
+          - WIFI
+          - BUS_FARE
           type: string
         type: array
       included:
@@ -5460,6 +5462,8 @@ definitions:
           - GOODS_AND_SERVICES_TAX
           - TIP_OR_GRATUITY
           - FOOD_AND_DRINKS
+          - WIFI
+          - BUS_FARE
           type: string
         type: array
       excluded:

@@ -5575,6 +5575,9 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/TagGroupDto'
+      ticketMsg:
+        type: string
+        description: 'Message to show on tickets.'
       title:
         type: string
         description: 'The name of the product.'

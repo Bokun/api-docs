@@ -3721,7 +3721,8 @@
             "DOUBLE",
             "BOOLEAN",
             "DATE",
-            "DATE_AND_TIME"
+            "DATE_AND_TIME",
+            "OPTION"
           ],
           "type": "string"
         },

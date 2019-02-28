@@ -3722,7 +3722,7 @@
             "BOOLEAN",
             "DATE",
             "DATE_AND_TIME",
-            "OPTION"
+            "OPTIONS"
           ],
           "type": "string"
         },

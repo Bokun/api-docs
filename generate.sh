@@ -31,7 +31,7 @@ version=`cat target/${service}.json | jq .info.version | sed 's/"//g'`
 
 # generate the classes for the service in the given language
 java -Dmodels -DsupportingFiles -jar target/swagger-codegen-cli.jar generate \
-  -D java8=true,dateLibrary=java8,library=jersey2,modelPackage=io.bokun.api.model,groupId=io.bokun.api,artifactId=${service},artifactVersion=${version} \
+  -D java8=true,dateLibrary=java8-localdatetime,library=jersey2,modelPackage=io.bokun.api.model,groupId=io.bokun.api,artifactId=${service},artifactVersion=${version} \
   -l ${lang} \
   -i target/${service}.json \
   -o target/${service}-${lang} $@

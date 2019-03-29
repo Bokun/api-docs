@@ -6920,8 +6920,9 @@ definitions:
         format: date-time
       leg:
         $ref: '#/definitions/RouteLegDto'
-      route:
-        $ref: '#/definitions/RouteDto'
+      routeId:
+        type: integer
+        format: int64
   AvailablePathDto:
     properties:
       legs:

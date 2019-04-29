@@ -8142,6 +8142,20 @@
           "format": "int64",
           "description": "The commission group this product belongs to, if any."
         },
+        "mainContactFields": {
+          "type": "array",
+          "description": "A list of main contact fields that should be displayed for customer while booking this product.",
+          "items": {
+            "$ref": "#/definitions/CustomerFieldReferenceDto"
+          }
+        },
+        "passengerFields": {
+          "type": "array",
+          "description": "A list of passenger fields that should be displayed for customer while booking this product.",
+          "items": {
+            "$ref": "#/definitions/CustomerFieldReferenceDto"
+          }
+        },
         "requirements": {
           "type": "string",
           "description": "A text describing what you need to bring for this activity. May contain HTML."
@@ -12297,6 +12311,35 @@
           "type": "string"
         }
       }
+    },
+    "CustomerFieldReferenceDto": {
+      "properties": {
+        "field": {
+          "$ref": "#/definitions/CustomerFieldEnum"
+        },
+        "required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "CustomerFieldEnum": {
+      "type": "string",
+      "enum": [
+        "TITLE",
+        "FIRST_NAME",
+        "LAST_NAME",
+        "PERSONAL_ID_NUMBER",
+        "EMAIL",
+        "PHONE_NUMBER",
+        "NATIONALITY",
+        "GENDER",
+        "ORGANIZATION",
+        "PASSPORT_ID",
+        "PASSPORT_EXPIRY",
+        "ADDRESS",
+        "DATE_OF_BIRTH",
+        "LANGUAGE"
+      ]
     },
     "CustomerInvoiceDto": {
       "properties": {

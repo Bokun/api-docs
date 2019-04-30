@@ -6325,6 +6325,7 @@
           "type": "string"
         },
         "fields": {
+          "type": "object",
           "additionalProperties": {
             "type": "object"
           }
@@ -6425,6 +6426,7 @@
           }
         },
         "termFacets": {
+          "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/TermsFacetDto"
           }
@@ -7046,6 +7048,7 @@
           }
         },
         "termFacets": {
+          "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/TermsFacetDto"
           }
@@ -10460,6 +10463,7 @@
           "format": "date-time"
         },
         "values": {
+          "type": "object",
           "additionalProperties": {
             "type": "string"
           }
@@ -11493,6 +11497,7 @@
     "ApiResponse": {
       "properties": {
         "fields": {
+          "type": "object",
           "additionalProperties": {
             "type": "object"
           }
@@ -12809,6 +12814,7 @@
           "type": "boolean"
         },
         "fields": {
+          "type": "object",
           "additionalProperties": {
             "type": "object"
           }
@@ -12943,6 +12949,7 @@
           "$ref": "#/definitions/ExtranetUserDto"
         },
         "fields": {
+          "type": "object",
           "additionalProperties": {
             "type": "object"
           }
@@ -13743,6 +13750,7 @@
           "type": "string"
         },
         "providerPaymentParameters": {
+          "type": "object",
           "additionalProperties": {
             "type": "string"
           }

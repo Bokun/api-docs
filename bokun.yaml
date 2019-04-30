@@ -4273,6 +4273,7 @@ definitions:
       externalId:
         type: string
       fields:
+        type: object
         additionalProperties:
           type: object
       flags:
@@ -4339,6 +4340,7 @@ definitions:
         items:
           $ref: '#/definitions/TermFilter'
       termFacets:
+        type: object
         additionalProperties:
           $ref: '#/definitions/TermsFacetDto'
       tookInMillis:
@@ -4756,6 +4758,7 @@ definitions:
         items:
           $ref: '#/definitions/TermFilter'
       termFacets:
+        type: object
         additionalProperties:
           $ref: '#/definitions/TermsFacetDto'
       tookInMillis:
@@ -7099,6 +7102,7 @@ definitions:
         type: string
         format: date-time
       values:
+        type: object
         additionalProperties:
           type: string
       weekDays:
@@ -7796,6 +7800,7 @@ definitions:
   ApiResponse:
     properties:
       fields:
+        type: object
         additionalProperties:
           type: object
       message:
@@ -8672,6 +8677,7 @@ definitions:
       excludeComboBookings:
         type: boolean
       fields:
+        type: object
         additionalProperties:
           type: object
       noteQuery:
@@ -8764,6 +8770,7 @@ definitions:
       extranetUser:
         $ref: '#/definitions/ExtranetUserDto'
       fields:
+        type: object
         additionalProperties:
           type: object
       harbour:
@@ -9303,6 +9310,7 @@ definitions:
       paymentToken:
         type: string
       providerPaymentParameters:
+        type: object
         additionalProperties:
           type: string
       uti:

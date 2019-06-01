@@ -5159,6 +5159,7 @@ definitions:
       ticketCategory:
         $ref: '#/definitions/TicketCategoryEnum'
       price:
+        description: 'The price per passenger in this pricing category. This is only set if tiered pricing is disabled, otherwise this is set to null.'
         $ref: '#/definitions/PriceDto'
       pickupPrice:
         $ref: '#/definitions/PriceDto'
@@ -5168,6 +5169,30 @@ definitions:
         items:
           $ref: '#/definitions/ExtraPriceDto'
         type: array
+      tieredPrices:
+        description: 'The tiered prices per passenger in this pricing category. This is only set if tiered pricing is enabled, otherwise this is set to null.'
+        items:
+          $ref: '#/definitions/TieredPriceDto'
+        type: array
+  TieredPriceDto:
+    type: object
+    properties:
+      minPassengersRequired:
+        type: integer
+        format: int32
+      maxPassengersRequired:
+        type: integer
+        format: int32
+      currency:
+        type: string
+      amount:
+        format: double
+        type: number
+      ofWhichTax:
+        format: double
+        type: number
+      priceNotFound:
+        type: boolean
   ActivityRatePricesDto:
     type: object
     properties:

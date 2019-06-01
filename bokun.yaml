@@ -5513,7 +5513,13 @@ definitions:
         description: 'A list of languages which the product content is available in.'
       lastPublished:
         type: string
-        description: 'The date that the product content was last changed.'
+        description: 'The date that the product was last changed and published.'
+      creationDate:
+        type: string
+        description: 'The date the product was first created.'
+      lastModified:
+        type: string
+        description: 'The date that the product content was last modified.'
       locationCode:
         $ref: '#/definitions/LocationCodeDto'
         description: 'The city that represents the main location for this activity. Specified as a location from the United Nations Code for Trade and Transport Locations (UN/LOCODE).'

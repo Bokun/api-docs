@@ -8116,7 +8116,15 @@
         },
         "lastPublished": {
           "type": "string",
-          "description": "The date that the product content was last changed."
+          "description": "The date that the product was last changed and published."
+        },
+        "creationDate": {
+          "type": "string",
+          "description": "The date the product was first created."
+        },
+        "lastModified": {
+          "type": "string",
+          "description": "The date that the product content was last modified."
         },
         "locationCode": {
           "$ref": "#/definitions/LocationCodeDto",

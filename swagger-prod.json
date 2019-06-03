@@ -7493,6 +7493,16 @@
         "amount": {
           "$ref": "#/definitions/SimpleMoney"
         },
+        "minParticipantsRequired": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Will be null if tiered pricing is not enabled for the rate."
+        },
+        "maxParticipantsRequired": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Will be null if tiered pricing is not enabled for the rate."
+        },
         "prices": {
           "type": "array",
           "items": {

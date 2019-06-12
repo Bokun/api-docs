@@ -2631,8 +2631,6 @@ definitions:
         type: string
       status:
         $ref: '#/definitions/RoomBookingStatusEnum'
-      qrCodeUrl:
-        type: string
       currency:
         type: string
       totalPrice:
@@ -3803,7 +3801,7 @@ definitions:
         type: string
       storedExternally:
         type: boolean
-  AccommodationQuery:
+  `AccommodationQuery:
     properties:
       accommodationId:
         type: integer
@@ -9448,8 +9446,6 @@ definitions:
         type: string
       paymentType:
         $ref: '#/definitions/PaymentPaidTypeEnum'
-      qrCodeUrl:
-        type: string
       routeBookings:
         type: array
         items:

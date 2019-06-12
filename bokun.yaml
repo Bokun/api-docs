@@ -3801,7 +3801,7 @@ definitions:
         type: string
       storedExternally:
         type: boolean
-  `AccommodationQuery:
+  AccommodationQuery:
     properties:
       accommodationId:
         type: integer

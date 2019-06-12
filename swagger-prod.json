@@ -3878,9 +3878,6 @@
         "status": {
           "$ref": "#/definitions/RoomBookingStatusEnum"
         },
-        "qrCodeUrl": {
-          "type": "string"
-        },
         "currency": {
           "type": "string"
         },
@@ -13952,9 +13949,6 @@
         },
         "paymentType": {
           "$ref": "#/definitions/PaymentPaidTypeEnum"
-        },
-        "qrCodeUrl": {
-          "type": "string"
         },
         "routeBookings": {
           "type": "array",

@@ -7625,7 +7625,8 @@
         },
         "conversionRate": {
           "format": "double",
-          "type": "number"
+          "type": "number",
+          "description": "Will be null unless the currency is converted."
         },
         "defaultCurrency": {
           "type": "string"

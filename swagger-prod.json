@@ -7620,6 +7620,17 @@
           "format": "int64",
           "type": "integer"
         },
+        "isPriceConverted": {
+          "type": "boolean"
+        },
+        "conversionRate": {
+          "format": "double",
+          "type": "number",
+          "description": "Will be null unless the currency is converted."
+        },
+        "defaultCurrency": {
+          "type": "string"
+        },
         "pricesByDateRange": {
           "items": {
             "$ref": "#/definitions/ActivityPriceListDateRange"

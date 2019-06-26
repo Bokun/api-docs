@@ -3878,9 +3878,6 @@
         "status": {
           "$ref": "#/definitions/RoomBookingStatusEnum"
         },
-        "qrCodeUrl": {
-          "type": "string"
-        },
         "currency": {
           "type": "string"
         },
@@ -7622,6 +7619,17 @@
         "activityId": {
           "format": "int64",
           "type": "integer"
+        },
+        "isPriceConverted": {
+          "type": "boolean"
+        },
+        "conversionRate": {
+          "format": "double",
+          "type": "number",
+          "description": "Will be null unless the currency is converted."
+        },
+        "defaultCurrency": {
+          "type": "string"
         },
         "pricesByDateRange": {
           "items": {
@@ -13952,9 +13960,6 @@
         },
         "paymentType": {
           "$ref": "#/definitions/PaymentPaidTypeEnum"
-        },
-        "qrCodeUrl": {
-          "type": "string"
         },
         "routeBookings": {
           "type": "array",

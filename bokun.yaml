@@ -2788,6 +2788,10 @@ definitions:
         type: string
       externalBookingReference:
         type: string
+      externalBookingEntityName:
+        type: string
+      externalBookingEntityCode:
+        type: string
       status:
         $ref: '#/definitions/RoomBookingStatusEnum'
       currency:
@@ -3027,6 +3031,10 @@ definitions:
         type: string
       externalBookingReference:
         type: string
+      externalBookingEntityName:
+        type: string
+      externalBookingEntityCode:
+        type: string
       bookingAnswers:
         $ref: '#/definitions/BookingAnswersDto'
   TransportBookingQuestionsDto:
@@ -3229,6 +3237,10 @@ definitions:
     properties:
       externalBookingReference:
         type: string
+      externalBookingEntityName:
+        type: string
+      externalBookingEntityCode:
+        type: string
       showPricesInNotification:
         type: boolean
       sendNotificationToMainContact:
@@ -3330,6 +3342,10 @@ definitions:
           $ref: '#/definitions/RentalBookingRequest'
         type: array
       externalBookingReference:
+        type: string
+      externalBookingEntityName:
+        type: string
+      externalBookingEntityCode:
         type: string
       labels:
         items:
@@ -8068,6 +8084,10 @@ definitions:
     properties:
       externalBookingReference:
         type: string
+      externalBookingEntityName:
+        type: string
+      externalBookingEntityCode:
+        type: string
       bookingFields:
         type: array
         items:
@@ -9598,6 +9618,10 @@ definitions:
         items:
           $ref: '#/definitions/CustomerPaymentDto'
       externalBookingReference:
+        type: string
+      externalBookingEntityName:
+        type: string
+      externalBookingEntityCode:
         type: string
       extranetUser:
         $ref: '#/definitions/ExtranetUserDto'

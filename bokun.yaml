@@ -1519,6 +1519,165 @@ paths:
           description: API response
           schema:
             $ref: '#/definitions/ApiResponse'
+  '/cart.json/{sessionId}':
+    get:
+      produces:
+        - application/json
+      tags:
+        - cart
+      operationId: cartGet
+      summary: Get the contents of the shopping cart with the session ID supplied.
+      parameters:
+        - in: path
+          description: The session ID of shopping cart
+          name: sessionId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: The shopping cart
+          schema:
+            $ref: '#/definitions/ShoppingCart'
+  '/cart.json/{sessionId}/activity':
+    post:
+      produces:
+        - application/json
+      tags:
+        - cart
+      operationId: cartAddActivity
+      summary: Add an activity to the shopping cart
+      parameters:
+        - in: path
+          description: The session ID of shopping cart
+          name: sessionId
+          required: true
+          type: string
+        - in: body
+          description: The activity booking request
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/ActivityBookingRequest'
+      responses:
+        '200':
+          description: The shopping cart
+          schema:
+            $ref: '#/definitions/ShoppingCart'
+  '/cart.json/{sessionId}/remove/{productBookingConfirmationCode}':
+    get:
+      produces:
+        - application/json
+      tags:
+        - cart
+      operationId: cartRemove
+      summary: Remove a product booking from the shopping cart.
+      parameters:
+        - in: path
+          description: The session ID of shopping cart
+          name: sessionId
+          required: true
+          type: string
+        - in: path
+          description: The confirmation code of the product booking you want to remove
+          name: productBookingConfirmationCode
+          required: true
+          type: string
+      responses:
+        '200':
+          description: The shopping cart
+          schema:
+            $ref: '#/definitions/ShoppingCart'
+  '/cart.json/{sessionId}/apply-promo-code/{promoCode}':
+    get:
+      produces:
+        - application/json
+      tags:
+        - cart
+      operationId: cartApplyPromoCode
+      summary: Apply a promo code to the shopping cart.
+      parameters:
+        - in: path
+          description: The session ID of shopping cart
+          name: sessionId
+          required: true
+          type: string
+        - in: path
+          description: The promo code you wish to apply to the shopping cart
+          name: promoCode
+          required: true
+          type: string
+      responses:
+        '200':
+          description: The shopping cart
+          schema:
+            $ref: '#/definitions/ShoppingCart'
+  '/cart.json/{sessionId}/remove-promo-code':
+    get:
+      produces:
+        - application/json
+      tags:
+        - cart
+      operationId: cartRemovePromoCode
+      summary: Remove any promo code from the shopping cart.
+      parameters:
+        - in: path
+          description: The session ID of shopping cart
+          name: sessionId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: The shopping cart
+          schema:
+            $ref: '#/definitions/ShoppingCart'
+  '/cart.json/{sessionId}/apply-gift-card/{giftCardCode}':
+    get:
+      produces:
+        - application/json
+      tags:
+        - cart
+      operationId: cartApplyGiftCard
+      summary: Apply a gift card to the shopping cart.
+      parameters:
+        - in: path
+          description: The session ID of shopping cart
+          name: sessionId
+          required: true
+          type: string
+        - in: path
+          description: The gift card code you wish to apply to the shopping cart
+          name: giftCardCode
+          required: true
+          type: string
+      responses:
+        '200':
+          description: The shopping cart
+          schema:
+            $ref: '#/definitions/ShoppingCart'
+  '/cart.json/{sessionId}/track-affiliate/{affiliateCode}':
+    get:
+      produces:
+        - application/json
+      tags:
+        - cart
+      operationId: cartApplyAffiliate
+      summary: Apply an affiliate tracking code to the shopping cart.
+      parameters:
+        - in: path
+          description: The session ID of shopping cart
+          name: sessionId
+          required: true
+          type: string
+        - in: path
+          description: The affiliate tracking code you wish to apply to the shopping cart
+          name: affiliateCode
+          required: true
+          type: string
+      responses:
+        '200':
+          description: The shopping cart
+          schema:
+            $ref: '#/definitions/ShoppingCart'
   '/checkout.json/options/shopping-cart/{sessionId}':
     get:
       produces:
@@ -3170,9 +3329,6 @@ definitions:
         items:
           $ref: '#/definitions/RentalBookingRequest'
         type: array
-      discountPercentage:
-        format: double
-        type: number
       externalBookingReference:
         type: string
       labels:
@@ -3180,6 +3336,8 @@ definitions:
           type: string
         type: array
       promoCode:
+        type: string
+      giftCardCode:
         type: string
   RentalBookingRequest:
     type: object

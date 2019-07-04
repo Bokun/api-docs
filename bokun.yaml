@@ -2994,13 +2994,6 @@ definitions:
           wrapped: true
     xml:
       name: bookingChannel
-  OnRequestSettings:
-    type: object
-    properties:
-      responseDeadline:
-        type: string
-      responseCallbackUrl:
-        type: string
   BookingAnswersDto:
     type: object
     properties:
@@ -3133,8 +3126,6 @@ definitions:
         type: string
       customizedPrice:
         type: number
-      onRequest:
-        $ref: '#/definitions/OnRequestSettings'
       passengers:
         items:
           $ref: '#/definitions/PassengerBookingRequest'

@@ -4231,6 +4231,10 @@ definitions:
       zoomLevel:
         type: integer
         format: int32
+      origin:
+        $ref: '#/definitions/LocationOriginEnum'
+      originId:
+        type: string
   LocationFilters:
     properties:
       geoBoundingBoxFilter:
@@ -10211,3 +10215,9 @@ definitions:
       - GENERAL
       - FINANCE
       - OPERATIONS
+  LocationOriginEnum:
+    type: string
+    enum:
+      - TRIPADVISOR
+      - GOOGLE
+      - CUSTOM

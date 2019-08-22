@@ -6258,6 +6258,12 @@
         "zoomLevel": {
           "type": "integer",
           "format": "int32"
+        },
+        "origin": {
+          "$ref": "#/definitions/LocationOriginEnum"
+        },
+        "originId": {
+          "type": "string"
         }
       }
     },
@@ -14993,6 +14999,14 @@
         "GENERAL",
         "FINANCE",
         "OPERATIONS"
+      ]
+    },
+    "LocationOriginEnum": {
+      "type": "string",
+      "enum": [
+        "GOOGLE_PLACES",
+        "TRIPADVISOR_API",
+        "FREETEXT_LOCATION"
       ]
     }
   }

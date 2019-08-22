@@ -10218,6 +10218,6 @@ definitions:
   LocationOriginEnum:
     type: string
     enum:
-      - TRIPADVISOR
-      - GOOGLE
-      - CUSTOM
+      - GOOGLE_PLACES
+      - TRIPADVISOR_API
+      - FREETEXT_LOCATION

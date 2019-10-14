@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Bokun API",
-    "description": "<p>Further documentation of this api is available <a href=\"https://docs.google.com/document/d/1tkLLqeAvVtRrDpsM1uJZJvhHg3EfsMw1z_SN8Lbe2Rs/pub\" target=\"_blank\">here</a>.</p> <p>You can generate a client in your preferred language using <a href=\"http://editor.swagger.io/#/?import=https://bokun.github.io/api-docs/bokun.yaml\">swagger editor</a></p>",
+    "description": "<p>You can sign up for the <a href=\"http://eepurl.com/gDj7Yb\">Bokun API mailing list</a> to receive notifications when there are upcoming changes to this API.</p> <p>Further documentation of this api is available <a href=\"https://docs.google.com/document/d/1tkLLqeAvVtRrDpsM1uJZJvhHg3EfsMw1z_SN8Lbe2Rs/pub\" target=\"_blank\">here</a>.</p> <p>You can generate a client in your preferred language using <a href=\"http://editor.swagger.io/#/?import=https://bokun.github.io/api-docs/bokun.yaml\">swagger editor</a></p>",
     "version": "1.0"
   },
   "schemes": [
@@ -4115,6 +4115,12 @@
         "externalBookingReference": {
           "type": "string"
         },
+        "externalBookingEntityName": {
+          "type": "string"
+        },
+        "externalBookingEntityCode": {
+          "type": "string"
+        },
         "status": {
           "$ref": "#/definitions/RoomBookingStatusEnum"
         },
@@ -4422,17 +4428,6 @@
         "name": "bookingChannel"
       }
     },
-    "OnRequestSettings": {
-      "type": "object",
-      "properties": {
-        "responseDeadline": {
-          "type": "string"
-        },
-        "responseCallbackUrl": {
-          "type": "string"
-        }
-      }
-    },
     "BookingAnswersDto": {
       "type": "object",
       "properties": {
@@ -4475,6 +4470,12 @@
           "type": "string"
         },
         "externalBookingReference": {
+          "type": "string"
+        },
+        "externalBookingEntityName": {
+          "type": "string"
+        },
+        "externalBookingEntityCode": {
           "type": "string"
         },
         "bookingAnswers": {
@@ -4620,9 +4621,6 @@
         },
         "customizedPrice": {
           "type": "number"
-        },
-        "onRequest": {
-          "$ref": "#/definitions/OnRequestSettings"
         },
         "passengers": {
           "items": {
@@ -4778,6 +4776,12 @@
         "externalBookingReference": {
           "type": "string"
         },
+        "externalBookingEntityName": {
+          "type": "string"
+        },
+        "externalBookingEntityCode": {
+          "type": "string"
+        },
         "showPricesInNotification": {
           "type": "boolean"
         },
@@ -4928,6 +4932,12 @@
           "type": "array"
         },
         "externalBookingReference": {
+          "type": "string"
+        },
+        "externalBookingEntityName": {
+          "type": "string"
+        },
+        "externalBookingEntityCode": {
           "type": "string"
         },
         "labels": {
@@ -11905,6 +11915,12 @@
         "externalBookingReference": {
           "type": "string"
         },
+        "externalBookingEntityName": {
+          "type": "string"
+        },
+        "externalBookingEntityCode": {
+          "type": "string"
+        },
         "bookingFields": {
           "type": "array",
           "items": {
@@ -14185,6 +14201,12 @@
           }
         },
         "externalBookingReference": {
+          "type": "string"
+        },
+        "externalBookingEntityName": {
+          "type": "string"
+        },
+        "externalBookingEntityCode": {
           "type": "string"
         },
         "extranetUser": {

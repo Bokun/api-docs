@@ -629,6 +629,30 @@ paths:
           description: No response was specified
           schema:
             $ref: '#/definitions/SellableActivities'
+  '/activity.json/list-updated':
+    get:
+      produces:
+        - application/json
+      tags:
+        - activity
+      operationId: getUpdatedActivities
+      summary: Get ids/timestamps of all Activities modified in specified date range
+      parameters:
+        - in: query
+          description: date range start inclusive (ISO yyyy-MM-ddTHH:mm:ss.SSS - time can be ommitted or partial, time zone UTC)
+          name: fromDate
+          required: true
+          type: string
+        - in: query
+          description: date range end exclusive (ISO yyyy-MM-ddTHH:mm:ss.SSS - time can be ommitted or partial, time zone UTC)
+          name: toDate
+          required: false
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/UpdatedProductsResponse'
   '/activity.json/list-by-id':
     get:
       produces:
@@ -2583,6 +2607,21 @@ definitions:
         items:
           $ref: '#/definitions/ActivitiesBySupplier'
         type: array
+  UpdatedProductsResponse:
+    type: object
+    properties:
+      updatedProducts:
+        items:
+          $ref: '#/definitions/ProductUpdateDetails'
+        type: array
+  ProductUpdateDetails:
+    type: object
+    properties:
+      productId:
+        format: int64
+        type: integer
+      updateTimestamp:
+        type: string
   ItemQuestionsDto:
     type: object
     properties:

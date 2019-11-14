@@ -9998,6 +9998,11 @@ definitions:
       - PRIVATE_ACTIVITY
       - TAILOR_MADE
       - BEACH
+      - ADULTS_ONLY
+      - COUPLES
+      - SENIOR
+      - YOUTH
+      - VOLUNTEERS
   ActivityCategory:
     type: string
     enum:

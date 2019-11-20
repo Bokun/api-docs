@@ -14764,7 +14764,12 @@
         "OUTDOOR",
         "PRIVATE_ACTIVITY",
         "TAILOR_MADE",
-        "BEACH"
+        "BEACH",
+        "ADULTS_ONLY",
+        "COUPLES",
+        "SENIOR",
+        "YOUTH",
+        "VOLUNTEERS"
       ]
     },
     "ActivityCategory": {

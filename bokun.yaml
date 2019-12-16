@@ -6316,6 +6316,16 @@ definitions:
         $ref: '#/definitions/LocationDto'
       title:
         type: string
+      type:
+        $ref: '#/definitions/PlaceTypeEnum'
+  PlaceTypeEnum:
+    type: string
+    enum:
+      - AIRPORT
+      - PORT
+      - STATION
+      - ACCOMMODATION
+      - OTHER
   PricingCategoryDto:
     properties:
       ticketCategory:

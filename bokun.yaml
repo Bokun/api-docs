@@ -366,8 +366,8 @@ paths:
       tags:
         - currency
       operationId: allCurrencies
-      summary: Get all Supported Currencies
-      description: 'Get a list of all the available currencies, along with conversion rates.'
+      summary: Get all system Supported Currencies
+      description: 'Get a list of all the available currencies, along with conversion rates to ISK.'
       responses:
         '200':
           description: No response was specified

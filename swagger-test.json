@@ -7619,7 +7619,7 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Value \"startTimeId_YYYYMMDD\" (YYYYMMDD - current request date)."
+          "description": "Value \"startTimeId_YYYYMMDD\" (YYYYMMDD - date of the departure for this particular availability)."
         },
         "activityId": {
           "type": "integer",
@@ -7673,7 +7673,7 @@
         "bookedParticipants": {
           "type": "integer",
           "format": "int32",
-          "description": "Amount of booked places for this start time IF request is made by activity original owner (supplier). Otherwise returns 0."
+          "description": "Amount of booked participants for this start time IF request is made by activity original owner (supplier). Otherwise is hidden (returns 0)."
         },
         "minParticipants": {
           "type": "integer",

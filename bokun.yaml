@@ -447,7 +447,7 @@ paths:
         - activity
       operationId: getUpcomingAvailabilities
       summary: Get the next upcoming Activity availabilities
-      description: 'Get the list of all availabilities for the Activity id including sold-outs, if parameter "includeSoldOut"=true. Parameter "max" limits the number of results (still, results do not exceed 50).'
+      description: 'Get the list of upcoming availabilities for the activity id (including sold-outs, if parameter "includeSoldOut" == true.)'
       parameters:
         - in: path
           description: ID of activity to be fetched
@@ -5175,14 +5175,14 @@ definitions:
       date:
         type: integer
         format: int64
-        description: 'Timestamp for request current date (at time exactly 0:00 UTC).'
+        description: 'Date (in UNIX Epoch time format) of the departure for this particular availability.'
       localizedDate:
         type: string
-        description: 'Current date when request was sent in profile language (e.g. "Wed 18.Mar 20").'
+        description: 'Same as date but formatted using EEE dd.MMM yy pattern, e.g. "Wed 18.Mar 20" and formated to the locale specified in the profile.'
       availabilityCount:
         type: integer
         format: int32
-        description: 'Amount of open seats for this start time. Returns 1000 if unlimited.'
+        description: 'Amount of open seats for this start time. Returns arbitrary high value if unlimited.'
       bookedParticipants:
         type: integer
         format: int32
@@ -6077,7 +6077,7 @@ definitions:
         description: 'The maximum participants per one booking on this rate. This field is null if there is no such maximum set (but do not confuse with start time availability maximum seats).'
       cancellationPolicy:
         description: 'The cancellation policy for this rate.'
-        $ref: '#/definitions/CancellationPolicyDto'
+        $ref: '#/definitions/CancellationPolicy'
       fixedPassExpiryDate:
         type: array
         description: 'Specifies at what fixed date the pass expires (array of year, month, day). Only used if Activity.bookingType == PASS and Activity.passExpiryType == FIXED_DATE.'
@@ -6087,23 +6087,23 @@ definitions:
         type: integer
         description: 'Specifies after how many days from the purchase the pass expires.Only used if Activity.bookingType == PASS and Activity.passExpiryType == RELATIVE_DATE.'
       pickupSelectionType:
-        description: 'Specifies how to handle pick up for this rate. NB: if Activity.meetingType == MEET_ON_LOCATION, then this will always be UNAVAILABLE.'
+        description: 'Specifies how to handle pick-up for this rate. NB: if Activity.meetingType == MEET_ON_LOCATION, then this will always be UNAVAILABLE.'
         $ref: '#/definitions/AddonSelectionType'
       pickupPricingType:
-        description: 'Specifies whether pickup is included in the price or whether it is priced separately.'
+        description: 'Specifies whether pick-up is included in the price or it is priced separately.'
         $ref: '#/definitions/AddonPricingType'
       pickupPricedPerPerson:
         type: boolean
         description: 'Specifies whether pick up is priced per person (per pricing category). Only checked if Activity.meetingType != MEET_ON_LOCATION and pickupPricingType == PRICED_SEPARATELY.'
       dropoffSelectionType:
-        description: 'Specifies how to handle dropoff for this rate. Only used if Activity.offersDropoffService == true.'
+        description: 'Specifies how to handle drop-off for this rate. Only used if Activity.offersDropoffService == true.'
         $ref: '#/definitions/AddonSelectionType'
       dropoffPricingType:
-        description: 'Specifies whether dropoff is included in the price or whether it is priced separately.'
+        description: 'Specifies whether drop-off is included in the price or it is priced separately.'
         $ref: '#/definitions/AddonPricingType'
       dropoffPricedPerPerson:
         type: boolean
-        description: 'Specifies whether drop off is priced per person (per pricing category). Only checked if Activity.offersDropoffService == true and dropoffPricingType == PRICED_SEPARATELY.'
+        description: 'Specifies whether drop-off is priced per person (per pricing category). Only checked if Activity.offersDropoffService == true and dropoffPricingType == PRICED_SEPARATELY.'
       extraConfigs:
         type: array
         description: 'The list of activity extras that are used by this rate.'
@@ -6126,14 +6126,18 @@ definitions:
           properties:
             minPassengersRequired:
               type: integer
+              description: 'Specifies minimum amount of participants to qualify for this tier.'
             maxPassengersRequired:
               type: integer
+              description: 'Specifies upper boundary of participants for this tier. If null - there is no upper limit for this tier.'
             pricingCategoryId:
               type: integer
               format: int64
+              description: 'Specifies ID of pricing category enabled for this tier.'
             activityRateId:
               type: integer
               format: int64
+              description: 'Specifies ID of rate for which this tier is enabled.'
       pricingCategoryIds:
         type: array
         description: 'The list of the IDs of pricing categories that are mapped to this rate.'
@@ -6153,10 +6157,16 @@ definitions:
       activityExtraId:
         type: integer
         format: int64
+        description: 'Specifies ID of extra mapped to this activity rate.'
       selectionType:
+        description: 'Specifies whether extra is optional or preselected.'
         $ref: '#/definitions/ExtraSelectionType'
       pricingType:
+        description: 'Specifies whether extra is included in the price or it is priced separately.'
         $ref: '#/definitions/AddonPricingType'
+      pricedPerPerson:
+        type: boolean
+        description: 'Specifies whether extra is priced per person. If false then extra is priced per booking.'
   ActivityPlacesDto:
     properties:
       dropoffPlaces:
@@ -9676,6 +9686,18 @@ definitions:
       id:
         type: integer
         format: int64
+      included:
+        type: boolean
+      percentage:
+        type: number
+        format: double
+      title:
+        type: string
+  Tax:
+    properties:
+      id:
+        type: integer
+        format: int64
         description: 'Tax id'
       created:
         type: array
@@ -9689,12 +9711,12 @@ definitions:
         type: boolean
         description: 'True if tax is included in the operations.'
       roundingMode:
-        $ref: '#/definitions/RoundingModeEnum'
+        $ref: '#/definitions/RoundingMode'
       currency:
         type: string
       percentages:
         type: array
-        description: 'A list of percentages applied for this tax during time.'
+        description: 'The list of percentages applied for this tax during time.'
         items:
           type: object
           properties:
@@ -10017,6 +10039,19 @@ definitions:
       id:
         type: integer
         format: int64
+      title:
+        type: string
+      penaltyRules:
+        type: array
+        items:
+          $ref: '#/definitions/PenaltyRuleDto'
+      tax:
+        $ref: '#/definitions/TaxDto'
+  CancellationPolicy:
+    properties:
+      id:
+        type: integer
+        format: int64
         description: 'Cancellation policy id.'
       created:
         type: array
@@ -10027,13 +10062,26 @@ definitions:
         type: string
         description: 'Cancellation policy title.'
       tax:
-        $ref: '#/definitions/TaxDto'
+        $ref: '#/definitions/Tax'
       penaltyRules:
         type: array
         description: 'The list of penalty rules applied for this cancellation policy.'
         items:
-          $ref: '#/definitions/PenaltyRules'
-  PenaltyRules:
+          $ref: '#/definitions/PenaltyRule'
+  PenaltyRuleDto:
+    properties:
+      id:
+        type: integer
+        format: int64
+      cutoffHours:
+        type: integer
+        format: int32
+      charge:
+        type: number
+        format: double
+      chargeType:
+        type: string
+  PenaltyRule:
     properties:
       id:
         type: integer
@@ -10050,7 +10098,6 @@ definitions:
       percentage:
         type: number
         description: 'Specifies penalty percentage of the cancelled booking total price.'
-
   Guidance:
     properties:
       id:
@@ -10440,8 +10487,9 @@ definitions:
       - GOOGLE_PLACES
       - TRIPADVISOR_API
       - FREETEXT_LOCATION
-  RoundingModeEnum:
+  RoundingMode:
     type: string
+    description: 'RoundingMode enum from java.math package.'
     enum:
       - UP
       - DOWN

@@ -447,6 +447,7 @@ paths:
         - activity
       operationId: getUpcomingAvailabilities
       summary: Get the next upcoming Activity availabilities
+      description: 'Get the list of upcoming availabilities for the activity id (including sold-outs, if parameter "includeSoldOut" == true.)'
       parameters:
         - in: path
           description: ID of activity to be fetched
@@ -5141,118 +5142,179 @@ definitions:
         format: double
   ActivityAvailabilityDto:
     properties:
+      id:
+        type: string
+        description: 'Value "startTimeId_YYYYMMDD" (YYYYMMDD - date of the departure for this particular availability).'
       activityId:
         type: integer
         format: int64
+        description: 'Id of the activity'
+      activityTitle:
+        type: string
+        description: 'Title of the activity.'
       activityOwnerId:
         type: integer
         format: int64
+        description: 'Id of vendor which owns activity (original supplier)'
+      activityOwnerTitle:
+        type: string
+        description: 'Title of vendor which owns activity (original supplier)'
+      startTime:
+        type: string
+        description: 'Start time in hours:minutes using 24h format (e.g. "19:00"). If this is not a time based availability, e.g. pass type, then value is "00:00"'
+      startTimeId:
+        type: integer
+        format: int64
+        description: 'Unique system id for the start time mapped to this availability'
+      startTimeLabel:
+        type: string
+        description: 'Optional label if used for this start time'
+      flexible:
+        type: boolean
+        description: 'If activity "bookingType" is DATE then true, otherwise - false.'
+      date:
+        type: integer
+        format: int64
+        description: 'Date (in UNIX Epoch time format) of the departure for this particular availability.'
+      localizedDate:
+        type: string
+        description: 'Same as date but formatted using EEE dd.MMM yy pattern, e.g. "Wed 18.Mar 20" and formated to the locale specified in the profile.'
       availabilityCount:
         type: integer
         format: int32
+        description: 'Amount of open seats for this start time. Returns arbitrary high value if unlimited.'
       bookedParticipants:
         type: integer
         format: int32
-      comboActivity:
+        description: 'Amount of booked participants for this start time IF request is made by activity original owner (supplier). Otherwise is hidden (returns 0).'
+      minParticipants:
+        type: integer
+        format: int32
+        description: 'Minimum bookable participants for this activity.'
+      minParticipantsToBookNow:
+        type: integer
+        format: int32
+        description: 'Value of the current minimum bookable participants (evaluating that minimum participants limit might be already reached by other participants)'
+      productGroupId:
+        type: integer
+        format: int32
+        description: 'The id of commission group which is assigned to this activity (set in Pricing/Commission group).'
+      recurrenceId:
+        type: integer
+        format: int32
+        description: 'Starting time availability rule (recurrence) id.'
+      pickupAllotment:
         type: boolean
-      comboStartTimes:
+        description: 'True if this pick-up service has a limited amount of available seats.'
+      pickupAvailabilityCount:
+        type: integer
+        format: int32
+        description: 'Amount of pick-up service available seats. Returns 1000 if unlimited.'
+      unlimitedAvailability:
+        type: boolean
+        description: 'False if activity capacity is set to Limited number, otherwise - true.'
+      defaultRateId:
+        type: integer
+        format: int32
+        description: 'Id of default rate set for this experience.'
+      rates:
         type: array
         items:
+          $ref: '#/definitions/ActivityRateDto'
+        description: 'The list of all rates (and their related information) offered by the product.'
+      pricesByRate:
+        type: array
+        description: 'The list of all detailed prices for each product element in this rate.'
+        items:
+          $ref: '#/definitions/ActivityRatePrices'
+      comboActivity:
+        type: boolean
+        description: 'True if this is combo experience, false - otherwise.'
+      comboStartTimes:
+        type: array
+        description: 'The list of ids and start times of experiences included in this combo product. Empty if this is not a combo activity.'
+        items:
           $ref: '#/definitions/ComboStartTimeInfoDto'
-      date:
-        type: string
-        format: date-time
+      flags:
+        type: array
+        description: 'The list of flags related to this product (set in Experience/Advanced).'
+        items:
+          type: string
       defaultPrice:
         type: number
+        description: 'Price for default price category, default rate from default price catalog.'
+      pricesByCategory:
+        type: object
+        description: 'All price categories and amounts in default vendor currency.'
+        additionalProperties:
+          type: number
+          format: double
+      pickupPrice:
+        type: number
+        description: 'Pick-up price per booking. If pick-up pricing is set per participant then value is null.'
+      pickupPricesByCategory:
+        type: object
+        description: 'Pick-up prices for one passenger of each category, in default vendor currency.'
+        additionalProperties:
+          type: number
+          format: double
       dropoffPrice:
         type: number
+        description: 'Drop-off price per booking. If drop-off pricing is set per participant then value is null.'
       dropoffPricesByCategory:
         type: object
+        description: 'Drop-off prices for one passenger of each category, in default vendor currency.'
         additionalProperties:
           type: number
           format: double
       extraPrices:
         type: object
+        description: 'Prices for each extra connected to this activity in default vendor currency.'
         additionalProperties:
           type: number
           format: double
-      flags:
-        type: array
-        items:
-          type: string
-      flexible:
-        type: boolean
-      id:
-        type: string
-      localizedDate:
-        type: string
-      minParticipants:
-        type: integer
-        format: int32
-      pickupAllotment:
-        type: boolean
-      pickupAvailabilityCount:
-        type: integer
-        format: int32
-      pickupPrice:
-        type: number
-      pickupPricesByCategory:
-        type: object
-        additionalProperties:
-          type: number
-          format: double
-      pricesByCategory:
-        type: object
-        additionalProperties:
-          type: number
-          format: double
-      soldOut:
-        type: boolean
-      startTime:
-        type: string
-      startTimeId:
-        type: integer
-        format: int64
-      unavailable:
-        type: boolean
-      unlimitedAvailability:
-        type: boolean
       guidedLanguages:
         type: array
         items:
           type: string
-      defaultRateId:
-        type: integer
-        format: int64
-      rates:
-        type: array
-        items:
-          $ref: '#/definitions/ActivityRateDto'
-      pricesByRate:
-        type: array
-        items:
-          $ref: '#/definitions/ActivityRatePrices'
+        description: 'The list of guided languages for this availability.'
+      unavailable:
+        type: boolean
+        description: 'True if the activity is limited availability AND availability == 0'
+      pickupSoldOut:
+        type: boolean
+        description: 'True if all pick-up seats are sold for this activity start time, false otherwise.'
+      soldOut:
+        type: boolean
+        description: 'True if all seats are sold for this activity start time, false otherwise.'
   ActivityRatePrices:
     properties:
       activityRateId:
         type: integer
         format: int64
+        description: 'Activity rate ID.'
       pricePerBooking:
+        description: 'Specifies price per booking for this rate. Appears only if this rate "pricedPerPerson" == false'
         $ref: '#/definitions/SimpleMoney'
       pricePerCategoryUnit:
         type: array
+        description: 'The list of prices per person for each price category mapped to this rate. Is empty if "pricedPerPerson" == true.'
         items:
           $ref: '#/definitions/PriceByItem'
       pickupPrice:
+        description: 'Specifies the pick-up price per booking. Will not appear if there is set pick-up price per passenger.'
         $ref: '#/definitions/SimpleMoney'
       pickupPricePerCategoryUnit:
         type: array
+        description: 'The list of pick-up prices per passenger for each price category. Is empty if pick-up price is set per booking.'
         items:
           $ref: '#/definitions/PriceByItem'
       dropoffPrice:
+        description: 'Specifies the drop-off price per booking. Will not appear if there is set drop-off price per passenger.'
         $ref: '#/definitions/SimpleMoney'
       dropoffPricePerCategoryUnit:
         type: array
+        description: 'The list of drop-off prices per passenger for each price category. Is empty if drop-off price is set per booking.'
         items:
           $ref: '#/definitions/PriceByItem'
       extraPricePerUnit:
@@ -5269,15 +5331,16 @@ definitions:
         type: integer
         format: int64
       amount:
+        description: 'Price amount that consists of amount and currency.'
         $ref: '#/definitions/SimpleMoney'
       minParticipantsRequired:
         type: integer
         format: int32
-        description: 'Will be null if tiered pricing is not enabled for the rate.'
+        description: 'Will be null/will not appear if tiered pricing is not enabled for the rate.'
       maxParticipantsRequired:
         type: integer
         format: int32
-        description: 'Will be null if tiered pricing is not enabled for the rate.'
+        description: 'Will be null/will not appear if tiered pricing is not enabled for the rate.'
       prices:
         type: array
         items:
@@ -5523,12 +5586,12 @@ definitions:
           $ref: '#/definitions/Place'
       guidanceTypes:
         type: array
-        description: 'Specifies the types of guidance on offer, along with what languages each is offered in.'
+        description: 'The list of types of guidance on offer, along with what languages each is offered in.'
         items:
           $ref: '#/definitions/Guidance'
       activityCategories:
         type: array
-        description: 'A list of categories that the tour/activity/attraction falls into.'
+        description: 'The list of categories that the tour/activity/attraction falls into.'
         items:
           $ref: '#/definitions/ActivityCategory'
       activityAttributes:
@@ -5569,7 +5632,7 @@ definitions:
         description: 'The language that the product description is written in. There may also be translations available.'
       bookableExtras:
         type: array
-        description: 'A list of extras available for this product. Note that not all of these extras may be available for all bookable items. For example, different rates may offer different extras.'
+        description: 'The list of extras available for this product. Note that not all of these extras may be available for all bookable items. For example, different rates may offer different extras.'
         items:
           $ref: '#/definitions/BookableExtraDto'
       bookingCutoffDays:
@@ -5865,7 +5928,7 @@ definitions:
           $ref: '#/definitions/WeekdayDto'
       cancellationPolicy:
         $ref: '#/definitions/CancellationPolicyDto'
-        description: 'A cancellation policy, describing any cancellation fees incurred when cancelling bookings.'
+        description: 'The cancellation policy, describing any cancellation fees incurred when cancelling bookings.'
       barcodeType:
         $ref: '#/definitions/BarcodeTypeEnum'
       timeZone:
@@ -5878,7 +5941,7 @@ definitions:
         description: 'The ID of the default rate for this activity.'
       rates:
         type: array
-        description: 'A list of all rates offered by the product.'
+        description: 'The list of all rates offered by the product.'
         items:
           $ref: '#/definitions/ActivityRateDto'
       hasOpeningHours:
@@ -5987,51 +6050,105 @@ definitions:
       id:
         type: integer
         format: int64
+        description: 'Rate id.'
       title:
         type: string
+        description: 'The title of rate (may be displayed to the end customer to describe the rate).'
       description:
         type: string
+        description: 'The description of rate (may be displayed to the end customer to describe the rate).'
       index:
         type: integer
         format: int32
+        description: 'Index is used for ordering rates within the list.'
       rateCode:
         type: string
+        description: 'Short rate code.'
       pricedPerPerson:
         type: boolean
+        description: 'Specifies whether this rate is priced per person. If this is false, then the rate is priced per booking.'
       minPerBooking:
         type: integer
         format: int32
+        description: 'The minimum participants per one booking on this rate. This is useful if you want to have a group rate.'
       maxPerBooking:
         type: integer
         format: int32
+        description: 'The maximum participants per one booking on this rate. This field is null if there is no such maximum set (but do not confuse with start time availability maximum seats).'
       cancellationPolicy:
-        $ref: '#/definitions/CancellationPolicyDto'
+        description: 'The cancellation policy for this rate.'
+        $ref: '#/definitions/CancellationPolicy'
+      fixedPassExpiryDate:
+        type: array
+        description: 'Specifies at what fixed date the pass expires (array of year, month, day). Only used if Activity.bookingType == PASS and Activity.passExpiryType == FIXED_DATE.'
+        items:
+          type: string
+      passValidForDays:
+        type: integer
+        description: 'Specifies after how many days from the purchase the pass expires.Only used if Activity.bookingType == PASS and Activity.passExpiryType == RELATIVE_DATE.'
       pickupSelectionType:
+        description: 'Specifies how to handle pick-up for this rate. NB: if Activity.meetingType == MEET_ON_LOCATION, then this will always be UNAVAILABLE.'
         $ref: '#/definitions/AddonSelectionType'
       pickupPricingType:
+        description: 'Specifies whether pick-up is included in the price or it is priced separately.'
         $ref: '#/definitions/AddonPricingType'
       pickupPricedPerPerson:
         type: boolean
+        description: 'Specifies whether pick up is priced per person (per pricing category). Only checked if Activity.meetingType != MEET_ON_LOCATION and pickupPricingType == PRICED_SEPARATELY.'
       dropoffSelectionType:
+        description: 'Specifies how to handle drop-off for this rate. Only used if Activity.offersDropoffService == true.'
         $ref: '#/definitions/AddonSelectionType'
       dropoffPricingType:
+        description: 'Specifies whether drop-off is included in the price or it is priced separately.'
         $ref: '#/definitions/AddonPricingType'
       dropoffPricedPerPerson:
         type: boolean
-      startTimeIds:
-        type: array
-        items:
-          type: integer
-          format: int64
-      pricingCategoryIds:
-        type: array
-        items:
-          type: integer
-          format: int64
+        description: 'Specifies whether drop-off is priced per person (per pricing category). Only checked if Activity.offersDropoffService == true and dropoffPricingType == PRICED_SEPARATELY.'
       extraConfigs:
         type: array
+        description: 'The list of activity extras that are used by this rate.'
         items:
           $ref: '#/definitions/ActivityRateExtraConfig'
+      startTimeIds:
+        type: array
+        description: 'Only used if bookingType == DATE_AND_TIME. The list of IDs of activity start times that this rate is applicable for. If empty, then the rate will be available for all start times.'
+        items:
+          type: integer
+          format: int64
+      tieredPricingEnabled:
+        type: boolean
+        description: 'Specifies if there is tiered pricing set for this rate.'
+      tiers:
+        type: array
+        description: 'The list of pricing tiers which are set for this rate.'
+        items:
+          type: object
+          properties:
+            minPassengersRequired:
+              type: integer
+              description: 'Specifies minimum amount of participants to qualify for this tier.'
+            maxPassengersRequired:
+              type: integer
+              description: 'Specifies upper boundary of participants for this tier. If null - there is no upper limit for this tier.'
+            pricingCategoryId:
+              type: integer
+              format: int64
+              description: 'Specifies ID of pricing category enabled for this tier.'
+            activityRateId:
+              type: integer
+              format: int64
+              description: 'Specifies ID of rate for which this tier is enabled.'
+      pricingCategoryIds:
+        type: array
+        description: 'The list of the IDs of pricing categories that are mapped to this rate.'
+        items:
+          type: integer
+          format: int64
+      details:
+        type: array
+        description: 'Specific details about the rate properties'
+        items:
+          type: string
   ActivityRateExtraConfig:
     properties:
       id:
@@ -6040,10 +6157,16 @@ definitions:
       activityExtraId:
         type: integer
         format: int64
+        description: 'Specifies ID of extra mapped to this activity rate.'
       selectionType:
+        description: 'Specifies whether extra is optional or preselected.'
         $ref: '#/definitions/ExtraSelectionType'
       pricingType:
+        description: 'Specifies whether extra is included in the price or it is priced separately.'
         $ref: '#/definitions/AddonPricingType'
+      pricedPerPerson:
+        type: boolean
+        description: 'Specifies whether extra is priced per person. If false then extra is priced per booking.'
   ActivityPlacesDto:
     properties:
       dropoffPlaces:
@@ -6249,12 +6372,15 @@ definitions:
       id:
         type: integer
         format: int64
+        description: 'Id of the combo start time. Do not confuse with combo product start time as this id is unique for each combo product child activity start time.'
       targetActivityId:
         type: integer
         format: int64
+        description: 'Id of the activity included in this combo product.'
       targetStartTimeId:
         type: integer
         format: int64
+        description: 'Id of the combo-included activity start time mapped to this combo start time.'
   ExtraBookingDetailsDto:
     properties:
       answers:
@@ -7257,8 +7383,10 @@ definitions:
     properties:
       amount:
         type: number
+        description: 'Money amount numeric value (without currency).'
       currency:
         type: string
+        description: 'Currency code (ISO 4217).'
   Money:
     properties:
       amount:
@@ -9565,6 +9693,51 @@ definitions:
         format: double
       title:
         type: string
+  Tax:
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: 'Tax id'
+      created:
+        type: array
+        description: 'Tax creation date and time (array of year, month, day, hours, minutes, seconds).'
+        items:
+          type: number
+      title:
+        type: string
+        description: 'Current tax title (e.g. "11% VAT").'
+      included:
+        type: boolean
+        description: 'True if tax is included in the operations.'
+      roundingMode:
+        $ref: '#/definitions/RoundingMode'
+      currency:
+        type: string
+      percentages:
+        type: array
+        description: 'The list of percentages applied for this tax during time.'
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: 'Id of percentage applied for the particular period.'
+            created:
+              type: array
+              description: 'Percentage applied to this tax creation date and time (array of year, month, day, hours, minutes, seconds).'
+              items:
+                type: number
+            title:
+              type: string
+              description: 'Percentage title for the particular period (e.g. "8% VAT").'
+            percentage:
+              type: number
+              format: double
+              description: 'Percentage value applied to this tax on the particular period.'
+            compounding:
+              type: boolean
+              description: 'True if this is compound (stacked) tax.'
   TokenChargeRequest:
     properties:
       amount:
@@ -9874,6 +10047,27 @@ definitions:
           $ref: '#/definitions/PenaltyRuleDto'
       tax:
         $ref: '#/definitions/TaxDto'
+  CancellationPolicy:
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: 'Cancellation policy id.'
+      created:
+        type: array
+        description: 'Cancellation policy creation date and time (array of year, month, day, hours, minutes, seconds).'
+        items:
+          type: number
+      title:
+        type: string
+        description: 'Cancellation policy title.'
+      tax:
+        $ref: '#/definitions/Tax'
+      penaltyRules:
+        type: array
+        description: 'The list of penalty rules applied for this cancellation policy.'
+        items:
+          $ref: '#/definitions/PenaltyRule'
   PenaltyRuleDto:
     properties:
       id:
@@ -9887,6 +10081,23 @@ definitions:
         format: double
       chargeType:
         type: string
+  PenaltyRule:
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: 'Id of the penalty rule.'
+      created:
+        type: array
+        description: 'Penalty rule creation date and time (array of year, month, day, hours, minutes, seconds).'
+        items:
+          type: number
+      cutoffHours:
+        type: integer
+        format: int32
+      percentage:
+        type: number
+        description: 'Specifies penalty percentage of the cancelled booking total price.'
   Guidance:
     properties:
       id:
@@ -10276,3 +10487,14 @@ definitions:
       - GOOGLE_PLACES
       - TRIPADVISOR_API
       - FREETEXT_LOCATION
+  RoundingMode:
+    type: string
+    description: 'RoundingMode enum from java.math package.'
+    enum:
+      - UP
+      - DOWN
+      - CEILING
+      - FLOOR
+      - HALF_UP
+      - HALF_DOWN
+      - EVEN

@@ -724,6 +724,7 @@
         ],
         "operationId": "findActivityBySlug",
         "summary": "Look up Activity by slug",
+        "description": "Use corresponding slug (human readable string that is used to identify the product) for fetching this product. Slug is set in Product overview -> Actions -> Slugs, then reindexing (republish) of the product is needed.",
         "parameters": [
           {
             "in": "path",
@@ -3999,83 +4000,238 @@
       "type": "object",
       "properties": {
         "questionId": {
-          "type": "string"
+          "type": "string",
+          "description": "Specifies system ID of the question."
         },
         "questionCode": {
-          "type": "string"
+          "type": "string",
+          "description": "Specifies external code of the question (created by question owner)."
         },
         "label": {
-          "type": "string"
+          "type": "string",
+          "description": "Specifies question title."
         },
         "help": {
-          "type": "string"
+          "type": "string",
+          "description": "Explanatory text for this question."
         },
         "placeholder": {
-          "type": "string"
+          "type": "string",
+          "description": "The placeholder text for this question."
         },
         "dataType": {
-          "enum": [
-            "SHORT_TEXT",
-            "LONG_TEXT",
-            "INT",
-            "DOUBLE",
-            "BOOLEAN",
-            "DATE",
-            "DATE_AND_TIME",
-            "OPTIONS"
-          ],
-          "type": "string"
-        },
-        "dataFormat": {
-          "enum": [
-            "EMAIL_ADDRESS",
-            "URL",
-            "PHONE_NUMBER",
-            "COUNTRY",
-            "LANGUAGE",
-            "TIME",
-            "DAY_OF_MONTH",
-            "MONTH",
-            "YEAR",
-            "PATTERN"
-          ],
-          "type": "string"
-        },
-        "pattern": {
-          "type": "string"
+          "$ref": "#/definitions/AnswerDataType",
+          "description": "Data type of the answer object for this question."
         },
         "required": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Specifies if the answer to this question is mandatory."
         },
         "defaultValue": {
-          "type": "string"
+          "type": "string",
+          "description": "Specifies default answer value, filled in."
         },
         "flags": {
+          "type": "array",
+          "description": "The list of flags added to this question.",
           "items": {
             "type": "string"
-          },
-          "type": "array"
+          }
         },
         "selectFromOptions": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Specifies if the answer can be selected from options."
         },
         "selectMultiple": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Specifies if the answer can have multiple options."
         },
         "answerOptions": {
+          "type": "array",
           "items": {
             "$ref": "#/definitions/AnswerOptionDto"
-          },
-          "type": "array"
+          }
+        }
+      }
+    },
+    "AnswerOptionDto": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "Answer option title."
         },
-        "answers": {
+        "label": {
+          "type": "string",
+          "description": "Duplicates answer option \"value\"."
+        }
+      }
+    },
+    "BookingQuestion": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies ID of the question."
+        },
+        "personalData": {
+          "type": "boolean",
+          "description": "Specifies if this question asks for personal data."
+        },
+        "questionCode": {
+          "type": "string",
+          "description": "Specifies question external code if used."
+        },
+        "label": {
+          "type": "string",
+          "description": "Specifies question title."
+        },
+        "help": {
+          "type": "string",
+          "description": "Explanatory text for this question."
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "The placeholder text for this question."
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Specifies if the answer to this question is mandatory."
+        },
+        "defaultValue": {
+          "type": "string",
+          "description": "Specifies default answer value, filled in."
+        },
+        "dataType": {
+          "$ref": "#/definitions/AnswerDataType",
+          "description": "Data type of the answer object for this question."
+        },
+        "flags": {
+          "type": "array",
+          "description": "The list of flags added to this question.",
           "items": {
             "type": "string"
-          },
-          "type": "array"
+          }
         },
-        "originalQuestion": {
-          "type": "string"
+        "selectFromOptions": {
+          "type": "boolean",
+          "description": "Specifies if the answer can be selected from options."
+        },
+        "selectMultiple": {
+          "type": "boolean",
+          "description": "Specifies if the answer can have multiple options."
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AnswerOption"
+          },
+          "description": "The list of answer options for this question."
+        },
+        "context": {
+          "type": "string",
+          "enum": [
+            "BOOKING",
+            "PASSENGER",
+            "EXTRA"
+          ],
+          "description": "Specifies if the question should be asked per booking, passenger or extra."
+        },
+        "pricingCategoryTriggerSelection": {
+          "$ref": "#/definitions/QuestionTriggerSelectionTypeEnum"
+        },
+        "pricingCategoryTriggers": {
+          "type": "array",
+          "description": "The list of pricing categories to which this question is applied.",
+          "items": {
+            "properties": {
+              "value": {
+                "type": "integer",
+                "format": "int64",
+                "description": "Specifies ID of pricing category to which this question is applied."
+              },
+              "label": {
+                "type": "string",
+                "description": "Specifies title of pricing category to which this question is applied."
+              }
+            }
+          }
+        },
+        "rateTriggerSelection": {
+          "$ref": "#/definitions/QuestionTriggerSelectionTypeEnum"
+        },
+        "rateTriggers": {
+          "type": "array",
+          "description": "The list of rates to which this question is applied.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "integer",
+                "format": "int64",
+                "description": "Specifies ID of rate to which this question is applied."
+              },
+              "label": {
+                "type": "string",
+                "description": "Specifies title of rate to which this question is applied."
+              }
+            }
+          }
+        },
+        "extraTriggerSelection": {
+          "$ref": "#/definitions/QuestionTriggerSelectionTypeEnum"
+        },
+        "extraTriggers": {
+          "type": "array",
+          "description": "The list of extras to which this question is applied.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "integer",
+                "format": "int64",
+                "description": "Specifies ID of extra to which this question is applied."
+              },
+              "label": {
+                "type": "string",
+                "description": "Specifies title of extra to which this question is applied."
+              }
+            }
+          }
+        }
+      }
+    },
+    "QuestionTriggerSelectionTypeEnum": {
+      "type": "string",
+      "enum": [
+        "ANY",
+        "SELECTED_ONLY"
+      ]
+    },
+    "AnswerDataType": {
+      "type": "string",
+      "enum": [
+        "SHORT_TEXT",
+        "LONG_TEXT",
+        "INT",
+        "DOUBLE",
+        "BOOLEAN",
+        "DATE",
+        "DATE_AND_TIME",
+        "OPTIONS"
+      ]
+    },
+    "AnswerOption": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Answer option title."
+        },
+        "value": {
+          "type": "string",
+          "description": "Duplicates answer option \"name\"."
         }
       }
     },
@@ -5642,17 +5798,6 @@
         }
       }
     },
-    "AnswerOptionDto": {
-      "type": "object",
-      "properties": {
-        "value": {
-          "type": "string"
-        },
-        "label": {
-          "type": "string"
-        }
-      }
-    },
     "AccommodationAvailabilitiesDto": {
       "type": "object",
       "properties": {
@@ -5882,7 +6027,8 @@
         },
         "productGroupId": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": "The id of commission group which is assigned to this product (set in Pricing/Commission group)."
         },
         "rating": {
           "type": "integer",
@@ -6062,52 +6208,74 @@
     },
     "BookableExtraDto": {
       "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies ID of extra."
+        },
         "externalId": {
-          "type": "string"
+          "type": "string",
+          "description": "Specifies custom code for extra which could be used for external systems."
+        },
+        "title": {
+          "type": "string",
+          "description": "Specifies title of the extra."
+        },
+        "information": {
+          "type": "string",
+          "description": "Extra description text. May contain HTML markup."
+        },
+        "included": {
+          "type": "boolean",
+          "description": "True if extra Selection == Preselected and false if Selection == Optional."
+        },
+        "free": {
+          "type": "boolean",
+          "description": "True if extra Pricing == Included in price, false if Pricing == Priced separately."
+        },
+        "productGroupId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies ID of commission group which is assigned to this extra (set in Pricing/Commission group)."
+        },
+        "pricingType": {
+          "$ref": "#/definitions/AddonPricingTypeEnum",
+          "description": "Not working. Specifies whether this extra is priced per person, per booking or free."
+        },
+        "pricingTypeLabel": {
+          "type": "string",
+          "description": "Not working. String for pricing type in normal text (e.g. \"per person\" instead of \"PER_PERSON\")."
+        },
+        "price": {
+          "type": "number",
+          "description": "The price amount for 1 extra in the default locale currency."
+        },
+        "increasesCapacity": {
+          "type": "boolean",
+          "description": "Not working. Specifies if this extra takes availability place."
+        },
+        "maxPerBooking": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Specifies number of custom limit for extras. If this limit is not set to custom, equals to 0."
+        },
+        "limitByPax": {
+          "type": "boolean",
+          "description": "True if is limit set to \"Limited by participants\", false - otherwise."
         },
         "flags": {
           "type": "array",
           "items": {
             "type": "string"
-          }
-        },
-        "free": {
-          "type": "boolean"
-        },
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "included": {
-          "type": "boolean"
-        },
-        "increasesCapacity": {
-          "type": "boolean"
-        },
-        "information": {
-          "type": "string"
-        },
-        "maxPerBooking": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "price": {
-          "type": "number"
-        },
-        "pricingType": {
-          "type": "string"
-        },
-        "pricingTypeLabel": {
-          "type": "string"
+          },
+          "description": "The list of flags added to this extra."
         },
         "questions": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/QuestionDto"
-          }
-        },
-        "title": {
-          "type": "string"
+          },
+          "description": "Not working."
         }
       }
     },
@@ -6139,24 +6307,46 @@
     },
     "CustomFieldDto": {
       "properties": {
+        "type": {
+          "type": "string",
+          "description": "Specifies type of this custom input field."
+        },
         "flags": {
           "type": "array",
+          "description": "The list of flags, connected to this custom input field.",
           "items": {
             "type": "string"
           }
+        },
+        "code": {
+          "type": "string",
+          "description": "Specifies the code, created for this custom input field."
+        },
+        "title": {
+          "type": "string",
+          "description": "Specifies the title, created for this custom input field."
+        },
+        "inputFieldId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "value": {
+          "type": "string",
+          "description": "Specifies value of this custom input field for specific product."
         }
-      },
-      "discriminator": "type"
+      }
     },
     "DerivedPhotoDto": {
       "properties": {
-        "cleanUrl": {
-          "type": "string"
-        },
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "Specifies derived photo type (e.g. large, preview, thumbnail)."
         },
         "url": {
+          "type": "string",
+          "description": "URL to the derived photo."
+        },
+        "cleanUrl": {
           "type": "string"
         }
       }
@@ -6306,34 +6496,47 @@
     "LocationDto": {
       "properties": {
         "address": {
-          "type": "string"
+          "type": "string",
+          "description": "Specifies street address of this location."
         },
         "city": {
-          "type": "string"
+          "type": "string",
+          "description": "Specifies city of this location."
         },
         "countryCode": {
-          "type": "string"
+          "type": "string",
+          "description": "Specifies country ISO code of this location."
+        },
+        "postCode": {
+          "type": "string",
+          "description": "Specifies postal code of this location."
         },
         "latitude": {
           "type": "number",
-          "format": "double"
+          "format": "double",
+          "description": "Specifies latitude of this location."
         },
         "longitude": {
           "type": "number",
-          "format": "double"
-        },
-        "postCode": {
-          "type": "string"
+          "format": "double",
+          "description": "Specifies longitude of this location."
         },
         "zoomLevel": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Not working (always 6). Specifies zoom level of initially shown map."
         },
         "origin": {
-          "$ref": "#/definitions/LocationOriginEnum"
+          "$ref": "#/definitions/LocationOriginEnum",
+          "description": "Not working."
         },
         "originId": {
-          "type": "string"
+          "type": "string",
+          "description": "Not working."
+        },
+        "wholeAddress": {
+          "type": "string",
+          "description": "Specifies full address of this location (concatenated format)."
         }
       }
     },
@@ -6355,17 +6558,31 @@
     },
     "PhotoDto": {
       "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "ID of the photo."
+        },
+        "originalUrl": {
+          "type": "string",
+          "description": "URL to the original size photo file."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the photo."
+        },
         "alternateText": {
           "type": "string"
         },
-        "derived": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/DerivedPhotoDto"
-          }
+        "height": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Specifies original size photo height in pixels."
         },
-        "description": {
-          "type": "string"
+        "width": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Specifies original size photo width in pixels."
         },
         "flags": {
           "type": "array",
@@ -6373,12 +6590,15 @@
             "type": "string"
           }
         },
-        "id": {
-          "type": "integer",
-          "format": "int64"
+        "derived": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DerivedPhotoDto"
+          }
         },
-        "originalUrl": {
-          "type": "string"
+        "fileName": {
+          "type": "string",
+          "description": "File name of the original photo preceded with \"/\"."
         }
       }
     },
@@ -6695,7 +6915,8 @@
         },
         "productGroupId": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": "The id of commission group which is assigned to this product (set in Pricing/Commission group)."
         },
         "slug": {
           "type": "string"
@@ -6930,70 +7151,66 @@
     },
     "VendorDto": {
       "properties": {
-        "currencyCode": {
-          "type": "string"
-        },
-        "emailAddress": {
-          "type": "string"
-        },
         "id": {
           "type": "integer",
           "format": "int64"
         },
-        "invoiceIdNumber": {
+        "title": {
           "type": "string"
         },
-        "logo": {
-          "$ref": "#/definitions/PhotoDto"
-        },
-        "logoStyle": {
-          "type": "string"
-        },
-        "phoneNumber": {
-          "type": "string"
-        },
-        "showAgentDetailsOnTicket": {
-          "type": "boolean"
+        "currencyCode": {
+          "type": "string",
+          "description": "Default currency set in this vendor info."
         },
         "showInvoiceIdOnTicket": {
+          "type": "boolean"
+        },
+        "showAgentDetailsOnTicket": {
           "type": "boolean"
         },
         "showPaymentsOnInvoice": {
           "type": "boolean"
         },
-        "title": {
-          "type": "string"
-        },
-        "website": {
-          "type": "string"
+        "companyEmailIsDefault": {
+          "type": "boolean"
         }
       }
     },
     "VideoDto": {
       "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "ID of the video."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the video."
+        },
+        "sourceUrl": {
+          "type": "string",
+          "description": "Original URL of the video."
+        },
+        "thumbnailUrl": {
+          "type": "string",
+          "description": "URL to the thumnail of this video."
+        },
+        "previewUrl": {
+          "type": "string",
+          "description": "URL to the preview of this video."
+        },
+        "html": {
+          "type": "string",
+          "description": "Iframe of the video for HTML code."
+        },
+        "providerName": {
+          "type": "string",
+          "description": "Specifies name of the video provider (e.g. YouTube)."
+        },
         "cleanPreviewUrl": {
           "type": "string"
         },
         "cleanThumbnailUrl": {
-          "type": "string"
-        },
-        "html": {
-          "type": "string"
-        },
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "previewUrl": {
-          "type": "string"
-        },
-        "providerName": {
-          "type": "string"
-        },
-        "sourceUrl": {
-          "type": "string"
-        },
-        "thumbnailUrl": {
           "type": "string"
         }
       }
@@ -7249,7 +7466,8 @@
         },
         "productGroupId": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": "The id of commission group which is assigned to this product (set in Pricing/Commission group)."
         },
         "slug": {
           "type": "string"
@@ -7549,7 +7767,8 @@
         },
         "productGroupId": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": "The id of commission group which is assigned to this product (set in Pricing/Commission group)."
         },
         "rentalPrice": {
           "type": "number"
@@ -7688,7 +7907,7 @@
         "productGroupId": {
           "type": "integer",
           "format": "int32",
-          "description": "The id of commission group which is assigned to this activity (set in Pricing/Commission group)."
+          "description": "The id of commission group which is assigned to this product (set in Pricing/Commission group)."
         },
         "recurrenceId": {
           "type": "integer",
@@ -8174,12 +8393,198 @@
     },
     "ActivityDto": {
       "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Unique identifier for this activity."
+        },
+        "externalId": {
+          "type": "string",
+          "description": "A short optional unique code for the activity. Also called a product code. Created by owner of the activity."
+        },
+        "productGroupId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The id of commission group which is assigned to this product (set in Pricing/Commission group)."
+        },
+        "productCategory": {
+          "$ref": "#/definitions/ProductCategoryEnum",
+          "description": "The product category, will be one of: ACTIVITIES, ACCOMMODATION, TRANSPORT, CAR_RENTALS"
+        },
+        "box": {
+          "type": "boolean",
+          "description": "Specifies whether this is a boxed version of another product."
+        },
+        "inventoryLocal": {
+          "type": "boolean",
+          "description": "Specifies if this activity inventory is managed locally or it is external inventory service product. False if this activity is external inventory service product, true - otherwise."
+        },
+        "inventorySupportsPricing": {
+          "type": "boolean",
+          "description": "If this activity is external inventory service product, then equals to SUPPORTS_PRICING of the connected plugin."
+        },
+        "inventorySupportsAvailability": {
+          "type": "boolean",
+          "description": "If this activity is external inventory service product, then equals to SUPPORTS_AVAILABILITY of the connected plugin."
+        },
+        "creationDate": {
+          "type": "string",
+          "description": "The date the activity was first created."
+        },
+        "lastModified": {
+          "type": "string",
+          "description": "The date that the activity content was last modified."
+        },
+        "lastPublished": {
+          "type": "string",
+          "description": "The date that the activity was last changed and published."
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the activity."
+        },
+        "description": {
+          "type": "string",
+          "description": "Text describing this activity. May contain HTML markup."
+        },
+        "excerpt": {
+          "type": "string",
+          "description": "A short, non-HTML summary (max 255 chars) describing the product. This text may be used in activity preview pages."
+        },
+        "cancellationPolicy": {
+          "$ref": "#/definitions/CancellationPolicyDto",
+          "description": "The cancellation policy, describing any cancellation fees incurred when cancelling bookings."
+        },
+        "overrideBarcodeFormat": {
+          "type": "boolean"
+        },
+        "barcodeType": {
+          "$ref": "#/definitions/BarcodeTypeEnum",
+          "description": "Specifies ticket barcode format for this activity."
+        },
+        "timeZone": {
+          "type": "string",
+          "description": "Specifies timezone for this activity."
+        },
+        "mainContactFields": {
+          "type": "array",
+          "description": "The list of main contact fields that should be displayed for customer while booking this product.",
+          "items": {
+            "$ref": "#/definitions/CustomerFieldReferenceDto"
+          }
+        },
+        "requiredCustomerFields": {
+          "type": "array",
+          "description": "Deprecated.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "keywords": {
+          "type": "array",
+          "description": "The list of keywords describing the product.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "flags": {
+          "type": "array",
+          "description": "Optional list of flags which the product owner has added to the product. Flags are just simple text labels.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "slug": {
+          "type": "string",
+          "description": "Human readable string that may be used to identify the product."
+        },
+        "baseLanguage": {
+          "type": "string",
+          "description": "The language that the product description is written in. There may also be translations available."
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The list of languages which the product content is available in."
+        },
+        "paymentCurrencies": {
+          "type": "array",
+          "description": "Deprecated.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "customFields": {
+          "type": "array",
+          "description": "In order to have custom fields for the product, they have to be enabled, in \"Advanced settings->Custom input fields\".",
+          "items": {
+            "$ref": "#/definitions/CustomFieldDto"
+          }
+        },
+        "tagGroups": {
+          "type": "array",
+          "description": "The list of different groups of custom parameters, created for to this activity. One example of tag groups - \"Activity type\". All tag groups present in system get be fetched by GET /tag.json/groups. ",
+          "items": {
+            "$ref": "#/definitions/TagGroupDto"
+          }
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CategoryDto"
+          }
+        },
+        "keyPhoto": {
+          "$ref": "#/definitions/PhotoDto",
+          "description": "The photo selected for use as the key photo for the product in lists and overviews."
+        },
+        "photos": {
+          "type": "array",
+          "description": "The list of photos showcasing this product.",
+          "items": {
+            "$ref": "#/definitions/PhotoDto"
+          }
+        },
+        "videos": {
+          "type": "array",
+          "description": "The list of videos showcasing the product.",
+          "items": {
+            "$ref": "#/definitions/VideoDto"
+          }
+        },
+        "vendor": {
+          "$ref": "#/definitions/VendorDto",
+          "description": "The vendor that operates this activity."
+        },
+        "boxedVendor": {
+          "$ref": "#/definitions/VendorDto",
+          "description": "If this is a boxed activity, then this field holds the ID of the vendor that owns the activity inside the box."
+        },
+        "storedExternally": {
+          "type": "boolean"
+        },
+        "pluginId": {
+          "type": "string",
+          "description": "Deprecated."
+        },
+        "reviewRating": {
+          "type": "number",
+          "format": "double",
+          "description": "Deprecated."
+        },
+        "reviewCount": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Deprecated."
+        },
         "activityType": {
           "$ref": "#/definitions/ActivityType",
           "description": "Specifies the type of the activity."
-        },
-        "privateActivity": {
-          "type": "boolean"
         },
         "bookingType": {
           "$ref": "#/definitions/ActivityBookingType",
@@ -8195,85 +8600,129 @@
         },
         "passExpiryType": {
           "$ref": "#/definitions/PassExpiryType",
-          "description": "Only used if bookingType == PASS. Specifies how the pass expires after purchase."
+          "description": "Only used if bookingType == PASS. Specifies how the pass expires after purchase. Could be"
+        },
+        "fixedPassExpiryDate": {
+          "type": "array",
+          "description": "Specifies at what fixed date the pass expires (array of year, month, day). Only used if Activity.bookingType == PASS and Activity.passExpiryType == FIXED_DATE (But could be non-empty, if this product had this value previously.)",
+          "items": {
+            "type": "string"
+          }
         },
         "meetingType": {
           "$ref": "#/definitions/ActivityMeetingType",
           "description": "Describes how passengers meet at the beginning of a tour/activity."
         },
+        "privateActivity": {
+          "type": "boolean",
+          "description": "Specifies if this is a private experience (set in Experience/Title and type/\"Show as a private experience\")."
+        },
         "passCapacity": {
           "type": "integer",
           "format": "int32",
-          "description": "Only used if bookingType == PASS and capacityType == LIMITED. Since passes are not date based, this is simply the global capacity for selling the pass: specifies how many total passes can be sold."
+          "description": "Only used if bookingType == PASS and capacityType == LIMITED. Since passes are not date based, this is simply the global capacity for selling the pass: specifies how many passes can be sold totally."
         },
-        "passAvailable": {
+        "passValidForDays": {
+          "type": "integer",
+          "description": "Specifies after how many days from the purchase the pass expires.Only used if Activity.bookingType == PASS and Activity.passExpiryType == RELATIVE_DATE."
+        },
+        "passesAvailable": {
           "type": "integer",
           "format": "int32",
           "description": "Only used if bookingType == PASS and capacityType == LIMITED. Specifies how many passes are currently available for booking."
         },
         "dressCode": {
           "type": "boolean",
-          "description": "Specifies if there is a particular dress code that the participants need to adhere to. The type of dress code should be described in text items."
+          "description": "Specifies if there is a particular dress code that the participants need to adhere to. The type of dress code should be described in text items. Value set up in \"Experience->Know before you go\"."
         },
         "passportRequired": {
           "type": "boolean",
-          "description": "Whether passenger needs to bring their passport for this activity."
-        },
-        "ticketPerPerson": {
-          "type": "boolean",
-          "description": "Whether ticket is generated per person or per booking."
+          "description": "Whether passenger needs to bring their passport for this activity. Value set up in \"Experience->Know before you go\"."
         },
         "supportedAccessibilityTypes": {
           "type": "array",
-          "description": "Specifies whether the activity is suitable for individuals with accessibility issues.",
+          "description": "Specifies whether the activity is suitable for individuals with accessibility issues. Value set up in \"Experience->Know before you go\".",
           "items": {
             "$ref": "#/definitions/AccessibilityType"
           }
         },
         "startPoints": {
           "type": "array",
-          "description": "Only relevant if meetingType == MEET_ON_LOCATION or MEET_ON_LOCATION_OR_PICK_UP. List of all places where this activity can start or be joined.",
+          "description": "Only relevant if meetingType == MEET_ON_LOCATION or MEET_ON_LOCATION_OR_PICK_UP. The list of all places where this activity starts or can be joined.",
           "items": {
             "$ref": "#/definitions/Place"
           }
         },
-        "guidanceTypes": {
+        "bookingQuestions": {
           "type": "array",
-          "description": "The list of types of guidance on offer, along with what languages each is offered in.",
+          "description": "The list of booking questions added to this acrivity.",
           "items": {
-            "$ref": "#/definitions/Guidance"
+            "$ref": "#/definitions/BookingQuestion"
           }
         },
-        "activityCategories": {
+        "passengerFields": {
           "type": "array",
-          "description": "The list of categories that the tour/activity/attraction falls into.",
+          "description": "The list of passenger fields that should be displayed for customer while booking this product.",
           "items": {
-            "$ref": "#/definitions/ActivityCategory"
+            "$ref": "#/definitions/CustomerFieldReferenceDto"
           }
         },
-        "activityAttributes": {
+        "inclusions": {
           "type": "array",
-          "description": "Attributes that describe the tour/activity/attraction.",
           "items": {
-            "$ref": "#/definitions/ActivityAttribute"
+            "type": "string",
+            "enum": [
+              "ENTRY_OR_ADMISSION_FEE",
+              "FUEL_SURCHARGE",
+              "LANDING_AND_FACILITY_FEES",
+              "PARKING_FEES",
+              "ENTRY_TAX",
+              "DEPARTURE_TAX",
+              "NATIONAL_PARK_ENTRANCE_FEE",
+              "GOODS_AND_SERVICES_TAX",
+              "TIP_OR_GRATUITY",
+              "FOOD_AND_DRINKS",
+              "WIFI",
+              "BUS_FARE"
+            ]
           }
         },
-        "actualVendor": {
-          "$ref": "#/definitions/VendorDto"
+        "included": {
+          "type": "string",
+          "description": "Optional text describing what is included when you book this product. May contain HTML markup."
         },
-        "actualId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "agendaItems": {
+        "exclusions": {
           "type": "array",
-          "description": "An optional list of agenda / itinerary items for this tour/activity.",
           "items": {
-            "$ref": "#/definitions/AgendaItemDto"
+            "type": "string",
+            "enum": [
+              "ENTRY_OR_ADMISSION_FEE",
+              "FUEL_SURCHARGE",
+              "LANDING_AND_FACILITY_FEES",
+              "PARKING_FEES",
+              "ENTRY_TAX",
+              "DEPARTURE_TAX",
+              "NATIONAL_PARK_ENTRANCE_FEE",
+              "GOODS_AND_SERVICES_TAX",
+              "TIP_OR_GRATUITY",
+              "FOOD_AND_DRINKS",
+              "WIFI",
+              "BUS_FARE"
+            ]
           }
+        },
+        "excluded": {
+          "type": "string",
+          "description": "Optional text describing what is excluded when you book this product. May contain HTML markup."
+        },
+        "requirements": {
+          "type": "string",
+          "description": "The text describing what you need to bring for this activity. May contain HTML markup."
         },
         "knowBeforeYouGoItems": {
+          "type": "array",
           "items": {
+            "type": "string",
             "enum": [
               "STROLLER_OR_PRAM_ACCESSIBLE",
               "WHEELCHAIR_ACCESSIBLE",
@@ -8285,90 +8734,146 @@
               "INFANTS_MUST_SIT_ON_LAPS",
               "PASSPORT_REQUIRED",
               "DRESS_CODE"
-            ],
-            "type": "string"
-          },
-          "type": "array"
+            ]
+          }
         },
         "attention": {
           "type": "string",
           "description": "Text describing any points that need special attention for the passengers. May contain HTML."
         },
-        "baseLanguage": {
-          "type": "string",
-          "description": "The language that the product description is written in. There may also be translations available."
+        "locationCode": {
+          "$ref": "#/definitions/LocationCodeDto",
+          "description": "The city that represents the main location for this activity. Specified as a location from the United Nations Code for Trade and Transport Locations (UN/LOCODE)."
         },
-        "bookableExtras": {
-          "type": "array",
-          "description": "The list of extras available for this product. Note that not all of these extras may be available for all bookable items. For example, different rates may offer different extras.",
-          "items": {
-            "$ref": "#/definitions/BookableExtraDto"
+        "googlePlace": {
+          "type": "object",
+          "properties": {
+            "country": {
+              "type": "string"
+            },
+            "countryCode": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "cityCode": {
+              "type": "string"
+            },
+            "geoLocationCenter": {
+              "type": "object",
+              "description": "Represents a point in geographical coordinates: latitude and longitude.",
+              "properties": {
+                "lat": {
+                  "type": "number",
+                  "format": "double"
+                },
+                "lng": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
           }
         },
-        "bookingCutoffDays": {
-          "type": "integer",
-          "format": "int32",
-          "description": "The number of days before the activity when we stop accepting bookings."
-        },
-        "bookingCutoffHours": {
-          "type": "integer",
-          "format": "int32",
-          "description": "The number of hours before the activity when we stop accepting bookings."
+        "resourceSlots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "count": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          "description": "Not working."
         },
         "bookingCutoffMinutes": {
           "type": "integer",
           "format": "int32",
           "description": "The number of minutes before the activity when we stop accepting bookings."
         },
+        "bookingCutoffHours": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The number of hours before the activity when we stop accepting bookings."
+        },
+        "bookingCutoffDays": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The number of days before the activity when we stop accepting bookings."
+        },
         "bookingCutoffWeeks": {
           "type": "integer",
           "format": "int32",
           "description": "The number of weeks before the activity when we stop accepting bookings."
         },
-        "box": {
-          "type": "boolean",
-          "description": "Specifies whether this is a boxed version of another product."
+        "requestDeadlineMinutes": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The number of minutes allocated to confirm or reject booking by activity supplier."
+        },
+        "requestDeadlineHours": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The number of hours allocated to confirm or reject booking by activity supplier."
+        },
+        "requestDeadlineDays": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The number of days allocated to confirm or reject booking by activity supplier."
+        },
+        "requestDeadlineWeeks": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The number of weeks allocated to confirm or reject booking by activity supplier."
         },
         "boxedActivityId": {
           "type": "integer",
           "format": "int64",
           "description": "If this is a box, then this field holds the ID of the activity inside the box."
         },
-        "boxedVendor": {
-          "$ref": "#/definitions/VendorDto",
-          "description": "If this is a box, then this field holds the ID of the vendor that owns the activity inside the box."
-        },
-        "categories": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/CategoryDto"
-          }
-        },
         "comboActivity": {
           "type": "boolean",
           "description": "Specifies whether this is a combo activity."
         },
-        "paymentCurrencies": {
+        "comboParts": {
           "type": "array",
           "items": {
-            "type": "string"
-          }
+            "$ref": "#/definitions/ComboPart"
+          },
+          "description": "Deprecated. The list of the components of this combo product."
         },
-        "customDropoffAllowed": {
+        "ticketPerComboComponent": {
           "type": "boolean",
-          "description": "Only relevant if dropoffService is TRUE. Specifies whether the customer should be allowed to enter their drop off place in free text."
+          "description": "Deprecated. Specifies whether this combo activity has tickets per combo component."
         },
-        "customFields": {
+        "ticketComboComponents": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/CustomFieldDto"
+            "$ref": "#/definitions/ComboPart",
+            "description": "Deprecated. The list of the parts of this combo product for which customer gets separate tickets as well as a ticket for the combo itself."
           }
         },
-        "customPickupAllowed": {
+        "pickupActivityId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Deprecated."
+        },
+        "allowCustomizedBookings": {
           "type": "boolean",
-          "description": "Only used if meetingType != MEET_ON_LOCATION. Specifies whether the customer should be allowed to enter their pick up place in free text."
+          "description": "Deprecated."
         },
         "dayBasedAvailability": {
+          "type": "boolean",
+          "description": "Deprecated."
+        },
+        "selectFromDayOptions": {
           "type": "boolean",
           "description": "Deprecated."
         },
@@ -8379,330 +8884,26 @@
           },
           "description": "Deprecated."
         },
-        "description": {
-          "type": "string",
-          "description": "Text describing this product. May contain HTML markup."
-        },
-        "difficultyLevel": {
-          "type": "string",
-          "description": "Specifies how physically demanding this tour/activity is."
-        },
-        "dropoffFlags": {
+        "activityCategories": {
           "type": "array",
+          "description": "The list of categories that the tour/activity/attraction falls into. (Categories & Themes)",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/ActivityCategory"
           }
         },
-        "dropoffPricingType": {
-          "$ref": "#/definitions/PickupPricingTypeEnum",
-          "description": "Deprecated. Pricing type for drop off is now specified in the rate."
-        },
-        "dropoffService": {
-          "type": "boolean",
-          "description": "Specifies whether this activity offers drop off service."
-        },
-        "duration": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Deprecated. Use duration minutes, hours, days and weeks instead."
-        },
-        "durationDays": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Duration in days. Total duration is calculated by summing the duration in minutes, hours, days, weeks."
-        },
-        "durationHours": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Duration in hours. Total duration is calculated by summing the duration in minutes, hours, days, weeks."
-        },
-        "durationMinutes": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Duration in minutes. Total duration is calculated by summing the duration in minutes, hours, days, weeks."
-        },
-        "durationType": {
-          "type": "string",
-          "description": "Deprecated. Use duration minutes, hours, days and weeks instead."
-        },
-        "durationWeeks": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Duration in weeks. Total duration is calculated by summing the duration in minutes, hours, days, weeks."
-        },
-        "excerpt": {
-          "type": "string",
-          "description": "A short, non-HTML text (max 255 chars) describing the product."
-        },
-        "externalId": {
-          "type": "string",
-          "description": "A short unique code for the product. Also called product code."
-        },
-        "flags": {
+        "activityAttributes": {
           "type": "array",
-          "description": "Optional list of flags which the product owner has added to the product. Flags are just simple text labels.",
+          "description": "The list of themes that describe the tour/activity/attraction. (Categories & Themes)",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/ActivityAttribute"
           }
         },
-        "id": {
-          "type": "integer",
-          "format": "int64",
-          "description": "Unique identifier for this product"
-        },
-        "inclusions": {
-          "items": {
-            "enum": [
-              "ENTRY_OR_ADMISSION_FEE",
-              "FUEL_SURCHARGE",
-              "LANDING_AND_FACILITY_FEES",
-              "PARKING_FEES",
-              "ENTRY_TAX",
-              "DEPARTURE_TAX",
-              "NATIONAL_PARK_ENTRANCE_FEE",
-              "GOODS_AND_SERVICES_TAX",
-              "TIP_OR_GRATUITY",
-              "FOOD_AND_DRINKS",
-              "WIFI",
-              "BUS_FARE"
-            ],
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "included": {
-          "type": "string",
-          "description": "Optional text describing what is included when you book this product. May contain HTML markup."
-        },
-        "exclusions": {
-          "items": {
-            "enum": [
-              "ENTRY_OR_ADMISSION_FEE",
-              "FUEL_SURCHARGE",
-              "LANDING_AND_FACILITY_FEES",
-              "PARKING_FEES",
-              "ENTRY_TAX",
-              "DEPARTURE_TAX",
-              "NATIONAL_PARK_ENTRANCE_FEE",
-              "GOODS_AND_SERVICES_TAX",
-              "TIP_OR_GRATUITY",
-              "FOOD_AND_DRINKS",
-              "WIFI",
-              "BUS_FARE"
-            ],
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "excluded": {
-          "type": "string",
-          "description": "Optional text describing what is excluded when you book this product. May contain HTML markup."
-        },
-        "keyPhoto": {
-          "$ref": "#/definitions/PhotoDto",
-          "description": "The photo selected for use as the key photo for the product in lists and overviews."
-        },
-        "keywords": {
+        "guidanceTypes": {
           "type": "array",
-          "description": "A list of keywords describing the product.",
+          "description": "The list of types of guidance on offer, along with what languages each is offered in.",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/Guidance"
           }
-        },
-        "languages": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "A list of languages which the product content is available in."
-        },
-        "lastPublished": {
-          "type": "string",
-          "description": "The date that the product was last changed and published."
-        },
-        "creationDate": {
-          "type": "string",
-          "description": "The date the product was first created."
-        },
-        "lastModified": {
-          "type": "string",
-          "description": "The date that the product content was last modified."
-        },
-        "locationCode": {
-          "$ref": "#/definitions/LocationCodeDto",
-          "description": "The city that represents the main location for this activity. Specified as a location from the United Nations Code for Trade and Transport Locations (UN/LOCODE)."
-        },
-        "minAge": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Represents the age limit for the activity, if any."
-        },
-        "nextDefaultPrice": {
-          "type": "number",
-          "description": "The price for 1 person in the default category, assuming the future departure date nearest in time to the current time."
-        },
-        "noPickupMsg": {
-          "type": "string"
-        },
-        "photos": {
-          "type": "array",
-          "description": "A list of photos showcasing this product.",
-          "items": {
-            "$ref": "#/definitions/PhotoDto"
-          }
-        },
-        "pickupAllotment": {
-          "type": "boolean",
-          "description": "Whether pick up has separate capacity from the activity (for example, activity can take 60 pax but the pick up bus can only take 30)."
-        },
-        "pickupFlags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "pickupMinutesBefore": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Specifies how many minutes before departure the pick up service starts."
-        },
-        "pickupPricingType": {
-          "$ref": "#/definitions/PickupPricingTypeEnum",
-          "description": "Deprecated. Pick up pricing is now specified in the rate."
-        },
-        "pickupService": {
-          "type": "boolean",
-          "description": "Deprecated. Pick up service is now specified in meetingType."
-        },
-        "pricingCategories": {
-          "type": "array",
-          "description": "A list of all pricing categories offered by this product.",
-          "items": {
-            "$ref": "#/definitions/PricingCategoryDto"
-          }
-        },
-        "productCategory": {
-          "type": "string",
-          "description": "The product category, will be one of: ACTIVITIES, ACCOMMODATION, TRANSPORT, CAR_RENTALS"
-        },
-        "productGroupId": {
-          "type": "integer",
-          "format": "int64",
-          "description": "The commission group this product belongs to, if any."
-        },
-        "mainContactFields": {
-          "type": "array",
-          "description": "A list of main contact fields that should be displayed for customer while booking this product.",
-          "items": {
-            "$ref": "#/definitions/CustomerFieldReferenceDto"
-          }
-        },
-        "passengerFields": {
-          "type": "array",
-          "description": "A list of passenger fields that should be displayed for customer while booking this product.",
-          "items": {
-            "$ref": "#/definitions/CustomerFieldReferenceDto"
-          }
-        },
-        "requirements": {
-          "type": "string",
-          "description": "A text describing what you need to bring for this activity. May contain HTML."
-        },
-        "route": {
-          "$ref": "#/definitions/ActivityRouteDto",
-          "description": "Optional travel directions that show the start point, end point, and any waypoints in between."
-        },
-        "seasonAllYear": {
-          "type": "boolean",
-          "description": "Deprecated."
-        },
-        "seasonEndDate": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Deprecated."
-        },
-        "seasonEndMonth": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Deprecated."
-        },
-        "seasonStartDate": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Deprecated."
-        },
-        "seasonStartMonth": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Deprecated."
-        },
-        "selectFromDayOptions": {
-          "type": "boolean",
-          "description": "Deprecated."
-        },
-        "showGlobalPickupMsg": {
-          "type": "boolean"
-        },
-        "showNoPickupMsg": {
-          "type": "boolean"
-        },
-        "slug": {
-          "type": "string",
-          "description": "Human readable string that may be used to identify the product."
-        },
-        "startTimes": {
-          "type": "array",
-          "description": "Only used if bookingType == DATE_AND_TIME. A list of scheduled start times for this tour/activity.",
-          "items": {
-            "$ref": "#/definitions/StartTimeDto"
-          }
-        },
-        "tagGroups": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/TagGroupDto"
-          }
-        },
-        "ticketMsg": {
-          "type": "string",
-          "description": "Message to show on tickets."
-        },
-        "title": {
-          "type": "string",
-          "description": "The name of the product."
-        },
-        "useComponentPickupAllotments": {
-          "type": "boolean"
-        },
-        "vendor": {
-          "$ref": "#/definitions/VendorDto",
-          "description": "The company that operates this activity."
-        },
-        "videos": {
-          "type": "array",
-          "description": "A list of videos showcasing the product.",
-          "items": {
-            "$ref": "#/definitions/VideoDto"
-          }
-        },
-        "weekdays": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/WeekdayDto"
-          }
-        },
-        "cancellationPolicy": {
-          "$ref": "#/definitions/CancellationPolicyDto",
-          "description": "The cancellation policy, describing any cancellation fees incurred when cancelling bookings."
-        },
-        "barcodeType": {
-          "$ref": "#/definitions/BarcodeTypeEnum"
-        },
-        "timeZone": {
-          "type": "string"
-        },
-        "storedExternally": {
-          "type": "boolean"
         },
         "defaultRateId": {
           "type": "integer",
@@ -8716,6 +8917,185 @@
             "$ref": "#/definitions/ActivityRateDto"
           }
         },
+        "ticketPerPerson": {
+          "type": "boolean",
+          "description": "Whether ticket is generated per person (true) or per booking (false)."
+        },
+        "durationType": {
+          "type": "string",
+          "enum": [
+            "MINUTES",
+            "HOURS",
+            "DAYS"
+          ],
+          "description": "Deprecated. Use duration minutes, hours, days and weeks instead."
+        },
+        "duration": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Deprecated. Use duration minutes, hours, days and weeks instead."
+        },
+        "durationMinutes": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Duration in minutes. Total duration is calculated by summing the duration in minutes, hours, days, weeks."
+        },
+        "durationHours": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Duration in hours. Total duration is calculated by summing the duration in minutes, hours, days, weeks."
+        },
+        "durationDays": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Duration in days. Total duration is calculated by summing the duration in minutes, hours, days, weeks."
+        },
+        "durationWeeks": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Duration in weeks. Total duration is calculated by summing the duration in minutes, hours, days, weeks."
+        },
+        "durationText": {
+          "type": "string",
+          "description": "Specifies activity duration in human language and formated to the locale specified in the profile."
+        },
+        "minAge": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Represents the age lower limit for the activity, if any."
+        },
+        "nextDefaultPrice": {
+          "type": "number",
+          "description": "The price for 1 person in the default category, assuming the future departure date nearest in time to the current time. Amount in default locale currency."
+        },
+        "nextDefaultPriceMoney": {
+          "type": "object",
+          "properties": {
+            "amount": {
+              "type": "number"
+            },
+            "currency": {
+              "type": "string"
+            }
+          },
+          "description": "The price for 1 person in the default category, assuming the future departure date nearest in time to the current time. Amount and currency in default locale currency."
+        },
+        "pickupService": {
+          "type": "boolean",
+          "description": "Deprecated. Pick up service is now specified in meetingType."
+        },
+        "pickupAllotment": {
+          "type": "boolean",
+          "description": "Whether pick up has separate capacity from the activity (for example, activity can take 60 pax but the pick up bus can only take 30)."
+        },
+        "pickupAllotmentType": {
+          "type": "string",
+          "enum": [
+            "NO_ALLOTMENT",
+            "USE_ALLOTMENT",
+            "USE_COMBO_ALLOTMENT"
+          ],
+          "description": "Not working. Specifies pick up allotment type."
+        },
+        "useComponentPickupAllotments": {
+          "type": "boolean",
+          "description": "Not working. True if pickupAllotmentType == USE_COMBO_ALLOTMENT."
+        },
+        "pickupFlags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The list of flags added to the pick up of this activity."
+        },
+        "customPickupAllowed": {
+          "type": "boolean",
+          "description": "Only used if meetingType != MEET_ON_LOCATION. Specifies whether the customer should be allowed to enter their pick up place in free text."
+        },
+        "pickupMinutesBefore": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Specifies how many minutes before departure the pick up service starts."
+        },
+        "noPickupMsg": {
+          "type": "string",
+          "description": "Specifies custom message on ticket when customer does not want pick-up. May contain HTML markup."
+        },
+        "ticketMsg": {
+          "type": "string",
+          "description": "Specifies custom message on ticket. May contain HTML markup."
+        },
+        "showGlobalPickupMsg": {
+          "type": "boolean",
+          "description": "Specifies if the custom message is turned on to be shown on ticket."
+        },
+        "showNoPickupMsg": {
+          "type": "boolean",
+          "description": "Specifies if the custom message when customer does not want pick-up is turned on to be shown on ticket."
+        },
+        "pickupPlaceGroups": {
+          "type": "object",
+          "description": "Not working. The list of the pickup place groups for this activity."
+        },
+        "dropoffService": {
+          "type": "boolean",
+          "description": "Specifies whether this activity offers drop off service."
+        },
+        "dropoffFlags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The list of flags added to the drop-off of this activity."
+        },
+        "customDropoffAllowed": {
+          "type": "boolean",
+          "description": "Only relevant if dropoffService is TRUE. Specifies whether the customer should be allowed to enter their drop off place in free text."
+        },
+        "useSameAsPickUpPlaces": {
+          "type": "boolean",
+          "description": "Not working. Specifies if supplier wants to drop-off users to the same places that they can be picked up from."
+        },
+        "dropoffPlaceGroups": {
+          "type": "object",
+          "description": "Not working. The list of the drop-off place groups for this activity."
+        },
+        "difficultyLevel": {
+          "type": "string",
+          "description": "Specifies how physically demanding this tour/activity is."
+        },
+        "pricingCategories": {
+          "type": "array",
+          "description": "The list of all pricing categories offered by this product.",
+          "items": {
+            "$ref": "#/definitions/PricingCategoryDto"
+          }
+        },
+        "agendaItems": {
+          "type": "array",
+          "description": "An optional list of agenda / itinerary items for this tour/activity.",
+          "items": {
+            "$ref": "#/definitions/AgendaItemDto"
+          }
+        },
+        "startTimes": {
+          "type": "array",
+          "description": "Only used if bookingType == DATE_AND_TIME. A list of scheduled start times for this tour/activity.",
+          "items": {
+            "$ref": "#/definitions/StartTimeDto"
+          }
+        },
+        "bookableExtras": {
+          "type": "array",
+          "description": "The list of extras available for this product. Note that not all of these extras may be available for all bookable items. For example, different rates may offer different extras.",
+          "items": {
+            "$ref": "#/definitions/BookableExtraDto"
+          }
+        },
+        "route": {
+          "$ref": "#/definitions/ActivityRouteDto",
+          "description": "Optional travel directions that show the start point, end point, and any waypoints in between."
+        },
         "hasOpeningHours": {
           "type": "boolean",
           "description": "Specifies whether this product has specific opening hours."
@@ -8726,10 +9106,67 @@
         },
         "seasonalOpeningHours": {
           "type": "array",
-          "description": "Optional seasonal opening hours. If date falls within the season then this will override the default opening hours.",
+          "description": "Deprecated. Optional seasonal opening hours. If date falls within the season then this will override the default opening hours.",
           "items": {
             "$ref": "#/definitions/SeasonalOpeningHours"
           }
+        },
+        "displaySettings": {
+          "type": "object",
+          "properties": {
+            "showPickupPlaces": {
+              "type": "boolean",
+              "description": "Specifies if pick up places are shown."
+            },
+            "showRouteMap": {
+              "type": "boolean"
+            },
+            "selectRateBasedOnStartTime": {
+              "type": "boolean"
+            },
+            "customFields": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "description": "Deprecated."
+            }
+          }
+        },
+        "hasBoxes": {
+          "type": "boolean",
+          "description": "Not working."
+        },
+        "requestDeadline": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The number of miliseconds allocated to confirm or reject booking by activity supplier."
+        },
+        "actualId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specififies ID of the original owner of the product."
+        },
+        "bookingCutoff": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The number of minutes before the activity when we stop accepting bookings."
+        },
+        "nextDefaultPriceAsText": {
+          "type": "string",
+          "description": "String of the price (e.g. \"USD 15.90\") for 1 person in the default price category, assuming the future departure date nearest in time to the current time. Amount in default locale currency."
+        },
+        "actualVendor": {
+          "$ref": "#/definitions/VendorDto",
+          "description": "Specifies the original owner of the product."
+        }
+      }
+    },
+    "ComboPart": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
         }
       }
     },
@@ -8738,6 +9175,14 @@
         "id": {
           "type": "integer",
           "format": "int64"
+        },
+        "created": {
+          "type": "array",
+          "description": "Creation date and time (array of year, month, day, hours, minutes, seconds).",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
         },
         "monday": {
           "$ref": "#/definitions/OpeningHoursWeekday"
@@ -8768,6 +9213,14 @@
           "type": "integer",
           "format": "int64"
         },
+        "created": {
+          "type": "array",
+          "description": "Creation date and time (array of year, month, day, hours, minutes, seconds).",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
         "monday": {
           "$ref": "#/definitions/OpeningHoursWeekday"
         },
@@ -8788,6 +9241,14 @@
         },
         "sunday": {
           "$ref": "#/definitions/OpeningHoursWeekday"
+        },
+        "startYear": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "endYear": {
+          "type": "integer",
+          "format": "int32"
         },
         "startMonth": {
           "type": "integer",
@@ -8813,8 +9274,17 @@
           "type": "integer",
           "format": "int64"
         },
+        "created": {
+          "type": "array",
+          "description": "Creation date and time (array of year, month, day, hours, minutes, seconds).",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
         "open24Hours": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Specifies if opening hours are 24 hours for this weekday."
         },
         "timeIntervals": {
           "type": "array",
@@ -8831,38 +9301,22 @@
           "items": {
             "type": "integer",
             "format": "int32"
-          }
+          },
+          "description": "Specifies opening hour and minutes (2 array elements)."
         },
         "openForHours": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Specifies total open hours amount for that weekday."
         },
         "openForMinutes": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Specifies total open minutes amount for that weekday."
         },
         "frequency": {
-          "$ref": "#/definitions/Duration"
-        }
-      }
-    },
-    "Duration": {
-      "properties": {
-        "minutes": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "hours": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "days": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "weeks": {
-          "type": "integer",
-          "format": "int32"
+          "type": "object",
+          "description": "Deprecated."
         }
       }
     },
@@ -8907,17 +9361,6 @@
         "cancellationPolicy": {
           "description": "The cancellation policy for this rate.",
           "$ref": "#/definitions/CancellationPolicy"
-        },
-        "fixedPassExpiryDate": {
-          "type": "array",
-          "description": "Specifies at what fixed date the pass expires (array of year, month, day). Only used if Activity.bookingType == PASS and Activity.passExpiryType == FIXED_DATE.",
-          "items": {
-            "type": "string"
-          }
-        },
-        "passValidForDays": {
-          "type": "integer",
-          "description": "Specifies after how many days from the purchase the pass expires.Only used if Activity.bookingType == PASS and Activity.passExpiryType == RELATIVE_DATE."
         },
         "pickupSelectionType": {
           "description": "Specifies how to handle pick-up for this rate. NB: if Activity.meetingType == MEET_ON_LOCATION, then this will always be UNAVAILABLE.",
@@ -9195,43 +9638,58 @@
     },
     "AgendaItemDto": {
       "properties": {
-        "body": {
-          "type": "string"
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies ID of the agenda item."
+        },
+        "index": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Not working."
+        },
+        "title": {
+          "type": "string",
+          "description": "Specifies title of the agenda item."
         },
         "excerpt": {
-          "type": "string"
+          "type": "string",
+          "description": "The excerpt text of the agenda item."
+        },
+        "body": {
+          "type": "string",
+          "description": "The description text of the agenda item. May contain HTML markup."
+        },
+        "day": {
+          "type": "integer",
+          "format": "int32",
+          "description": "If this is a multi-day tour, specifies which day number this agenda item belongs to."
         },
         "flags": {
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "description": "The list of flags added to this agenda item."
         },
-        "id": {
-          "type": "integer",
-          "format": "int64"
+        "location": {
+          "$ref": "#/definitions/LocationDto",
+          "description": "Specifies location details for this agenda item."
         },
-        "index": {
-          "type": "integer",
-          "format": "int32"
+        "address": {
+          "type": "object",
+          "description": "Not working. Specifies the address for this agenda item."
         },
         "keyPhoto": {
-          "$ref": "#/definitions/PhotoDto"
+          "$ref": "#/definitions/PhotoDto",
+          "description": "A photo added as a key photo for this agenda item."
         },
         "photos": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/PhotoDto"
-          }
-        },
-        "place": {
-          "$ref": "#/definitions/PlaceDto"
-        },
-        "possibleStartPoint": {
-          "type": "boolean"
-        },
-        "title": {
-          "type": "string"
+          },
+          "description": "The list of all photos added for this agenda item."
         }
       }
     },
@@ -9459,59 +9917,83 @@
     },
     "PricingCategoryDto": {
       "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies ID of the price category."
+        },
+        "title": {
+          "type": "string",
+          "description": "Specifies title of the price category."
+        },
         "ticketCategory": {
           "$ref": "#/definitions/TicketCategoryEnum"
         },
-        "ageQualified": {
-          "type": "boolean"
+        "occupancy": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Specifies how many places for activity availabilities occupies 1 ticket for this price category."
         },
-        "defaultCategory": {
-          "type": "boolean"
+        "groupSize": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Deprecated."
+        },
+        "ageQualified": {
+          "type": "boolean",
+          "description": "Specifies whether this price category has age restrictions."
+        },
+        "minAge": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Specifies lower limit for age restriction for this price category."
+        },
+        "maxAge": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Specifies upper limit for age restriction for this price category."
         },
         "dependent": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Specifies if this price category has booking limits which depend on another price categories in this booking (e.g. max 4 children per 1 adult)."
+        },
+        "masterCategoryId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies ID of related price category: if dependent == true then master price category id, if dependent == false then child price category id."
+        },
+        "maxPerMaster": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Specifies maximum of categories that are set as dependent for one master category. (e.g. 4 children per 1 adult)."
+        },
+        "sumDependentCategories": {
+          "type": "boolean",
+          "description": "Specifies if max sum of dependent categories in one booking is set."
+        },
+        "maxDependentSum": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Specifies max sum for dependent categories in one booking."
+        },
+        "internalUseOnly": {
+          "type": "boolean",
+          "description": "Specifies if this price category is intended for internal use only."
         },
         "flags": {
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "description": "Not working."
+        },
+        "defaultCategory": {
+          "type": "boolean",
+          "description": "Specifies if this price category is set as default for this activity."
         },
         "fullTitle": {
-          "type": "string"
-        },
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "internalUseOnly": {
-          "type": "boolean"
-        },
-        "masterCategoryId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "maxAge": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "maxDependentSum": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "maxPerMaster": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "minAge": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "sumDependentCategories": {
-          "type": "boolean"
-        },
-        "title": {
-          "type": "string"
+          "type": "string",
+          "description": "Full price category title string that is formatted as follows: title (minAge - maxAge)."
         }
       }
     },
@@ -9565,57 +10047,82 @@
     },
     "StartTimeDto": {
       "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Specifies ID of the starting time."
+        },
+        "label": {
+          "type": "string",
+          "description": "Not working. Specifies label for this starting time."
+        },
+        "hour": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Specifies hours of this starting time."
+        },
+        "minute": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Specifies minutes of this starting time."
+        },
+        "overrideTimeWhenPickup": {
+          "type": "boolean",
+          "description": "Specifies if this starting time is overriden by pick up time."
+        },
+        "pickupHour": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Specifies start time hours when different time for pick-up is selected."
+        },
+        "pickupMinute": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Specifies start time minutes when different time for pick-up is selected."
+        },
+        "durationType": {
+          "type": "string",
+          "description": "Deprecated. Should be used durationMinutes, durationHours, durationDays, durationWeeks."
+        },
+        "voucherPickupMsg": {
+          "type": "string",
+          "description": "Not working. Pick-up message on the ticket"
+        },
+        "externalId": {
+          "type": "string",
+          "description": "Not working. Code for start time, which could be used for external systems."
+        },
         "duration": {
           "type": "integer",
-          "format": "int32"
-        },
-        "durationDays": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "durationHours": {
-          "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Deprecated. Should be used durationMinutes, durationHours, durationDays, durationWeeks."
         },
         "durationMinutes": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Duration set for this starting time in minutes. Could be different from activity duration. Total duration is calculated by summing the duration in minutes, hours, days, weeks."
         },
-        "durationType": {
-          "type": "string"
+        "durationHours": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Duration set for this starting time in hours. Could be different from activity duration. Total duration is calculated by summing the duration in minutes, hours, days, weeks."
+        },
+        "durationDays": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Duration set for this starting time in days. Could be different from activity duration. Total duration is calculated by summing the duration in minutes, hours, days, weeks."
         },
         "durationWeeks": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Duration set for this starting time in weeks. Could be different from activity duration. Total duration is calculated by summing the duration in minutes, hours, days, weeks."
         },
         "flags": {
           "type": "array",
           "items": {
             "type": "string"
-          }
-        },
-        "hour": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "minute": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "overrideTimeWhenPickup": {
-          "type": "boolean"
-        },
-        "pickupHour": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "pickupMinute": {
-          "type": "integer",
-          "format": "int32"
+          },
+          "description": "The list of the flags created for this starting time."
         }
       }
     },
@@ -11173,7 +11680,8 @@
         },
         "productGroupId": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": "The id of commission group which is assigned to this product (set in Pricing/Commission group)."
         },
         "returnPricing": {
           "type": "boolean"
@@ -11779,10 +12287,10 @@
           "$ref": "#/definitions/BarcodeValueDto"
         },
         "bookedDropoffPricingType": {
-          "$ref": "#/definitions/PickupPricingTypeEnum"
+          "$ref": "#/definitions/AddonPricingTypeEnum"
         },
         "bookedPickupPricingType": {
-          "$ref": "#/definitions/PickupPricingTypeEnum"
+          "$ref": "#/definitions/AddonPricingTypeEnum"
         },
         "bookedPricingCategories": {
           "type": "array",
@@ -11986,33 +12494,6 @@
         }
       }
     },
-    "ActivityPricingCategoryBookingQuestionsDto": {
-      "properties": {
-        "bookingId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "extraBookings": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ExtraBookingQuestionsDto"
-          }
-        },
-        "pricingCategory": {
-          "$ref": "#/definitions/BookingItemInfoDto"
-        },
-        "quantity": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "questionGroups": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/BookingQuestionGroupDto"
-          }
-        }
-      }
-    },
     "AgentBookingDetailsDto": {
       "properties": {
         "contractId": {
@@ -12176,52 +12657,6 @@
         }
       }
     },
-    "BookingQuestionDto": {
-      "properties": {
-        "answerRequired": {
-          "type": "boolean"
-        },
-        "defaultAnswer": {
-          "type": "string"
-        },
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "options": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "question": {
-          "type": "string"
-        },
-        "selectFromOptions": {
-          "type": "boolean"
-        },
-        "type": {
-          "type": "string"
-        }
-      }
-    },
-    "BookingQuestionGroupDto": {
-      "properties": {
-        "answersNeeded": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "name": {
-          "type": "string"
-        },
-        "questions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/BookingQuestionDto"
-          }
-        }
-      }
-    },
     "BookingQuestionWithIdDto": {
       "properties": {
         "answerRequired": {
@@ -12363,33 +12798,6 @@
         "id": {
           "type": "integer",
           "format": "int64"
-        },
-        "unitCount": {
-          "type": "integer",
-          "format": "int32"
-        }
-      }
-    },
-    "CarBookingQuestionsDto": {
-      "properties": {
-        "bookingId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "carType": {
-          "$ref": "#/definitions/CarTypeInfoDto"
-        },
-        "extraBookings": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ExtraBookingQuestionsDto"
-          }
-        },
-        "questionGroups": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/BookingQuestionGroupDto"
-          }
         },
         "unitCount": {
           "type": "integer",
@@ -12563,43 +12971,6 @@
         },
         "totalPrice": {
           "type": "number"
-        }
-      }
-    },
-    "CarRentalBookingQuestionsDto": {
-      "properties": {
-        "bookingId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "carBookings": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/CarBookingQuestionsDto"
-          }
-        },
-        "carRental": {
-          "$ref": "#/definitions/BookingItemInfoDto"
-        },
-        "dropoffLocation": {
-          "$ref": "#/definitions/CarRentalLocationDto"
-        },
-        "endDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "pickupLocation": {
-          "$ref": "#/definitions/CarRentalLocationDto"
-        },
-        "questionGroups": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/BookingQuestionGroupDto"
-          }
-        },
-        "startDate": {
-          "type": "string",
-          "format": "date-time"
         }
       }
     },
@@ -12863,10 +13234,12 @@
     "CustomerFieldReferenceDto": {
       "properties": {
         "field": {
-          "$ref": "#/definitions/CustomerFieldEnum"
+          "$ref": "#/definitions/CustomerFieldEnum",
+          "description": "Specifies customer information field name."
         },
         "required": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Specifies if corresponding field is required in this form."
         }
       }
     },
@@ -13106,27 +13479,6 @@
         "extraId": {
           "type": "integer",
           "format": "int64"
-        }
-      }
-    },
-    "ExtraBookingQuestionsDto": {
-      "properties": {
-        "bookingId": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "extra": {
-          "$ref": "#/definitions/BookingItemInfoDto"
-        },
-        "questionGroups": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/BookingQuestionWithIdGroupDto"
-          }
-        },
-        "unitCount": {
-          "type": "integer",
-          "format": "int32"
         }
       }
     },
@@ -13531,7 +13883,8 @@
           "$ref": "#/definitions/BookingItemInfoDto"
         },
         "productCategory": {
-          "$ref": "#/definitions/ProductCategoryEnum"
+          "$ref": "#/definitions/ProductCategoryEnum",
+          "description": "The product category, will be one of: ACTIVITIES, ACCOMMODATION, TRANSPORT, CAR_RENTALS"
         },
         "productConfirmationCode": {
           "type": "string"
@@ -13664,7 +14017,8 @@
           "format": "int64"
         },
         "productCategory": {
-          "$ref": "#/definitions/ProductCategoryEnum"
+          "$ref": "#/definitions/ProductCategoryEnum",
+          "description": "The product category, will be one of: ACTIVITIES, ACCOMMODATION, TRANSPORT, CAR_RENTALS"
         },
         "productConfirmationCode": {
           "type": "string"
@@ -14059,19 +14413,6 @@
         }
       }
     },
-    "RouteBookingQuestionsDto": {
-      "properties": {
-        "booking": {
-          "$ref": "#/definitions/RouteBookingDto"
-        },
-        "questionGroups": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/BookingQuestionGroupDto"
-          }
-        }
-      }
-    },
     "SingleAccommodationBookingRequestDto": {
       "properties": {
         "accommodationRequest": {
@@ -14286,7 +14627,8 @@
           "type": "array",
           "description": "Tax creation date and time (array of year, month, day, hours, minutes, seconds).",
           "items": {
-            "type": "number"
+            "type": "integer",
+            "format": "int64"
           }
         },
         "title": {
@@ -14317,7 +14659,8 @@
                 "type": "array",
                 "description": "Percentage applied to this tax creation date and time (array of year, month, day, hours, minutes, seconds).",
                 "items": {
-                  "type": "number"
+                  "type": "integer",
+                  "format": "int64"
                 }
               },
               "title": {
@@ -14765,7 +15108,8 @@
           "$ref": "#/definitions/ActivityDto"
         },
         "productCategory": {
-          "$ref": "#/definitions/ProductCategoryEnum"
+          "$ref": "#/definitions/ProductCategoryEnum",
+          "description": "The product category, will be one of: ACTIVITIES, ACCOMMODATION, TRANSPORT, CAR_RENTALS"
         },
         "vehicle": {
           "$ref": "#/definitions/CarTypeDto"
@@ -14786,19 +15130,26 @@
       "properties": {
         "id": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": "Cancellation policy id."
         },
         "title": {
-          "type": "string"
+          "type": "string",
+          "description": "Cancellation policy title."
         },
         "penaltyRules": {
           "type": "array",
+          "description": "The list of penalty rules applied for this cancellation policy.",
           "items": {
             "$ref": "#/definitions/PenaltyRuleDto"
           }
         },
         "tax": {
           "$ref": "#/definitions/TaxDto"
+        },
+        "defaultPolicy": {
+          "type": "boolean",
+          "description": "If this policy was changed somehow (penalty rules or taxes added) then false, otherwise - true.'"
         }
       }
     },
@@ -14813,7 +15164,8 @@
           "type": "array",
           "description": "Cancellation policy creation date and time (array of year, month, day, hours, minutes, seconds).",
           "items": {
-            "type": "number"
+            "type": "integer",
+            "format": "int64"
           }
         },
         "title": {
@@ -14836,18 +15188,22 @@
       "properties": {
         "id": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": "Id of the penalty rule."
         },
         "cutoffHours": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Specifies cutoff hours for this penalty rule to apply. E.g. this number would be 24 in penalty rule \"if less than 24 hours then 100% charge\"."
         },
         "charge": {
           "type": "number",
-          "format": "double"
+          "format": "double",
+          "description": "Specifies value which is used in combination with chargeType for calculating penalty charge."
         },
         "chargeType": {
-          "type": "string"
+          "type": "string",
+          "description": "Penalty charge calculation type, can either be PERCENTAGE or AMOUNT. If AMOUNT is used, the currency is taken from the sale."
         }
       }
     },
@@ -14862,12 +15218,14 @@
           "type": "array",
           "description": "Penalty rule creation date and time (array of year, month, day, hours, minutes, seconds).",
           "items": {
-            "type": "number"
+            "type": "integer",
+            "format": "int64"
           }
         },
         "cutoffHours": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Specifies cutoff hours for this penalty rule to apply. E.g. this number would be 24 in penalty rule \"if less than 24 hours then 100% charge\"."
         },
         "percentage": {
           "type": "number",
@@ -14879,7 +15237,16 @@
       "properties": {
         "id": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": "Not used"
+        },
+        "created": {
+          "type": "array",
+          "description": "Guidance creation date and time (array of year, month, day, hours, minutes, seconds).",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
         },
         "guidanceType": {
           "$ref": "#/definitions/GuidanceType"
@@ -14957,19 +15324,45 @@
       "properties": {
         "id": {
           "type": "integer",
-          "format": "int64"
+          "format": "int64",
+          "description": "Specifies ID of this place."
+        },
+        "created": {
+          "type": "array",
+          "description": "Place creation date and time (array of year, month, day, hours, minutes, seconds).",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "type": {
+          "type": "string",
+          "description": "Specifies the type of the place (airport/station/hotel, etc.)."
         },
         "title": {
-          "type": "string"
+          "type": "string",
+          "description": "Specifies the title of this place."
         },
-        "labels": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+        "code": {
+          "type": "string"
         },
         "address": {
           "$ref": "#/definitions/Address"
+        },
+        "pickupTicketDescription": {
+          "type": "string",
+          "description": "Text that appears on the ticket if this place is used as pickup place."
+        },
+        "dropoffTicketDescription": {
+          "type": "string",
+          "description": "Text that appears on the ticket if this place is used as pickup place."
+        },
+        "labels": {
+          "type": "array",
+          "description": "The list of labels added to this place.",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -15010,7 +15403,8 @@
       "enum": [
         "LIMITED_MOBILITY",
         "LIMITED_SIGHT",
-        "WHEELCHAIR"
+        "WHEELCHAIR",
+        "STROLLER_OR_PRAM"
       ]
     },
     "ActivityMeetingType": {
@@ -15161,7 +15555,7 @@
         "CALCULATE_EACH_UNIT"
       ]
     },
-    "PickupPricingTypeEnum": {
+    "AddonPricingTypeEnum": {
       "type": "string",
       "enum": [
         "FREE",

@@ -724,7 +724,7 @@
         ],
         "operationId": "findActivityBySlug",
         "summary": "Look up Activity by slug",
-        "description": "Use corresponding slug (human readable string that is used to identify the product) for fetching this product. Slug is set in Product overview -> Actions -> Slugs, then reindexing (republish) of the product is needed.",
+        "description": "Use corresponding slug (human readable string that is used to identify the product) for fetching this product. Slug is set in Product overview -> Actions -> Slugs.",
         "parameters": [
           {
             "in": "path",
@@ -1064,6 +1064,7 @@
         ],
         "operationId": "getActivity",
         "summary": "Get Activity by ID",
+        "description": "Use unique ID for fetching comprehensive information on this activity product.",
         "parameters": [
           {
             "in": "path",
@@ -4019,10 +4020,6 @@
           "type": "string",
           "description": "The placeholder text for this question."
         },
-        "dataType": {
-          "$ref": "#/definitions/AnswerDataType",
-          "description": "Data type of the answer object for this question."
-        },
         "required": {
           "type": "boolean",
           "description": "Specifies if the answer to this question is mandatory."
@@ -4030,6 +4027,28 @@
         "defaultValue": {
           "type": "string",
           "description": "Specifies default answer value, filled in."
+        },
+        "dataType": {
+          "$ref": "#/definitions/AnswerDataType",
+          "description": "Data type of the answer object for this question."
+        },
+        "dataFormat": {
+          "enum": [
+            "EMAIL_ADDRESS",
+            "URL",
+            "PHONE_NUMBER",
+            "COUNTRY",
+            "LANGUAGE",
+            "TIME",
+            "DAY_OF_MONTH",
+            "MONTH",
+            "YEAR",
+            "PATTERN"
+          ],
+          "type": "string"
+        },
+        "pattern": {
+          "type": "string"
         },
         "flags": {
           "type": "array",
@@ -4040,22 +4059,32 @@
         },
         "selectFromOptions": {
           "type": "boolean",
-          "description": "Specifies if the answer can be selected from options."
+          "description": "Specifies if the answer can be selected from a set of preselected options."
         },
         "selectMultiple": {
           "type": "boolean",
-          "description": "Specifies if the answer can have multiple options."
+          "description": "Specifies if the answer can have multiple options selected when answering."
         },
         "answerOptions": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/AnswerOptionDto"
           }
+        },
+        "answers": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "originalQuestion": {
+          "type": "string"
         }
       }
     },
     "AnswerOptionDto": {
       "type": "object",
+      "description": "Answer option.",
       "properties": {
         "value": {
           "type": "string",
@@ -4063,11 +4092,11 @@
         },
         "label": {
           "type": "string",
-          "description": "Duplicates answer option \"value\"."
+          "description": "Answer option label."
         }
       }
     },
-    "BookingQuestion": {
+    "ActivityBookingQuestion": {
       "type": "object",
       "properties": {
         "id": {
@@ -4116,11 +4145,11 @@
         },
         "selectFromOptions": {
           "type": "boolean",
-          "description": "Specifies if the answer can be selected from options."
+          "description": "Specifies if the answer can be selected from a set of preselected options."
         },
         "selectMultiple": {
           "type": "boolean",
-          "description": "Specifies if the answer can have multiple options."
+          "description": "Specifies if the answer can have multiple options selected when answering."
         },
         "options": {
           "type": "array",
@@ -4224,6 +4253,7 @@
     },
     "AnswerOption": {
       "type": "object",
+      "description": "Answer option.",
       "properties": {
         "name": {
           "type": "string",
@@ -4231,7 +4261,7 @@
         },
         "value": {
           "type": "string",
-          "description": "Duplicates answer option \"name\"."
+          "description": "Answer option value."
         }
       }
     },
@@ -6240,11 +6270,11 @@
         },
         "pricingType": {
           "$ref": "#/definitions/AddonPricingTypeEnum",
-          "description": "Not working. Specifies whether this extra is priced per person, per booking or free."
+          "description": "Specifies whether this extra is priced per person, per booking or free."
         },
         "pricingTypeLabel": {
           "type": "string",
-          "description": "Not working. String for pricing type in normal text (e.g. \"per person\" instead of \"PER_PERSON\")."
+          "description": "String for pricing type in normal text (e.g. \"per person\" instead of \"PER_PERSON\")."
         },
         "price": {
           "type": "number",
@@ -6252,7 +6282,7 @@
         },
         "increasesCapacity": {
           "type": "boolean",
-          "description": "Not working. Specifies if this extra takes availability place."
+          "description": "This field is used for Accomodations only. Specifies if this extra takes availability place."
         },
         "maxPerBooking": {
           "type": "integer",
@@ -6275,7 +6305,7 @@
           "items": {
             "$ref": "#/definitions/QuestionDto"
           },
-          "description": "Not working."
+          "description": "Deprecated. Booking questions are now separated into different object."
         }
       }
     },
@@ -6449,6 +6479,7 @@
       }
     },
     "LocationCodeDto": {
+      "description": "Deprecated. Use Address instead.",
       "properties": {
         "coordinates": {
           "type": "string"
@@ -6524,15 +6555,15 @@
         "zoomLevel": {
           "type": "integer",
           "format": "int32",
-          "description": "Not working (always 6). Specifies zoom level of initially shown map."
+          "description": "TODO. Specifies zoom level of initially shown map."
         },
         "origin": {
           "$ref": "#/definitions/LocationOriginEnum",
-          "description": "Not working."
+          "description": "TODO."
         },
         "originId": {
           "type": "string",
-          "description": "Not working."
+          "description": "TODO."
         },
         "wholeAddress": {
           "type": "string",
@@ -6890,7 +6921,8 @@
           "$ref": "#/definitions/LocationDto"
         },
         "locationCode": {
-          "$ref": "#/definitions/LocationCodeDto"
+          "$ref": "#/definitions/LocationCodeDto",
+          "description": "Deprecated."
         },
         "paymentCurrencies": {
           "type": "array",
@@ -8429,18 +8461,19 @@
         },
         "creationDate": {
           "type": "string",
-          "description": "The date the activity was first created."
+          "description": "The date the activity was first created. Date format example: Mon Jan 27 16:02:05 GMT 2020."
         },
         "lastModified": {
           "type": "string",
-          "description": "The date that the activity content was last modified."
+          "description": "The date that the activity content was last modified. Date format example: Mon Jan 27 16:02:05 GMT 2020."
         },
         "lastPublished": {
           "type": "string",
-          "description": "The date that the activity was last changed and published."
+          "description": "The date that the activity was last changed and published. Date format example: 2020-01-27T16:02:05.352Z."
         },
         "published": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "TODO. Specifies if this product is activated."
         },
         "title": {
           "type": "string",
@@ -8459,7 +8492,8 @@
           "description": "The cancellation policy, describing any cancellation fees incurred when cancelling bookings."
         },
         "overrideBarcodeFormat": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "TODO. Specifies if ticket barcode format for this activity overrides standard QR_CODE."
         },
         "barcodeType": {
           "$ref": "#/definitions/BarcodeTypeEnum",
@@ -8478,7 +8512,7 @@
         },
         "requiredCustomerFields": {
           "type": "array",
-          "description": "Deprecated.",
+          "description": "Deprecated. Should use \"mainContactFields\" instead.",
           "items": {
             "type": "string"
           }
@@ -8514,7 +8548,7 @@
         },
         "paymentCurrencies": {
           "type": "array",
-          "description": "Deprecated.",
+          "description": "TODO.",
           "items": {
             "type": "string"
           }
@@ -8528,7 +8562,7 @@
         },
         "tagGroups": {
           "type": "array",
-          "description": "The list of different groups of custom parameters, created for to this activity. One example of tag groups - \"Activity type\". All tag groups present in system get be fetched by GET /tag.json/groups. ",
+          "description": "The list of different groups of custom parameters, created for this activity. One example of tag groups - \"Activity type\". All tag groups present in system get be fetched by GET /tag.json/groups. ",
           "items": {
             "$ref": "#/definitions/TagGroupDto"
           }
@@ -8570,17 +8604,17 @@
         },
         "pluginId": {
           "type": "string",
-          "description": "Deprecated."
+          "description": "need more info - Sindri."
         },
         "reviewRating": {
           "type": "number",
           "format": "double",
-          "description": "Deprecated."
+          "description": "need more info, Sigrun."
         },
         "reviewCount": {
           "type": "integer",
           "format": "int64",
-          "description": "Deprecated."
+          "description": "need more info - Sigrun."
         },
         "activityType": {
           "$ref": "#/definitions/ActivityType",
@@ -8600,18 +8634,18 @@
         },
         "passExpiryType": {
           "$ref": "#/definitions/PassExpiryType",
-          "description": "Only used if bookingType == PASS. Specifies how the pass expires after purchase. Could be"
+          "description": "Only used if bookingType == PASS. Specifies how the pass expires after purchase. Could be non-empty, if this product had this value previously."
         },
         "fixedPassExpiryDate": {
           "type": "array",
-          "description": "Specifies at what fixed date the pass expires (array of year, month, day). Only used if Activity.bookingType == PASS and Activity.passExpiryType == FIXED_DATE (But could be non-empty, if this product had this value previously.)",
+          "description": "Specifies at what fixed date the pass expires (array of year, month, day). Only used if Activity.bookingType == PASS and Activity.passExpiryType == FIXED_DATE. Could be non-empty, if this product had this value previously.",
           "items": {
             "type": "string"
           }
         },
         "meetingType": {
           "$ref": "#/definitions/ActivityMeetingType",
-          "description": "Describes how passengers meet at the beginning of a tour/activity."
+          "description": "Describes how passengers meet at the start of a tour/activity."
         },
         "privateActivity": {
           "type": "boolean",
@@ -8657,7 +8691,7 @@
           "type": "array",
           "description": "The list of booking questions added to this acrivity.",
           "items": {
-            "$ref": "#/definitions/BookingQuestion"
+            "$ref": "#/definitions/ActivityBookingQuestion"
           }
         },
         "passengerFields": {
@@ -8743,7 +8777,7 @@
         },
         "locationCode": {
           "$ref": "#/definitions/LocationCodeDto",
-          "description": "The city that represents the main location for this activity. Specified as a location from the United Nations Code for Trade and Transport Locations (UN/LOCODE)."
+          "description": "Deprecated."
         },
         "googlePlace": {
           "type": "object",
@@ -8791,47 +8825,47 @@
               }
             }
           },
-          "description": "Not working."
+          "description": "klausti Siggi."
         },
         "bookingCutoffMinutes": {
           "type": "integer",
           "format": "int32",
-          "description": "The number of minutes before the activity when we stop accepting bookings."
+          "description": "The number of minutes before the activity when we stop accepting bookings. Combines with other bookingCutoff[X] fields, e.g. hours=1 and minutes=15 combine into 1h 15min booking cutoff time."
         },
         "bookingCutoffHours": {
           "type": "integer",
           "format": "int32",
-          "description": "The number of hours before the activity when we stop accepting bookings."
+          "description": "The number of hours before the activity when we stop accepting bookings. Combines with other bookingCutoff[X] fields, e.g. hours=1 and minutes=15 combine into 1h 15min booking cutoff time."
         },
         "bookingCutoffDays": {
           "type": "integer",
           "format": "int32",
-          "description": "The number of days before the activity when we stop accepting bookings."
+          "description": "The number of days before the activity when we stop accepting bookings. Combines with other bookingCutoff[X] fields, e.g. hours=1 and minutes=15 combine into 1h 15min booking cutoff time."
         },
         "bookingCutoffWeeks": {
           "type": "integer",
           "format": "int32",
-          "description": "The number of weeks before the activity when we stop accepting bookings."
+          "description": "The number of weeks before the activity when we stop accepting bookings. Combines with other bookingCutoff[X] fields, e.g. hours=1 and minutes=15 combine into 1h 15min booking cutoff time."
         },
         "requestDeadlineMinutes": {
           "type": "integer",
           "format": "int32",
-          "description": "The number of minutes allocated to confirm or reject booking by activity supplier."
+          "description": "The number of minutes allocated to confirm or reject booking by activity supplier. Combines with other requestDeadline[X] fields, e.g. days=1 and hours=10 combine into 1 day 10 hours booking request deadline time."
         },
         "requestDeadlineHours": {
           "type": "integer",
           "format": "int32",
-          "description": "The number of hours allocated to confirm or reject booking by activity supplier."
+          "description": "The number of hours allocated to confirm or reject booking by activity supplier. Combines with other requestDeadline[X] fields, e.g. days=1 and hours=10 combine into 1 day 10 hours booking request deadline time."
         },
         "requestDeadlineDays": {
           "type": "integer",
           "format": "int32",
-          "description": "The number of days allocated to confirm or reject booking by activity supplier."
+          "description": "The number of days allocated to confirm or reject booking by activity supplier. Combines with other requestDeadline[X] fields, e.g. days=1 and hours=10 combine into 1 day 10 hours booking request deadline time."
         },
         "requestDeadlineWeeks": {
           "type": "integer",
           "format": "int32",
-          "description": "The number of weeks allocated to confirm or reject booking by activity supplier."
+          "description": "The number of weeks allocated to confirm or reject booking by activity supplier. Combines with other requestDeadline[X] fields, e.g. days=1 and hours=10 combine into 1 day 10 hours booking request deadline time."
         },
         "boxedActivityId": {
           "type": "integer",
@@ -8847,42 +8881,42 @@
           "items": {
             "$ref": "#/definitions/ComboPart"
           },
-          "description": "Deprecated. The list of the components of this combo product."
+          "description": "TODO. The list of the components of this combo product."
         },
         "ticketPerComboComponent": {
           "type": "boolean",
-          "description": "Deprecated. Specifies whether this combo activity has tickets per combo component."
+          "description": "TODO. Specifies whether this combo activity has tickets per combo component."
         },
         "ticketComboComponents": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/ComboPart",
-            "description": "Deprecated. The list of the parts of this combo product for which customer gets separate tickets as well as a ticket for the combo itself."
+            "description": "TODO. The list of the parts of this combo product for which customer gets separate tickets as well as a ticket for the combo itself."
           }
         },
         "pickupActivityId": {
           "type": "integer",
           "format": "int64",
-          "description": "Deprecated."
+          "description": "TODO. Specifies ID of activity which pickup config should be used for syncing pickup service of this combo."
         },
         "allowCustomizedBookings": {
           "type": "boolean",
-          "description": "Deprecated."
+          "description": "TODO. Specifies if bookings with customized start times and prices are allowed (such bookings do not affect availability)."
         },
         "dayBasedAvailability": {
           "type": "boolean",
-          "description": "Deprecated."
+          "description": "Specifies if BookingType == DATE."
         },
         "selectFromDayOptions": {
           "type": "boolean",
-          "description": "Deprecated."
+          "description": "Speciefies if we let customers choose their preferred start time from a list when booking this product."
         },
         "dayOptions": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "Deprecated."
+          "description": "The list of available departure options."
         },
         "activityCategories": {
           "type": "array",
@@ -8995,11 +9029,11 @@
             "USE_ALLOTMENT",
             "USE_COMBO_ALLOTMENT"
           ],
-          "description": "Not working. Specifies pick up allotment type."
+          "description": "TODO. Specifies pick up allotment type."
         },
         "useComponentPickupAllotments": {
           "type": "boolean",
-          "description": "Not working. True if pickupAllotmentType == USE_COMBO_ALLOTMENT."
+          "description": "True if pickupAllotmentType == USE_COMBO_ALLOTMENT."
         },
         "pickupFlags": {
           "type": "array",
@@ -9035,7 +9069,7 @@
         },
         "pickupPlaceGroups": {
           "type": "object",
-          "description": "Not working. The list of the pickup place groups for this activity."
+          "description": "TODO. The list of the pickup place groups for this activity."
         },
         "dropoffService": {
           "type": "boolean",
@@ -9054,15 +9088,23 @@
         },
         "useSameAsPickUpPlaces": {
           "type": "boolean",
-          "description": "Not working. Specifies if supplier wants to drop-off users to the same places that they can be picked up from."
+          "description": "TODO. Specifies if supplier wants to drop-off users to the same places that they can be picked up from."
         },
         "dropoffPlaceGroups": {
           "type": "object",
-          "description": "Not working. The list of the drop-off place groups for this activity."
+          "description": "TODO. The list of the drop-off place groups for this activity."
         },
         "difficultyLevel": {
           "type": "string",
-          "description": "Specifies how physically demanding this tour/activity is."
+          "description": "Specifies how physically demanding this tour/activity is.",
+          "enum": [
+            "VERY_EASY",
+            "EASY",
+            "MODERATE",
+            "CHALLENGING",
+            "DEMANDING",
+            "EXTREME"
+          ]
         },
         "pricingCategories": {
           "type": "array",
@@ -9106,7 +9148,7 @@
         },
         "seasonalOpeningHours": {
           "type": "array",
-          "description": "Deprecated. Optional seasonal opening hours. If date falls within the season then this will override the default opening hours.",
+          "description": "Optional seasonal opening hours. If date falls within the season then this will override the default opening hours.",
           "items": {
             "$ref": "#/definitions/SeasonalOpeningHours"
           }
@@ -9127,42 +9169,43 @@
             "customFields": {
               "type": "array",
               "items": {
-                "type": "object"
+                "$ref": "#/definitions/CustomFieldDto"
               },
-              "description": "Deprecated."
+              "description": "Is set up in old product overview. In order to have custom fields for the product, they have to be enabled, in \"Advanced settings->Custom input fields\"."
             }
           }
         },
         "hasBoxes": {
           "type": "boolean",
-          "description": "Not working."
+          "description": "TODO. Specifies if this activity product has a box version in the system."
         },
         "requestDeadline": {
           "type": "integer",
           "format": "int64",
-          "description": "The number of miliseconds allocated to confirm or reject booking by activity supplier."
+          "description": "Deprecated, use 4 fields instead (requestDeadlineMinutes, etc.). The number of miliseconds allocated to confirm or reject booking by activity supplier."
         },
         "actualId": {
           "type": "integer",
           "format": "int64",
-          "description": "Specififies ID of the original owner of the product."
+          "description": "Specifies ID of this product if it is not a box, otherwise ID of boxed activity product."
         },
         "bookingCutoff": {
           "type": "integer",
           "format": "int32",
-          "description": "The number of minutes before the activity when we stop accepting bookings."
+          "description": "Deprecated, use 4 fields instead (bookingCutoffMinutes, etc.). The number of minutes before the activity when we stop accepting bookings."
         },
         "nextDefaultPriceAsText": {
           "type": "string",
-          "description": "String of the price (e.g. \"USD 15.90\") for 1 person in the default price category, assuming the future departure date nearest in time to the current time. Amount in default locale currency."
+          "description": "Human readable price (e.g. \"USD 15.90\") for 1 person in the default price category, assuming the future departure date nearest in time to the current time. Amount in default locale currency."
         },
         "actualVendor": {
           "$ref": "#/definitions/VendorDto",
-          "description": "Specifies the original owner of the product."
+          "description": "Specifies the original owner of the activity product."
         }
       }
     },
     "ComboPart": {
+      "description": "TODO.",
       "properties": {
         "id": {
           "type": "integer",
@@ -9316,7 +9359,28 @@
         },
         "frequency": {
           "type": "object",
-          "description": "Deprecated."
+          "$ref": "#/definitions/Duration",
+          "description": "Set up in Advanced opening hours page. Specifies frequency of opening hours (e.g. customers are admited every 1 hour)."
+        }
+      }
+    },
+    "Duration": {
+      "properties": {
+        "minutes": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "hours": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "days": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "weeks": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
@@ -9646,7 +9710,7 @@
         "index": {
           "type": "integer",
           "format": "int32",
-          "description": "Not working."
+          "description": "TODO. Specifies this agenda item position in the itinerary list."
         },
         "title": {
           "type": "string",
@@ -9678,7 +9742,7 @@
         },
         "address": {
           "type": "object",
-          "description": "Not working. Specifies the address for this agenda item."
+          "description": "TODO. Specifies the address for this agenda item."
         },
         "keyPhoto": {
           "$ref": "#/definitions/PhotoDto",
@@ -9937,7 +10001,7 @@
         "groupSize": {
           "type": "integer",
           "format": "int32",
-          "description": "Deprecated."
+          "description": "Specifies size of group in case it is a pricing category of Group type."
         },
         "ageQualified": {
           "type": "boolean",
@@ -9985,7 +10049,7 @@
           "items": {
             "type": "string"
           },
-          "description": "Not working."
+          "description": "TODO. The list of flags created for this pricing category."
         },
         "defaultCategory": {
           "type": "boolean",
@@ -10054,7 +10118,7 @@
         },
         "label": {
           "type": "string",
-          "description": "Not working. Specifies label for this starting time."
+          "description": "TODO. Specifies label for this starting time."
         },
         "hour": {
           "type": "integer",
@@ -10086,11 +10150,11 @@
         },
         "voucherPickupMsg": {
           "type": "string",
-          "description": "Not working. Pick-up message on the ticket"
+          "description": "TODO. Pick-up message on the ticket."
         },
         "externalId": {
           "type": "string",
-          "description": "Not working. Code for start time, which could be used for external systems."
+          "description": "TODO. Code for the start time, which could be used for external systems."
         },
         "duration": {
           "type": "integer",
@@ -12654,58 +12718,6 @@
         },
         "value": {
           "type": "string"
-        }
-      }
-    },
-    "BookingQuestionWithIdDto": {
-      "properties": {
-        "answerRequired": {
-          "type": "boolean"
-        },
-        "defaultAnswer": {
-          "type": "string"
-        },
-        "flags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "options": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "question": {
-          "type": "string"
-        },
-        "selectFromOptions": {
-          "type": "boolean"
-        },
-        "type": {
-          "type": "string"
-        }
-      }
-    },
-    "BookingQuestionWithIdGroupDto": {
-      "properties": {
-        "answersNeeded": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "name": {
-          "type": "string"
-        },
-        "questions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/BookingQuestionWithIdDto"
-          }
         }
       }
     },

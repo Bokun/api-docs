@@ -6555,15 +6555,15 @@
         "zoomLevel": {
           "type": "integer",
           "format": "int32",
-          "description": "TODO. Specifies zoom level of initially shown map."
+          "description": "Specifies zoom level of initially shown map."
         },
         "origin": {
           "$ref": "#/definitions/LocationOriginEnum",
-          "description": "TODO."
+          "description": ""
         },
         "originId": {
           "type": "string",
-          "description": "TODO."
+          "description": ""
         },
         "wholeAddress": {
           "type": "string",
@@ -8473,7 +8473,7 @@
         },
         "published": {
           "type": "boolean",
-          "description": "TODO. Specifies if this product is activated."
+          "description": "Specifies if this product is activated."
         },
         "title": {
           "type": "string",
@@ -8493,7 +8493,7 @@
         },
         "overrideBarcodeFormat": {
           "type": "boolean",
-          "description": "TODO. Specifies if ticket barcode format for this activity overrides standard QR_CODE."
+          "description": "Specifies if ticket barcode format for this activity overrides standard QR_CODE."
         },
         "barcodeType": {
           "$ref": "#/definitions/BarcodeTypeEnum",
@@ -8548,7 +8548,7 @@
         },
         "paymentCurrencies": {
           "type": "array",
-          "description": "TODO.",
+          "description": "",
           "items": {
             "type": "string"
           }
@@ -8881,27 +8881,27 @@
           "items": {
             "$ref": "#/definitions/ComboPart"
           },
-          "description": "TODO. The list of the components of this combo product."
+          "description": "The list of the components of this combo product."
         },
         "ticketPerComboComponent": {
           "type": "boolean",
-          "description": "TODO. Specifies whether this combo activity has tickets per combo component."
+          "description": "Specifies whether this combo activity has tickets per combo component."
         },
         "ticketComboComponents": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/ComboPart",
-            "description": "TODO. The list of the parts of this combo product for which customer gets separate tickets as well as a ticket for the combo itself."
+            "description": "The list of the parts of this combo product for which customer gets separate tickets as well as a ticket for the combo itself."
           }
         },
         "pickupActivityId": {
           "type": "integer",
           "format": "int64",
-          "description": "TODO. Specifies ID of activity which pickup config should be used for syncing pickup service of this combo."
+          "description": "Specifies ID of activity which pickup config should be used for syncing pickup service of this combo."
         },
         "allowCustomizedBookings": {
           "type": "boolean",
-          "description": "TODO. Specifies if bookings with customized start times and prices are allowed (such bookings do not affect availability)."
+          "description": "Specifies if bookings with customized start times and prices are allowed (such bookings do not affect availability)."
         },
         "dayBasedAvailability": {
           "type": "boolean",
@@ -9029,7 +9029,7 @@
             "USE_ALLOTMENT",
             "USE_COMBO_ALLOTMENT"
           ],
-          "description": "TODO. Specifies pick up allotment type."
+          "description": "Specifies pick up allotment type."
         },
         "useComponentPickupAllotments": {
           "type": "boolean",
@@ -9069,7 +9069,7 @@
         },
         "pickupPlaceGroups": {
           "type": "object",
-          "description": "TODO. The list of the pickup place groups for this activity."
+          "description": "The list of the pickup place groups for this activity."
         },
         "dropoffService": {
           "type": "boolean",
@@ -9088,11 +9088,11 @@
         },
         "useSameAsPickUpPlaces": {
           "type": "boolean",
-          "description": "TODO. Specifies if supplier wants to drop-off users to the same places that they can be picked up from."
+          "description": "Specifies if supplier wants to drop-off users to the same places that they can be picked up from."
         },
         "dropoffPlaceGroups": {
           "type": "object",
-          "description": "TODO. The list of the drop-off place groups for this activity."
+          "description": "The list of the drop-off place groups for this activity."
         },
         "difficultyLevel": {
           "type": "string",
@@ -9177,7 +9177,7 @@
         },
         "hasBoxes": {
           "type": "boolean",
-          "description": "TODO. Specifies if this activity product has a box version in the system."
+          "description": "Specifies if this activity product has a box version in the system."
         },
         "requestDeadline": {
           "type": "integer",
@@ -9205,7 +9205,7 @@
       }
     },
     "ComboPart": {
-      "description": "TODO.",
+      "description": "",
       "properties": {
         "id": {
           "type": "integer",
@@ -9710,7 +9710,7 @@
         "index": {
           "type": "integer",
           "format": "int32",
-          "description": "TODO. Specifies this agenda item position in the itinerary list."
+          "description": "Specifies this agenda item position in the itinerary list."
         },
         "title": {
           "type": "string",
@@ -9742,7 +9742,7 @@
         },
         "address": {
           "type": "object",
-          "description": "TODO. Specifies the address for this agenda item."
+          "description": "Specifies the address for this agenda item."
         },
         "keyPhoto": {
           "$ref": "#/definitions/PhotoDto",
@@ -10049,7 +10049,7 @@
           "items": {
             "type": "string"
           },
-          "description": "TODO. The list of flags created for this pricing category."
+          "description": "The list of flags created for this pricing category."
         },
         "defaultCategory": {
           "type": "boolean",
@@ -10118,7 +10118,7 @@
         },
         "label": {
           "type": "string",
-          "description": "TODO. Specifies label for this starting time."
+          "description": "Specifies label for this starting time."
         },
         "hour": {
           "type": "integer",
@@ -10150,11 +10150,11 @@
         },
         "voucherPickupMsg": {
           "type": "string",
-          "description": "TODO. Pick-up message on the ticket."
+          "description": "Pick-up message on the ticket."
         },
         "externalId": {
           "type": "string",
-          "description": "TODO. Code for the start time, which could be used for external systems."
+          "description": "Code for the start time, which could be used for external systems."
         },
         "duration": {
           "type": "integer",

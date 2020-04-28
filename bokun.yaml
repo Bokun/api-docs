@@ -4448,13 +4448,16 @@ definitions:
       zoomLevel:
         type: integer
         format: int32
-        description: 'TODO. Specifies zoom level of initially shown map.'
+        #TODO
+        description: 'Specifies zoom level of initially shown map.'
       origin:
         $ref: '#/definitions/LocationOriginEnum'
-        description: 'TODO.'
+        #TODO
+        description: ''
       originId:
         type: string
-        description: 'TODO.'
+        #TODO
+        description: ''
       wholeAddress:
         type: string
         description: 'Specifies full address of this location (concatenated format).'
@@ -5774,7 +5777,8 @@ definitions:
         description: 'The date that the activity was last changed and published. Date format example: 2020-01-27T16:02:05.352Z.'
       published:
         type: boolean
-        description: 'TODO. Specifies if this product is activated.'
+        #TODO
+        description: 'Specifies if this product is activated.'
       title:
         type: string
         description: 'The title of the activity.'
@@ -5789,7 +5793,8 @@ definitions:
         description: 'The cancellation policy, describing any cancellation fees incurred when cancelling bookings.'
       overrideBarcodeFormat:
         type: boolean
-        description: 'TODO. Specifies if ticket barcode format for this activity overrides standard QR_CODE.'
+        #TODO
+        description: 'Specifies if ticket barcode format for this activity overrides standard QR_CODE.'
       barcodeType:
         $ref: '#/definitions/BarcodeTypeEnum'
         description: 'Specifies ticket barcode format for this activity.'
@@ -5829,7 +5834,8 @@ definitions:
         description: 'The list of languages which the product content is available in.'
       paymentCurrencies:
         type: array
-        description: 'TODO.'
+        #TODO
+        description: ''
         items:
           type: string
       customFields:
@@ -6081,22 +6087,27 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/ComboPart'
-        description: 'TODO. The list of the components of this combo product.'
+        #TODO
+        description: 'The list of the components of this combo product.'
       ticketPerComboComponent:
         type: boolean
-        description: 'TODO. Specifies whether this combo activity has tickets per combo component.'
+        #TODO
+        description: 'Specifies whether this combo activity has tickets per combo component.'
       ticketComboComponents:
         type: array
         items:
           $ref: '#/definitions/ComboPart'
-          description: 'TODO. The list of the parts of this combo product for which customer gets separate tickets as well as a ticket for the combo itself.'
+          #TODO
+          description: 'The list of the parts of this combo product for which customer gets separate tickets as well as a ticket for the combo itself.'
       pickupActivityId:
         type: integer
         format: int64
-        description: 'TODO. Specifies ID of activity which pickup config should be used for syncing pickup service of this combo.'
+        #TODO
+        description: 'Specifies ID of activity which pickup config should be used for syncing pickup service of this combo.'
       allowCustomizedBookings:
         type: boolean
-        description: 'TODO. Specifies if bookings with customized start times and prices are allowed (such bookings do not affect availability).'
+        #TODO
+        description: 'Specifies if bookings with customized start times and prices are allowed (such bookings do not affect availability).'
       dayBasedAvailability:
         type: boolean
         description: 'Specifies if BookingType == DATE.'
@@ -6192,7 +6203,8 @@ definitions:
           - NO_ALLOTMENT
           - USE_ALLOTMENT
           - USE_COMBO_ALLOTMENT
-        description: 'TODO. Specifies pick up allotment type.'
+        #TODO
+        description: 'Specifies pick up allotment type.'
       useComponentPickupAllotments:
         type: boolean
         description: 'True if pickupAllotmentType == USE_COMBO_ALLOTMENT.'
@@ -6222,7 +6234,8 @@ definitions:
         description: 'Specifies if the custom message when customer does not want pick-up is turned on to be shown on ticket.'
       pickupPlaceGroups:
         type: object
-        description: 'TODO. The list of the pickup place groups for this activity.'
+        #TODO
+        description: 'The list of the pickup place groups for this activity.'
       dropoffService:
         type: boolean
         description: 'Specifies whether this activity offers drop off service.'
@@ -6236,10 +6249,12 @@ definitions:
         description: 'Only relevant if dropoffService is TRUE. Specifies whether the customer should be allowed to enter their drop off place in free text.'
       useSameAsPickUpPlaces:
         type: boolean
-        description: 'TODO. Specifies if supplier wants to drop-off users to the same places that they can be picked up from.'
+        #TODO
+        description: 'Specifies if supplier wants to drop-off users to the same places that they can be picked up from.'
       dropoffPlaceGroups:
         type: object
-        description: 'TODO. The list of the drop-off place groups for this activity.'
+        #TODO
+        description: 'The list of the drop-off place groups for this activity.'
       difficultyLevel:
         type: string
         description: 'Specifies how physically demanding this tour/activity is.'
@@ -6301,7 +6316,8 @@ definitions:
             description: 'Is set up in old product overview. In order to have custom fields for the product, they have to be enabled, in "Advanced settings->Custom input fields".'
       hasBoxes:
         type: boolean
-        description: 'TODO. Specifies if this activity product has a box version in the system.'
+        #TODO
+        description: 'Specifies if this activity product has a box version in the system.'
       requestDeadline:
         type: integer
         format: int64
@@ -6321,7 +6337,8 @@ definitions:
         $ref: '#/definitions/VendorDto'
         description: 'Specifies the original owner of the activity product.'
   ComboPart:
-    description: 'TODO.'
+    #TODO
+    description: ''
     properties:
       id:
         type: integer
@@ -6677,7 +6694,8 @@ definitions:
       index:
         type: integer
         format: int32
-        description: 'TODO. Specifies this agenda item position in the itinerary list.'
+        #TODO
+        description: 'Specifies this agenda item position in the itinerary list.'
       title:
         type: string
         description: 'Specifies title of the agenda item.'
@@ -6701,7 +6719,8 @@ definitions:
         description: 'Specifies location details for this agenda item.'
       address:
         type: object
-        description: 'TODO. Specifies the address for this agenda item.'
+        #TODO
+        description: 'Specifies the address for this agenda item.'
       keyPhoto:
         $ref: '#/definitions/PhotoDto'
         description: 'A photo added as a key photo for this agenda item.'
@@ -6914,7 +6933,8 @@ definitions:
         type: array
         items:
           type: string
-        description: 'TODO. The list of flags created for this pricing category.'
+          #TODO
+        description: 'The list of flags created for this pricing category.'
       defaultCategory:
         type: boolean
         description: 'Specifies if this price category is set as default for this activity.'
@@ -6960,7 +6980,8 @@ definitions:
         description: 'Specifies ID of the starting time.'
       label:
         type: string
-        description: 'TODO. Specifies label for this starting time.'
+        #TODO
+        description: 'Specifies label for this starting time.'
       hour:
         type: integer
         format: int32
@@ -6985,10 +7006,12 @@ definitions:
         description: 'Deprecated. Should be used durationMinutes, durationHours, durationDays, durationWeeks.'
       voucherPickupMsg:
         type: string
-        description: 'TODO. Pick-up message on the ticket.'
+        #TODO
+        description: 'Pick-up message on the ticket.'
       externalId:
         type: string
-        description: 'TODO. Code for the start time, which could be used for external systems.'
+        #TODO
+        description: 'Code for the start time, which could be used for external systems.'
       duration:
         type: integer
         format: int32

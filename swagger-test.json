@@ -15133,7 +15133,7 @@
         },
         "defaultPolicy": {
           "type": "boolean",
-          "description": "If this policy was changed somehow (penalty rules or taxes added) then false, otherwise - true.'"
+          "description": ""
         }
       }
     },

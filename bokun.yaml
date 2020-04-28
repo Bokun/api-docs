@@ -5875,15 +5875,18 @@ definitions:
         type: boolean
       pluginId:
         type: string
-        description: 'need more info - Sindri.'
+        #TODO
+        description: ''
       reviewRating:
         type: number
         format: double
-        description: 'need more info, Sigrun.'
+        #TODO
+        description: ''
       reviewCount:
         type: integer
         format: int64
-        description: 'need more info - Sigrun.'
+        #TODO
+        description: ''
       activityType:
         $ref: '#/definitions/ActivityType'
         description: 'Specifies the type of the activity.'

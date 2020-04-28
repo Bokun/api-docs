@@ -5953,40 +5953,14 @@ definitions:
       inclusions:
         type: array
         items:
-          type: string
-          enum:
-            - ENTRY_OR_ADMISSION_FEE
-            - FUEL_SURCHARGE
-            - LANDING_AND_FACILITY_FEES
-            - PARKING_FEES
-            - ENTRY_TAX
-            - DEPARTURE_TAX
-            - NATIONAL_PARK_ENTRANCE_FEE
-            - GOODS_AND_SERVICES_TAX
-            - TIP_OR_GRATUITY
-            - FOOD_AND_DRINKS
-            - WIFI
-            - BUS_FARE
+          $ref: '#/definitions/InclusionExclusionType'
       included:
         type: string
         description: 'Optional text describing what is included when you book this product. May contain HTML markup.'
       exclusions:
         type: array
         items:
-          type: string
-          enum:
-            - ENTRY_OR_ADMISSION_FEE
-            - FUEL_SURCHARGE
-            - LANDING_AND_FACILITY_FEES
-            - PARKING_FEES
-            - ENTRY_TAX
-            - DEPARTURE_TAX
-            - NATIONAL_PARK_ENTRANCE_FEE
-            - GOODS_AND_SERVICES_TAX
-            - TIP_OR_GRATUITY
-            - FOOD_AND_DRINKS
-            - WIFI
-            - BUS_FARE
+          $ref: '#/definitions/InclusionExclusionType'
       excluded:
         type: string
         description: 'Optional text describing what is excluded when you book this product. May contain HTML markup.'
@@ -10877,3 +10851,19 @@ definitions:
       - HALF_UP
       - HALF_DOWN
       - EVEN
+  InclusionExclusionType:
+    type: string
+    description: 'Activity Inclusions/Exclusions.'
+    enum:
+      - ENTRY_OR_ADMISSION_FEE
+      - FUEL_SURCHARGE
+      - LANDING_AND_FACILITY_FEES
+      - PARKING_FEES
+      - ENTRY_TAX
+      - DEPARTURE_TAX
+      - NATIONAL_PARK_ENTRANCE_FEE
+      - GOODS_AND_SERVICES_TAX
+      - TIP_OR_GRATUITY
+      - FOOD_AND_DRINKS
+      - WIFI
+      - BUS_FARE

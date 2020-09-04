@@ -5643,25 +5643,35 @@ definitions:
         description: 'Array of pricelists that are valid for the certain time frames.'
   CategoryPriceDto:
     type: object
+    required:
+      - pricingCategoryId
+      - title
+      - ticketCategory
     properties:
       pricingCategoryId:
         format: int64
         type: integer
+        description: 'Specifies pricing category ID.'
       title:
         type: string
+        description: 'Specifies pricing category title.'
       ticketCategory:
         $ref: '#/definitions/TicketCategoryEnum'
+        description: 'Specifies pricing category type.'
       price:
         description: 'The price per passenger in this pricing category. This is only set if tiered pricing is disabled, otherwise this is set to null.'
         $ref: '#/definitions/PriceDto'
       pickupPrice:
         $ref: '#/definitions/PriceDto'
+        description: 'The pick up price per passenger in this pricing category. If pick up service is not enabled, or pick up is not priced per person, this will be empty.'
       dropoffPrice:
         $ref: '#/definitions/PriceDto'
+        description: 'The drop off price per passenger in this pricing category. If drop off service is not enabled, or drop off is not priced per person, this will be empty.'
       extras:
         items:
           $ref: '#/definitions/ExtraPriceDto'
         type: array
+        description: 'The price for extras booked for passengers in this pricing category.'
       tieredPrices:
         description: 'The tiered prices per passenger in this pricing category. This is only set if tiered pricing is enabled, otherwise this is set to null.'
         items:
@@ -5669,25 +5679,39 @@ definitions:
         type: array
   TieredPriceDto:
     type: object
+    required:
+      - minPassengersRequired
+      - currency
+      - amount
+      - ofWhichTax
     properties:
       minPassengersRequired:
         type: integer
         format: int32
+        description: 'Specifies the minimum number of passengers for the tier.'
       maxPassengersRequired:
         type: integer
         format: int32
+        description: 'Specifies the maximum number of passengers for the tier.'
       currency:
         type: string
+        description: 'Specifies the currency on which the price is shown.'
       amount:
         format: double
         type: number
+        description: 'Specifies the amount of the price.'
       ofWhichTax:
         format: double
         type: number
+        description: 'Specifies the amount of tax, that is applied for the price.'
       priceNotFound:
         type: boolean
+        description: 'True if the price for this rate is missing. Omitted field if the price is not missing.'
   ActivityRatePricesDto:
     type: object
+    required:
+      - rateId
+      - title
     properties:
       rateId:
         format: int64
@@ -5698,32 +5722,35 @@ definitions:
         description: 'Specifies the title of the rate.'
       price:
         $ref: '#/definitions/PriceDto'
-        description: 'Specifies the rate price if it is set per booking. Field omitted if the price is set per person.'
+        description: 'Specifies the passenger price per booking. If rate is priced per person, this will be empty.'
       passengers:
         items:
           $ref: '#/definitions/CategoryPriceDto'
         type: array
-        description: 'The list of pricing categories and related prices per person. This field is omitted if the price is set per booking.'
+        description: 'The list of prices per person, based on the pricing category. If rate is not priced per person, this will be empty.'
       pickupPrice:
         $ref: '#/definitions/PriceDto'
-        description: 'Specifies the price for the pick up service on this rate.'
+        description: 'Specifies the price for pick up per booking. If pick up service is not enabled, or pick up is not priced per booking, this will be empty.'
       dropoffPrice:
         $ref: '#/definitions/PriceDto'
-        description: 'Specifies the price for the drop-off service on this rate.'
+        description: 'Specifies the price for drop off per booking. If drop off service is not enabled, or drop off is not priced per booking, this will be empty.'
       extras:
         items:
           $ref: '#/definitions/ExtraPriceDto'
         type: array
-        description: 'The list of prices for the extras available for this rate.'
+        description: 'Pricing for extras belonging to the product, which are not priced per person.'
   ActivityPriceListDateRange:
     type: object
+    required:
+      - from
+      - rates
     properties:
       from:
         type: string
-        description: 'Start date for the validity of this pricelist.'
+        description: 'Start date (inclusive) for the validity of this pricelist. '
       to:
         type: string
-        description: 'End date for the validity of this pricelist. Field omitted if the end date is not filled.'
+        description: 'End date (inclusive) for the validity of this pricelist. If the end date is not set, this will be empty .'
       rates:
         items:
           $ref: '#/definitions/ActivityRatePricesDto'
@@ -5742,7 +5769,7 @@ definitions:
       ofWhichTax:
         format: double
         type: number
-        description: 'Specifies the fraction of the amount that is dedicated for the taxes. Expressed in absolute value, applying the same currency as for amount.'
+        description: 'Specifies the amount of tax, that is applied for the price.'
       priceNotFound:
         type: boolean
         description: 'True if the price for this rate is missing. Omitted field if the price is not missing.'
@@ -6096,8 +6123,8 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/ComboPart'
-          #TODO
-          description: 'The list of the parts of this combo product for which customer gets separate tickets as well as a ticket for the combo itself.'
+        #TODO
+        description: 'The list of the parts of this combo product for which customer gets separate tickets as well as a ticket for the combo itself.'
       pickupActivityId:
         type: integer
         format: int64

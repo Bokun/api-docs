@@ -5625,18 +5625,22 @@ definitions:
       activityId:
         format: int64
         type: integer
+        description: 'Specifies activity ID, which is related to this price list.'
       isPriceConverted:
         type: boolean
+        description: 'Specifies if the prices in the response are converted to the requested currency.'
       conversionRate:
         format: double
         type: number
         description: 'Will be null unless the currency is converted.'
       defaultCurrency:
         type: string
+        description: 'Specifies the default currency in the supplier price catalog.'
       pricesByDateRange:
         items:
           $ref: '#/definitions/ActivityPriceListDateRange'
         type: array
+        description: 'Array of pricelists that are valid for the certain time frames.'
   CategoryPriceDto:
     type: object
     properties:
@@ -5688,56 +5692,73 @@ definitions:
       rateId:
         format: int64
         type: integer
+        description: 'Specifies the rate ID.'
       title:
         type: string
+        description: 'Specifies the title of the rate.'
       price:
         $ref: '#/definitions/PriceDto'
+        description: 'Specifies the rate price if it is set per booking. Field omitted if the price is set per person.'
       passengers:
         items:
           $ref: '#/definitions/CategoryPriceDto'
         type: array
+        description: 'The list of pricing categories and related prices per person. This field is omitted if the price is set per booking.'
       pickupPrice:
         $ref: '#/definitions/PriceDto'
+        description: 'Specifies the price for the pick up service on this rate.'
       dropoffPrice:
         $ref: '#/definitions/PriceDto'
+        description: 'Specifies the price for the drop-off service on this rate.'
       extras:
         items:
           $ref: '#/definitions/ExtraPriceDto'
         type: array
+        description: 'The list of prices for the extras available for this rate.'
   ActivityPriceListDateRange:
     type: object
     properties:
       from:
         type: string
+        description: 'Start date for the validity of this pricelist.'
       to:
         type: string
+        description: 'End date for the validity of this pricelist. Field omitted if the end date is not filled.'
       rates:
         items:
           $ref: '#/definitions/ActivityRatePricesDto'
         type: array
+        description: 'The list of rates that are set for each product on this pricelist.'
   PriceDto:
     type: object
     properties:
       currency:
         type: string
+        description: 'Specifies the currency on which the price is shown.'
       amount:
         format: double
         type: number
+        description: 'Specifies the amount of the price.'
       ofWhichTax:
         format: double
         type: number
+        description: 'Specifies the fraction of the amount that is dedicated for the taxes. Expressed in absolute value, applying the same currency as for amount.'
       priceNotFound:
         type: boolean
+        description: 'True if the price for this rate is missing. Omitted field if the price is not missing.'
   ExtraPriceDto:
     type: object
     properties:
       extraId:
         format: int64
         type: integer
+        description: 'Specifies the ID of the extra.'
       title:
         type: string
+        description: 'Specifies the title of the extra.'
       price:
         $ref: '#/definitions/PriceDto'
+        description: 'Specifies the price of the extra.'
   ActivityDto:
     properties:
       id:
@@ -6020,7 +6041,8 @@ definitions:
             count:
               type: integer
               format: int32
-        description: 'klausti Siggi.'
+        #TODO
+        description: ''
       bookingCutoffMinutes:
         type: integer
         format: int32
@@ -6090,7 +6112,7 @@ definitions:
         description: 'Specifies if BookingType == DATE.'
       selectFromDayOptions:
         type: boolean
-        description: 'Speciefies if we let customers choose their preferred start time from a list when booking this product.'
+        description: 'Specifies if we let customers choose their preferred start time from a list when booking this product.'
       dayOptions:
         type: array
         items:

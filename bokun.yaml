@@ -5640,7 +5640,7 @@ definitions:
         items:
           $ref: '#/definitions/ActivityPriceListDateRange'
         type: array
-        description: 'Array of pricelists that are valid for the certain time frames.'
+        description: 'Array of pricelists that are valid for relevant time frames.'
   CategoryPriceDto:
     type: object
     required:
@@ -5706,7 +5706,7 @@ definitions:
         description: 'Specifies the amount of tax, that is applied for the price.'
       priceNotFound:
         type: boolean
-        description: 'True if the price for this rate is missing. Omitted field if the price is not missing.'
+        description: 'True if the price for this rate is missing. Omitted if the price was found.'
   ActivityRatePricesDto:
     type: object
     required:
@@ -5772,7 +5772,7 @@ definitions:
         description: 'Specifies the amount of tax, that is applied for the price.'
       priceNotFound:
         type: boolean
-        description: 'True if the price for this rate is missing. Omitted field if the price is not missing.'
+        description: 'True if the price for this rate is missing. Omitted if the price was found.'
   ExtraPriceDto:
     type: object
     properties:

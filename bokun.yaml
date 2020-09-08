@@ -1790,6 +1790,42 @@ paths:
           description: The checkout response
           schema:
             $ref: '#/definitions/CheckoutResponse'
+  '/booking.json/guest/{sessionId}/reserve':
+    post:
+      produces:
+        - application/json
+      tags:
+        - booking
+      operationId: guestReserve
+      summary: Reserve the booking for the guest (before payment)
+      parameters:
+        - in: path
+          description: The session ID of the guest
+          name: sessionId
+          required: true
+          type: string
+        - in: query
+          description: The currency code to use for calculating prices.
+          name: currency
+          required: false
+          type: string
+          default: ISK
+        - in: query
+          description: Comma separated names of parameters for the payment provider.
+          name: paymentParameters
+          required: false
+          type: string
+        - in: body
+          description: JSON object
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/BookingReservationRequestDto'
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/booking'
   '/booking.json/guest/{sessionId}/reserved':
     get:
       produces:
@@ -1817,119 +1853,42 @@ paths:
             type: array
             items:
               $ref: '#/definitions/booking'
-  '/booking.json/activity-booking/{confirmationCode}/customer-status/{status}':
+  '/booking.json/{confirmationCode}/move-back-to-cart/session/{sessionId}':
     get:
       produces:
         - application/json
       tags:
         - booking
-      operationId: setActivityBookingCustomerStatus
-      summary: Change the arrived status of an activity booking
+      operationId: moveReservedBookingBackToSessionCart
+      summary: Move a reserved booking back to a session cart
       parameters:
         - in: path
-          description: The confirmation code for the product booking
+          description: The session ID of the guest
+          name: sessionId
+          required: true
+          type: string
+        - in: path
+          description: The confirmation code of the booking. The booking ID can also be used.
           name: confirmationCode
           required: true
           type: string
-        - in: path
-          description: The arrived status (yes/no true/false)
-          name: status
-          required: true
+        - in: query
+          description: The currency code to use for calculating prices.
+          name: currency
+          required: false
           type: string
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/ActivityBookingDetailsDto'
-  '/booking.json/cancel-product-booking/{productConfirmationCode}':
-    post:
-      produces:
-        - application/json
-      tags:
-        - booking
-      operationId: cancelProductBooking
-      summary: Cancel for given product booking
-      parameters:
-        - in: path
-          description: The confirmation code for the activity booking
-          name: productConfirmationCode
-          required: true
+          default: ISK
+        - in: query
+          description: The language the content should be served in
+          name: lang
+          required: false
           type: string
-        - in: body
-          description: JSON object
-          name: body
-          required: true
-          schema:
-            $ref: '#/definitions/cancelProductBooking'
+          default: IS
       responses:
         '200':
           description: No response was specified
           schema:
-            $ref: '#/definitions/ApiResponse'
-  '/booking.json/cancel-booking/{confirmationCode}':
-    post:
-      produces:
-        - application/json
-      tags:
-        - booking
-      operationId: cancelBooking
-      summary: Cancel for given booking
-      parameters:
-        - in: path
-          description: The confirmation code for the booking that you want to cancel
-          name: confirmationCode
-          required: true
-          type: string
-        - in: body
-          description: JSON object
-          name: body
-          required: true
-          schema:
-            $ref: '#/definitions/cancelBooking'
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/ApiResponse'
-  '/booking.json/accommodation-booking/{id}':
-    get:
-      produces:
-        - application/json
-      tags:
-        - booking
-      operationId: accommodationBooking
-      summary: Show accommodation booking information
-      parameters:
-        - in: path
-          description: The id or confirmation code for the product booking
-          name: id
-          required: true
-          type: string
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/AccommodationBookingDetailsDto'
-  /booking.json/car-rental-booking/reserve-and-confirm:
-    post:
-      produces:
-        - application/json
-      tags:
-        - booking
-      operationId: reserveAndConfirmCarRentalBooking
-      summary: Reserve and confirm a single car rental booking (bypasses shopping cart)
-      parameters:
-        - in: body
-          description: JSON object
-          name: body
-          required: true
-          schema:
-            $ref: '#/definitions/SingleCarRentalBookingRequestDto'
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/booking'
+            $ref: '#/definitions/ShoppingCart'
   '/booking.json/{confirmationCode}/abort-reserved':
     get:
       produces:
@@ -1955,91 +1914,68 @@ paths:
           description: No response was specified
           schema:
             $ref: '#/definitions/ApiResponse'
-  '/booking.json/car-rental-booking/{confirmationCode}/customer-status/{status}':
-    get:
-      produces:
-        - application/json
-      tags:
-        - booking
-      operationId: setCarRentalBookingCustomerStatus
-      summary: Change the arrived status of a car rental booking
-      parameters:
-        - in: path
-          description: The confirmation code for the product booking
-          name: confirmationCode
-          required: true
-          type: string
-        - in: path
-          description: The arrived status (yes/no or true/false)
-          name: status
-          required: true
-          type: string
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/CarRentalBookingDetailsDto'
-  '/booking.json/accommodation-booking/{confirmationCode}/customer-status/{status}':
-    get:
-      produces:
-        - application/json
-      tags:
-        - booking
-      operationId: setAccommodationBookingCustomerStatus
-      summary: Change the arrived status of an accommodation booking
-      parameters:
-        - in: path
-          description: The confirmation code for the product booking
-          name: confirmationCode
-          required: true
-          type: string
-        - in: path
-          description: The arrived status (yes/no true/false)
-          name: status
-          required: true
-          type: string
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/AccommodationBookingDetailsDto'
-  /booking.json/activity-booking/reserve-and-confirm:
+  '/booking.json/guest/{sessionId}/reserve-pay-confirm':
     post:
       produces:
         - application/json
       tags:
         - booking
-      operationId: reserveAndConfirmActivityBooking
-      summary: Reserve and confirm a single activity booking (bypasses shopping cart)
+      operationId: guestReserveChargeAndConfirm
+      summary: 'Reserve the booking for the guest, charge the card and confirm'
       parameters:
+        - in: path
+          description: The session ID of the guest
+          name: sessionId
+          required: true
+          type: string
+        - in: query
+          description: The currency code to use for calculating prices.
+          name: currency
+          required: false
+          type: string
+          default: ISK
+        - in: query
+          description: Specifies whether to send email booking confirmation to the customer
+          name: sendCustomerNotification
+          required: false
+          type: boolean
+          default: true
         - in: body
           description: JSON object
           name: body
           required: true
           schema:
-            $ref: '#/definitions/SingleActivityBookingRequestDto'
+            $ref: '#/definitions/BookingReservationRequestDto'
       responses:
         '200':
           description: No response was specified
           schema:
             $ref: '#/definitions/booking'
-  '/booking.json/accommodation-booking/{productConfirmationCode}/ticket':
-    get:
+  '/booking.json/{confirmationCode}/payment-error':
+    post:
       produces:
-        - application/pdf
+        - application/json
       tags:
         - booking
-      operationId: getAccommodationTicket
-      summary: Get ticket for given accommodation booking
+      operationId: paymentError
+      summary: Indicate that an error occurred in payment
       parameters:
         - in: path
-          description: The confirmation code of the accommodation booking
-          name: productConfirmationCode
+          description: The confirmation code of the booking. The booking ID can also be used.
+          name: confirmationCode
           required: true
           type: string
+        - in: body
+          description: JSON object describing the error
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/ErrorDto'
       responses:
         '200':
           description: No response was specified
+          schema:
+            $ref: '#/definitions/ApiResponse'
   '/booking.json/{confirmationCode}/confirm':
     post:
       produces:
@@ -2083,13 +2019,38 @@ paths:
           description: No response was specified
           schema:
             $ref: '#/definitions/booking'
+  '/booking.json/cancel-booking/{confirmationCode}':
+    post:
+      produces:
+        - application/json
+      tags:
+        - booking
+      operationId: cancelBooking
+      summary: Cancel for given booking
+      parameters:
+        - in: path
+          description: The confirmation code for the booking that you want to cancel
+          name: confirmationCode
+          required: true
+          type: string
+        - in: body
+          description: JSON object
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/cancelBooking'
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/ApiResponse'
   '/booking.json/booking/{confirmationCode}':
     get:
       produces:
         - application/json
       tags:
         - booking
-      operationId: booking
+      operationId: bookingByConfirmationCode
       summary: Fetch a booking by confirmation code
       parameters:
         - in: path
@@ -2114,187 +2075,18 @@ paths:
           description: No response was specified
           schema:
             $ref: '#/definitions/booking'
-  '/booking.json/activity-booking/{id}':
+  '/booking.json/booking/{id}':
     get:
       produces:
         - application/json
       tags:
         - booking
-      operationId: activityBooking
-      summary: Show activity booking information
+      operationId: bookingById
+      summary: Fetch a booking by id
       parameters:
         - in: path
-          description: The id or confirmation code for the product booking
+          description: The id of the booking
           name: id
-          required: true
-          type: string
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/ActivityBookingDetailsDto'
-  '/booking.json/route-booking/{confirmationCode}/customer-status/{status}':
-    get:
-      produces:
-        - application/json
-      tags:
-        - booking
-      operationId: setRouteBookingCustomerStatus
-      summary: Change the arrived status of a route booking
-      parameters:
-        - in: path
-          description: The confirmation code for the product booking
-          name: confirmationCode
-          required: true
-          type: string
-        - in: path
-          description: The arrived status (yes/no or true/false)
-          name: status
-          required: true
-          type: string
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/RouteBookingDetailsDto'
-  '/booking.json/{confirmationCode}/payment-error':
-    post:
-      produces:
-        - application/json
-      tags:
-        - booking
-      operationId: paymentError
-      summary: Indicate that an error occurred in payment
-      parameters:
-        - in: path
-          description: The confirmation code of the booking. The booking ID can also be used.
-          name: confirmationCode
-          required: true
-          type: string
-        - in: body
-          description: JSON object describing the error
-          name: body
-          required: true
-          schema:
-            $ref: '#/definitions/ErrorDto'
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/ApiResponse'
-  /booking.json/accommodation-booking/reserve-and-confirm:
-    post:
-      produces:
-        - application/json
-      tags:
-        - booking
-      operationId: reserveAndConfirmAccommodationBooking
-      summary: Reserve and confirm a single accommodation booking (bypasses shopping cart)
-      parameters:
-        - in: body
-          description: JSON object
-          name: body
-          required: true
-          schema:
-            $ref: '#/definitions/SingleAccommodationBookingRequestDto'
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/booking'
-  '/booking.json/guest/{sessionId}/reserve-pay-confirm':
-    post:
-      produces:
-        - application/json
-      tags:
-        - booking
-      operationId: guestReserveChargeAndConfirm
-      summary: 'Reserve the booking for the guest, charge the card and confirm'
-      parameters:
-        - in: path
-          description: The session ID of the guest
-          name: sessionId
-          required: true
-          type: string
-        - in: query
-          description: The currency code to use for calculating prices.
-          name: currency
-          required: false
-          type: string
-          default: ISK
-        - in: query
-          description: Specifies whether to send email booking confirmation to the customer
-          name: sendCustomerNotification
-          required: false
-          type: boolean
-          default: true
-        - in: body
-          description: JSON object
-          name: body
-          required: true
-          schema:
-            $ref: '#/definitions/BookingReservationRequestDto'
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/booking'
-  '/booking.json/transport-booking/{productConfirmationCode}/ticket':
-    get:
-      produces:
-        - application/pdf
-      tags:
-        - booking
-      operationId: getTransportTicket
-      summary: Get ticket for given transport booking
-      parameters:
-        - in: path
-          description: The confirmation code of the transport booking
-          name: productConfirmationCode
-          required: true
-          type: string
-      responses:
-        '200':
-          description: No response was specified
-  /booking.json/product-booking-search:
-    post:
-      produces:
-        - application/json
-      tags:
-        - booking
-      operationId: productBookingSearch
-      summary: Search for bookings and return a list of booking information
-      parameters:
-        - in: body
-          description: JSON object
-          name: body
-          required: true
-          schema:
-            $ref: '#/definitions/ProductBookingQuery'
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/ProductBookingSearchResultsDto'
-  '/booking.json/{confirmationCode}/move-back-to-cart/session/{sessionId}':
-    get:
-      produces:
-        - application/json
-      tags:
-        - booking
-      operationId: moveReservedBookingBackToSessionCart
-      summary: Move a reserved booking back to a session cart
-      parameters:
-        - in: path
-          description: The session ID of the guest
-          name: sessionId
-          required: true
-          type: string
-        - in: path
-          description: The confirmation code of the booking. The booking ID can also be used.
-          name: confirmationCode
           required: true
           type: string
         - in: query
@@ -2313,62 +2105,7 @@ paths:
         '200':
           description: No response was specified
           schema:
-            $ref: '#/definitions/ShoppingCart'
-  '/booking.json/guest/{sessionId}/reserve':
-    post:
-      produces:
-        - application/json
-      tags:
-        - booking
-      operationId: guestReserve
-      summary: Reserve the booking for the guest (before payment)
-      parameters:
-        - in: path
-          description: The session ID of the guest
-          name: sessionId
-          required: true
-          type: string
-        - in: query
-          description: The currency code to use for calculating prices.
-          name: currency
-          required: false
-          type: string
-          default: ISK
-        - in: query
-          description: Comma separated names of parameters for the payment provider.
-          name: paymentParameters
-          required: false
-          type: string
-        - in: body
-          description: JSON object
-          name: body
-          required: true
-          schema:
-            $ref: '#/definitions/BookingReservationRequestDto'
-      responses:
-        '200':
-          description: No response was specified
-          schema:
             $ref: '#/definitions/booking'
-  '/booking.json/route-booking/{id}':
-    get:
-      produces:
-        - application/json
-      tags:
-        - booking
-      operationId: routeBooking
-      summary: Show route booking information
-      parameters:
-        - in: path
-          description: The id or confirmation code for the product booking
-          name: id
-          required: true
-          type: string
-      responses:
-        '200':
-          description: No response was specified
-          schema:
-            $ref: '#/definitions/RouteBookingDetailsDto'
   '/booking.json/{id}/summary':
     get:
       produces:
@@ -2407,17 +2144,127 @@ paths:
           description: No response was specified
           schema:
             $ref: '#/definitions/BookingEditResult'
-  '/booking.json/car-rental-booking/{productConfirmationCode}/ticket':
+  /booking.json/product-booking-search:
+    post:
+      produces:
+        - application/json
+      tags:
+        - booking
+      operationId: productBookingSearch
+      summary: Search for bookings and return a list of booking information
+      parameters:
+        - in: body
+          description: JSON object
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/ProductBookingQuery'
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductBookingSearchResultsDto'
+  '/booking.json/cancel-product-booking/{productConfirmationCode}':
+    post:
+      produces:
+        - application/json
+      tags:
+        - booking
+      operationId: cancelProductBooking
+      summary: Cancel for given product booking
+      parameters:
+        - in: path
+          description: The confirmation code for the activity booking
+          name: productConfirmationCode
+          required: true
+          type: string
+        - in: body
+          description: JSON object
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/cancelProductBooking'
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/ApiResponse'
+  /booking.json/activity-booking/reserve-and-confirm:
+    post:
+      produces:
+        - application/json
+      tags:
+        - booking
+      operationId: reserveAndConfirmActivityBooking
+      summary: Reserve and confirm a single activity booking (bypasses shopping cart)
+      parameters:
+        - in: body
+          description: JSON object
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/SingleActivityBookingRequestDto'
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/booking'
+  '/booking.json/activity-booking/{id}':
+    get:
+      produces:
+        - application/json
+      tags:
+        - booking
+      operationId: activityBooking
+      summary: Show activity booking information
+      parameters:
+        - in: path
+          description: The id or confirmation code for the product booking
+          name: id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/ActivityBookingDetailsDto'
+  '/booking.json/activity-booking/{confirmationCode}/customer-status/{status}':
+    get:
+      produces:
+        - application/json
+      tags:
+        - booking
+      operationId: setActivityBookingCustomerStatus
+      summary: Change the arrived status of an activity booking
+      parameters:
+        - in: path
+          description: The confirmation code for the product booking
+          name: confirmationCode
+          required: true
+          type: string
+        - in: path
+          description: The arrived status (yes/no true/false)
+          name: status
+          required: true
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/ActivityBookingDetailsDto'
+  '/booking.json/activity-booking/{productConfirmationCode}/ticket':
     get:
       produces:
         - application/pdf
       tags:
         - booking
-      operationId: getCarRentalTicket
-      summary: Get ticket for given car rental booking
+      operationId: getActivityTicket
+      summary: Get ticket for given activity booking
       parameters:
         - in: path
-          description: The confirmation code of the car rental booking
+          description: The confirmation code of the activity booking
           name: productConfirmationCode
           required: true
           type: string
@@ -2444,23 +2291,69 @@ paths:
           description: No response was specified
           schema:
             $ref: '#/definitions/booking'
-  '/booking.json/activity-booking/{productConfirmationCode}/ticket':
+  '/booking.json/route-booking/{id}':
     get:
       produces:
-        - application/pdf
+        - application/json
       tags:
         - booking
-      operationId: getActivityTicket
-      summary: Get ticket for given activity booking
+      operationId: routeBooking
+      summary: Show route booking information
       parameters:
         - in: path
-          description: The confirmation code of the activity booking
-          name: productConfirmationCode
+          description: The id or confirmation code for the product booking
+          name: id
           required: true
           type: string
       responses:
         '200':
           description: No response was specified
+          schema:
+            $ref: '#/definitions/RouteBookingDetailsDto'
+  '/booking.json/route-booking/{confirmationCode}/customer-status/{status}':
+    get:
+      produces:
+        - application/json
+      tags:
+        - booking
+      operationId: setRouteBookingCustomerStatus
+      summary: Change the arrived status of a route booking
+      parameters:
+        - in: path
+          description: The confirmation code for the product booking
+          name: confirmationCode
+          required: true
+          type: string
+        - in: path
+          description: The arrived status (yes/no or true/false)
+          name: status
+          required: true
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/RouteBookingDetailsDto'
+  /booking.json/car-rental-booking/reserve-and-confirm:
+    post:
+      produces:
+        - application/json
+      tags:
+        - booking
+      operationId: reserveAndConfirmCarRentalBooking
+      summary: Reserve and confirm a single car rental booking (bypasses shopping cart)
+      parameters:
+        - in: body
+          description: JSON object
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/SingleCarRentalBookingRequestDto'
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/booking'
   '/booking.json/car-rental-booking/{id}':
     get:
       produces:
@@ -2480,6 +2373,144 @@ paths:
           description: No response was specified
           schema:
             $ref: '#/definitions/CarRentalBookingDetailsDto'
+  '/booking.json/car-rental-booking/{confirmationCode}/customer-status/{status}':
+    get:
+      produces:
+        - application/json
+      tags:
+        - booking
+      operationId: setCarRentalBookingCustomerStatus
+      summary: Change the arrived status of a car rental booking
+      parameters:
+        - in: path
+          description: The confirmation code for the product booking
+          name: confirmationCode
+          required: true
+          type: string
+        - in: path
+          description: The arrived status (yes/no or true/false)
+          name: status
+          required: true
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/CarRentalBookingDetailsDto'
+  '/booking.json/car-rental-booking/{productConfirmationCode}/ticket':
+    get:
+      produces:
+        - application/pdf
+      tags:
+        - booking
+      operationId: getCarRentalTicket
+      summary: Get ticket for given car rental booking
+      parameters:
+        - in: path
+          description: The confirmation code of the car rental booking
+          name: productConfirmationCode
+          required: true
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+  '/booking.json/transport-booking/{productConfirmationCode}/ticket':
+    get:
+      produces:
+        - application/pdf
+      tags:
+        - booking
+      operationId: getTransportTicket
+      summary: Get ticket for given transport booking
+      parameters:
+        - in: path
+          description: The confirmation code of the transport booking
+          name: productConfirmationCode
+          required: true
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+  /booking.json/accommodation-booking/reserve-and-confirm:
+    post:
+      produces:
+        - application/json
+      tags:
+        - booking
+      operationId: reserveAndConfirmAccommodationBooking
+      summary: Reserve and confirm a single accommodation booking (bypasses shopping cart)
+      parameters:
+        - in: body
+          description: JSON object
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/SingleAccommodationBookingRequestDto'
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/booking'
+  '/booking.json/accommodation-booking/{id}':
+    get:
+      produces:
+        - application/json
+      tags:
+        - booking
+      operationId: accommodationBooking
+      summary: Show accommodation booking information
+      parameters:
+        - in: path
+          description: The id or confirmation code for the product booking
+          name: id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/AccommodationBookingDetailsDto'
+  '/booking.json/accommodation-booking/{confirmationCode}/customer-status/{status}':
+    get:
+      produces:
+        - application/json
+      tags:
+        - booking
+      operationId: setAccommodationBookingCustomerStatus
+      summary: Change the arrived status of an accommodation booking
+      parameters:
+        - in: path
+          description: The confirmation code for the product booking
+          name: confirmationCode
+          required: true
+          type: string
+        - in: path
+          description: The arrived status (yes/no true/false)
+          name: status
+          required: true
+          type: string
+      responses:
+        '200':
+          description: No response was specified
+          schema:
+            $ref: '#/definitions/AccommodationBookingDetailsDto'
+  '/booking.json/accommodation-booking/{productConfirmationCode}/ticket':
+    get:
+      produces:
+        - application/pdf
+      tags:
+        - booking
+      operationId: getAccommodationTicket
+      summary: Get ticket for given accommodation booking
+      parameters:
+        - in: path
+          description: The confirmation code of the accommodation booking
+          name: productConfirmationCode
+          required: true
+          type: string
+      responses:
+        '200':
+          description: No response was specified
   '/product-list.json/slug/{slug}':
     get:
       produces:

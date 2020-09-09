@@ -1825,7 +1825,7 @@ paths:
         '200':
           description: No response was specified
           schema:
-            $ref: '#/definitions/booking'
+            $ref: '#/definitions/BookingDetailsDto'
   '/booking.json/guest/{sessionId}/reserved':
     get:
       produces:
@@ -1852,7 +1852,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/booking'
+              $ref: '#/definitions/BookingDetailsDto'
   '/booking.json/{confirmationCode}/move-back-to-cart/session/{sessionId}':
     get:
       produces:
@@ -1950,7 +1950,7 @@ paths:
         '200':
           description: No response was specified
           schema:
-            $ref: '#/definitions/booking'
+            $ref: '#/definitions/BookingDetailsDto'
   '/booking.json/{confirmationCode}/payment-error':
     post:
       produces:
@@ -2018,7 +2018,7 @@ paths:
         '200':
           description: No response was specified
           schema:
-            $ref: '#/definitions/booking'
+            $ref: '#/definitions/BookingDetailsDto'
   '/booking.json/cancel-booking/{confirmationCode}':
     post:
       produces:
@@ -2074,7 +2074,7 @@ paths:
         '200':
           description: No response was specified
           schema:
-            $ref: '#/definitions/booking'
+            $ref: '#/definitions/BookingDetailsDto'
   '/booking.json/booking/{id}':
     get:
       produces:
@@ -2105,7 +2105,7 @@ paths:
         '200':
           description: No response was specified
           schema:
-            $ref: '#/definitions/booking'
+            $ref: '#/definitions/BookingDetailsDto'
   '/booking.json/{id}/summary':
     get:
       produces:
@@ -2210,7 +2210,7 @@ paths:
         '200':
           description: No response was specified
           schema:
-            $ref: '#/definitions/booking'
+            $ref: '#/definitions/BookingDetailsDto'
   '/booking.json/activity-booking/{id}':
     get:
       produces:
@@ -2290,7 +2290,7 @@ paths:
         '200':
           description: No response was specified
           schema:
-            $ref: '#/definitions/booking'
+            $ref: '#/definitions/BookingDetailsDto'
   '/booking.json/route-booking/{id}':
     get:
       produces:
@@ -2353,7 +2353,7 @@ paths:
         '200':
           description: No response was specified
           schema:
-            $ref: '#/definitions/booking'
+            $ref: '#/definitions/BookingDetailsDto'
   '/booking.json/car-rental-booking/{id}':
     get:
       produces:
@@ -2450,7 +2450,7 @@ paths:
         '200':
           description: No response was specified
           schema:
-            $ref: '#/definitions/booking'
+            $ref: '#/definitions/BookingDetailsDto'
   '/booking.json/accommodation-booking/{id}':
     get:
       produces:
@@ -3003,7 +3003,7 @@ definitions:
       externalBookingEntityCode:
         type: string
       status:
-        $ref: '#/definitions/RoomBookingStatusEnum'
+        $ref: '#/definitions/BookingStatusEnum'
       currency:
         type: string
       totalPrice:
@@ -8465,7 +8465,7 @@ definitions:
       paidType:
         $ref: '#/definitions/PaymentPaidTypeEnum'
       parentBooking:
-        $ref: '#/definitions/booking'
+        $ref: '#/definitions/BookingDetailsDto'
       parentBookingId:
         type: integer
         format: int64
@@ -8630,7 +8630,7 @@ definitions:
       paidType:
         $ref: '#/definitions/PaymentPaidTypeEnum'
       parentBooking:
-        $ref: '#/definitions/booking'
+        $ref: '#/definitions/BookingDetailsDto'
       parentBookingId:
         type: integer
         format: int64
@@ -8946,7 +8946,7 @@ definitions:
       paidType:
         $ref: '#/definitions/PaymentPaidTypeEnum'
       parentBooking:
-        $ref: '#/definitions/booking'
+        $ref: '#/definitions/BookingDetailsDto'
       parentBookingId:
         type: integer
         format: int64
@@ -9911,7 +9911,7 @@ definitions:
       paidType:
         $ref: '#/definitions/PaymentPaidTypeEnum'
       parentBooking:
-        $ref: '#/definitions/booking'
+        $ref: '#/definitions/BookingDetailsDto'
       parentBookingId:
         type: integer
         format: int64
@@ -10188,113 +10188,6 @@ definitions:
       referenceCode:
         type: string
       title:
-        type: string
-  booking:
-    properties:
-      accommodationBookings:
-        type: array
-        items:
-          $ref: '#/definitions/AccommodationBookingDetailsDto'
-      activityBookings:
-        type: array
-        items:
-          $ref: '#/definitions/ActivityBookingDetailsDto'
-      affiliate:
-        $ref: '#/definitions/affiliate'
-      agent:
-        $ref: '#/definitions/BookingAgentWithLinksDto'
-      bookingChannel:
-        $ref: '#/definitions/bookingChannel'
-      bookingFields:
-        type: array
-        items:
-          $ref: '#/definitions/BookingFieldDto'
-      carRentalBookings:
-        type: array
-        items:
-          $ref: '#/definitions/CarRentalBookingDetailsDto'
-      confirmationCode:
-        type: string
-      creationDate:
-        type: string
-        format: date-time
-      currency:
-        type: string
-      customer:
-        $ref: '#/definitions/CustomerDto'
-      customerPayments:
-        type: array
-        items:
-          $ref: '#/definitions/CustomerPaymentDto'
-      externalBookingReference:
-        type: string
-      externalBookingEntityName:
-        type: string
-      externalBookingEntityCode:
-        type: string
-      extranetUser:
-        $ref: '#/definitions/ExtranetUserDto'
-      harbour:
-        $ref: '#/definitions/HarbourDto'
-      bookingId:
-        type: integer
-        format: int64
-      invoice:
-        $ref: '#/definitions/CustomerInvoiceDto'
-      language:
-        type: string
-      paymentType:
-        $ref: '#/definitions/PaymentPaidTypeEnum'
-      routeBookings:
-        type: array
-        items:
-          $ref: '#/definitions/RouteBookingDetailsDto'
-      seller:
-        $ref: '#/definitions/VendorDto'
-      status:
-        $ref: '#/definitions/BookingStatusEnum'
-      systemConfig:
-        $ref: '#/definitions/IntegratedSystemConfigDto'
-      totalDue:
-        type: number
-      totalPaid:
-        type: number
-      totalPrice:
-        type: number
-      totalPriceConverted:
-        type: number
-      vessel:
-        $ref: '#/definitions/VesselDto'
-  bookingChannel:
-    properties:
-      backend:
-        type: boolean
-      externalId:
-        type: string
-      flags:
-        type: array
-        items:
-          type: string
-      id:
-        type: integer
-        format: int64
-      overrideVoucherHeader:
-        type: boolean
-      title:
-        type: string
-      uuid:
-        type: string
-      voucherEmailAddress:
-        type: string
-      voucherLogo:
-        $ref: '#/definitions/PhotoDto'
-      voucherLogoStyle:
-        type: string
-      voucherName:
-        type: string
-      voucherPhoneNumber:
-        type: string
-      voucherWebsite:
         type: string
   bookingNote:
     properties:

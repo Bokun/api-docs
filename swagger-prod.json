@@ -1101,6 +1101,89 @@
         }
       }
     },
+    "/activity.json/{id}/prices": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "activity"
+        ],
+        "operationId": "getPrices",
+        "summary": "Get Activity prices by ID",
+        "description": "Use unique ID for fetching comprehensive information on the prices of this activity product.",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "ID of activity for which prices are to be fetched.",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "description": "(Optional) Prices catalog ID. If omitted considered as default catalog ID. In case experience is accessed through marketplace contract, the catalog in contract is applied.",
+            "name": "catalogId",
+            "required": false,
+            "type": "string",
+            "default": "default catalog ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "$ref": "#/definitions/SingleExperiencePriceDto"
+            }
+          }
+        }
+      }
+    },
+    "/activity.json/{experienceId}/catalog/{catalogId}/prices": {
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "activity"
+        ],
+        "operationId": "setPrices",
+        "summary": "Set experience prices by experienceId to corresponding catalog according to catalogId",
+        "description": "Use unique ID for fetching comprehensive information on the prices of this activity product.",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "ID of experience (activity) for which prices are to be updated.",
+            "name": "experienceId",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "path",
+            "description": "ID of the price catalog, which is updated.",
+            "name": "catalogId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "description": "Single experience prices",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SingleExperiencePriceDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified"
+          }
+        }
+      }
+    },
     "/shopping-cart.json/session/{sessionId}/car-rental": {
       "post": {
         "produces": [
@@ -3050,7 +3133,7 @@
         }
       }
     },
-    "/booking.json/booking/{id}": {
+    "/booking.json/booking/by-id/{id}": {
       "get": {
         "produces": [
           "application/json"
@@ -15282,6 +15365,143 @@
           "description": "The list of labels added to this place.",
           "items": {
             "type": "string"
+          }
+        }
+      }
+    },
+    "SingleExperiencePriceDto": {
+      "properties": {
+        "basePrices": {
+          "type": "array",
+          "description": "Base experience prices keyed by experience id.",
+          "items": {
+            "$ref": "#/definitions/ExperiencePriceDto"
+          }
+        },
+        "priceRules": {
+          "type": "array",
+          "description": "Contains prices for seasonal pricing rules (as opposed to base rules) for this catalog.",
+          "items": {
+            "$ref": "#/definitions/PriceRuleExperiencePricesDto"
+          }
+        }
+      }
+    },
+    "ExperiencePriceDto": {
+      "properties": {
+        "experienceId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "ID of experience aka activity product."
+        },
+        "currency": {
+          "type": "string",
+          "description": "Currency this price is expressed at."
+        },
+        "prices": {
+          "type": "object",
+          "description": "Pricing information, keyed by rate id.",
+          "additionalProperties": {
+            "$ref": "#/definitions/RatePriceDto"
+          }
+        }
+      }
+    },
+    "PriceRuleExperiencePricesDto": {
+      "properties": {
+        "priceRuleId": {
+          "type": "string",
+          "description": "The id of the price rule."
+        },
+        "priceRuleTitle": {
+          "type": "string",
+          "description": "The title of the price rule."
+        },
+        "recurrenceRule": {
+          "type": "string",
+          "description": "Recurrence rule of this price rule."
+        },
+        "orderIndex": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "experiencePrices": {
+          "type": "object",
+          "description": "Experience prices keyed by experience id.",
+          "additionalProperties": {
+            "$ref": "#/definitions/ExperiencePriceDto"
+          }
+        }
+      }
+    },
+    "RatePriceDto": {
+      "properties": {
+        "rateId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "ID of activity rate."
+        },
+        "pricePerBooking": {
+          "$ref": "#/definitions/PriceDto",
+          "description": "Experience product price. Set if rate is priced per booking."
+        },
+        "pickupPerBooking": {
+          "$ref": "#/definitions/PriceDto",
+          "description": "Pickup price. Set if: a) pickupPricedPerPerson == false, b) pickupSelectionType != UNAVAILABLE, c) pickupPricingType == PRICED_SEPARATELY"
+        },
+        "dropoffPerBooking": {
+          "$ref": "#/definitions/PriceDto",
+          "description": "Dropoff price. Set if: a) dropoffPricedPerPerson == false, b) dropoffSelectionType != UNAVAILABLE, c) dropoffPricingType == PRICED_SEPARATELY"
+        },
+        "extraPricesPerBooking": {
+          "type": "object",
+          "description": "Extra prices. Only contains values for those ActivityRateExtraConfig objects which have pricedPerPerson == false. Map keys: Extra IDs. Values - prices for said extras.",
+          "additionalProperties": {
+            "$ref": "#/definitions/PriceDto"
+          }
+        },
+        "base": {
+          "type": "boolean",
+          "description": "True if this price is \"base\" price. Base means that if a price lookup for requested currency fails, newest applicable base price is used for FX conversion."
+        },
+        "perPersonPrices": {
+          "type": "array",
+          "description": "Only contains values if rate is priced per person.",
+          "items": {
+            "$ref": "#/definitions/PricePerPersonDto"
+          }
+        }
+      }
+    },
+    "PricePerPersonDto": {
+      "properties": {
+        "pricingCategoryId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Pricing category applicable for this price."
+        },
+        "rateTierId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "If tiered pricing is enabled, this will contain rate tier object id. Otherwise null."
+        },
+        "price": {
+          "$ref": "#/definitions/PriceDto",
+          "description": "Price for experience product. Used for both tiered-enabled and tiered-disabled cases. Set if pricedPerPerson == true, otherwise null."
+        },
+        "pickupPrice": {
+          "$ref": "#/definitions/PriceDto",
+          "description": "Pickup price. Set if: a) pickupPricedPerPerson == true, b) pickupSelectionType != UNAVAILABLE, c) pickupPricingType == PRICED_SEPARATELY"
+        },
+        "dropoffPrice": {
+          "$ref": "#/definitions/PriceDto",
+          "description": "Dropoff price. Set if: a) dropoffPricedPerPerson == true, b) dropoffSelectionType != UNAVAILABLE, c) dropoffPricingType == PRICED_SEPARATELY"
+        },
+        "extraPrices": {
+          "type": "object",
+          "description": "Extra prices. Only contains values for those ActivityRateExtraConfig objects which have pricedPerPerson == true. Map keys: Extra IDs. Values - prices for said extras.",
+          "additionalProperties": {
+            "$ref": "#/definitions/PriceDto"
           }
         }
       }

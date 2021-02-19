@@ -9124,6 +9124,26 @@
           "type": "string",
           "description": "Specifies custom message on ticket when customer does not want pick-up. May contain HTML markup."
         },
+        "pickupTimeLocationBased": {
+          "type": "boolean",
+          "description": "Specifies if pickup time is different for each pickup place"
+        },
+        "pickupTimeByLocations": {
+          "type": "object",
+          "description": "Specifies when pickup starts per pickup place",
+          "properties": {
+            "placeId": {
+              "type": "integer",
+              "format": "int64",
+              "description": "Pickup place id"
+            },
+            "minBeforeStart": {
+              "type": "integer",
+              "format": "int32",
+              "description": "How many minutes pickup starts before start time, negative when pickup starts after start time"
+            }
+          }
+        },
         "ticketMsg": {
           "type": "string",
           "description": "Specifies custom message on ticket. May contain HTML markup."

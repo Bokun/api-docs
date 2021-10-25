@@ -9289,6 +9289,10 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/ProductInvoiceDto'
+      payments:
+        type: array
+        items:
+          $ref: '#/definitions/CustomerPaymentDto'
       recipient:
         $ref: '#/definitions/CustomerDto'
       recipientName:

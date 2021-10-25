@@ -8,7 +8,7 @@
   "schemes": [
     "https"
   ],
-  "host": "api.bokuntest.com",
+  "host": "api.bokun.io",
   "tags": [
     {
       "name": "accommodation",
@@ -3162,7 +3162,7 @@
           "booking"
         ],
         "operationId": "productBookingSearch",
-        "summary": "Search for bookings and return a list of booking information",
+        "summary": "Search for product bookings and return a list of booking information",
         "parameters": [
           {
             "in": "body",
@@ -3181,6 +3181,40 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/ProductBookingSearchResultsDto"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/booking.json/booking-search": {
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "booking"
+        ],
+        "operationId": "bookingSearch",
+        "summary": "Search for bookings and return a list of booking information",
+        "parameters": [
+          {
+            "in": "body",
+            "description": "JSON object",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ItineraryBookingQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "No response was specified",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BookingSearchResultsDto"
               }
             }
           }
@@ -4659,6 +4693,27 @@
         },
         "ticket": {
           "type": "string"
+        }
+      }
+    },
+    "LightweightBookingChannelDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "channelType": {
+          "type": "string",
+          "enum": [
+            "BACKEND",
+            "OTA",
+            "APP",
+            "OTHER"
+          ]
         }
       }
     },
@@ -10314,6 +10369,31 @@
         }
       }
     },
+    "PromoCodeDto": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "BookingLabelDto": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
     "StopoverDto": {
       "properties": {
         "arrivalDate": {
@@ -13782,6 +13862,112 @@
         }
       }
     },
+    "ItineraryBookingQuery": {
+      "properties": {
+        "confirmationCode": {
+          "type": "string"
+        },
+        "externalBookingReference": {
+          "type": "string"
+        },
+        "externalBookingEntityName": {
+          "type": "string"
+        },
+        "externalBookingEntityCode": {
+          "type": "string"
+        },
+        "bookingLabelIds": {
+          "type": "string"
+        },
+        "paymentId": {
+          "type": "string"
+        },
+        "textFilter": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "bookingStatuses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sortFields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SortField"
+          }
+        },
+        "bookingSource": {
+          "type": "string"
+        },
+        "bookingChannelId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "extranetUserId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "agentId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "sellerId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "supplierId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "promoCodeId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "conversationAwaitingVendorId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "modifiedAfterCreation": {
+          "type": "boolean"
+        },
+        "conversationOpen": {
+          "type": "boolean"
+        },
+        "affiliateHubOnly": {
+          "type": "boolean"
+        },
+        "excludeAffiliateHub": {
+          "type": "boolean"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "creationDateRange": {
+          "$ref": "#/definitions/DateRangeFilter"
+        },
+        "startDateRange": {
+          "$ref": "#/definitions/DateRangeFilter"
+        },
+        "lastModifiedDateRange": {
+          "$ref": "#/definitions/DateRangeFilter"
+        },
+        "cancellationDateRange": {
+          "$ref": "#/definitions/DateRangeFilter"
+        }
+      }
+    },
     "ProductBookingQuery": {
       "properties": {
         "bookedExtrasIds": {
@@ -14037,6 +14223,111 @@
         }
       }
     },
+    "BookingSearchResultItem": {
+      "properties": {
+        "confirmationCode": {
+          "type": "string"
+        },
+        "externalBookingReference": {
+          "type": "string"
+        },
+        "externalBookingEntityName": {
+          "type": "string"
+        },
+        "externalBookingEntityCode": {
+          "type": "string"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "paidAmountAsText": {
+          "type": "string"
+        },
+        "customerInvoice": {
+          "$ref": "#/definitions/CustomerInvoiceDto"
+        },
+        "customer": {
+          "$ref": "#/definitions/CustomerDto"
+        },
+        "agent": {
+          "$ref": "#/definitions/AgentBookingDetailsDto"
+        },
+        "creationDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "extranetUser": {
+          "$ref": "#/definitions/ExtranetUserDto"
+        },
+        "affiliate": {
+          "$ref": "#/definitions/AffiliateDto"
+        },
+        "affiliateType": {
+          "enum": [
+            "NORMAL",
+            "VENDOR"
+          ],
+          "type": "string"
+        },
+        "affiliateVendor": {
+          "$ref": "#/definitions/ItemDto"
+        },
+        "harbour": {
+          "$ref": "#/definitions/HarbourDto"
+        },
+        "vessel": {
+          "$ref": "#/definitions/VesselDto"
+        },
+        "promoCode": {
+          "$ref": "#/definitions/PromoCodeDto"
+        },
+        "paidAmountAsMoney": {
+          "$ref": "#/definitions/Money"
+        },
+        "paymentStatus": {
+          "enum": [
+            "FREE",
+            "NOT_PAID",
+            "DEPOSIT",
+            "INVOICED",
+            "PAID_IN_FULL"
+          ],
+          "type": "string"
+        },
+        "paidPercentage": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "channel": {
+          "$ref": "#/definitions/LightweightBookingChannelDto"
+        },
+        "seller": {
+          "$ref": "#/definitions/BookingItemInfoDto"
+        },
+        "salesSegment": {
+          "type": "string"
+        },
+        "viewerRole": {
+          "type": "string"
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BookingLabelDto"
+          }
+        },
+        "productBookings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductBookingSearchResultItem"
+          }
+        }
+      }
+    },
     "ProductBookingSearchResultsDto": {
       "properties": {
         "query": {
@@ -14046,6 +14337,24 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/ProductBookingSearchResultItem"
+          }
+        },
+        "tookInMillis": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "totalHits": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "BookingSearchResultsDto": {
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BookingSearchResultItem"
           }
         },
         "tookInMillis": {

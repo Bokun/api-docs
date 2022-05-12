@@ -4473,6 +4473,9 @@
         "invoice": {
           "$ref": "#/definitions/CustomerInvoiceDto"
         },
+        "agentInvoice": {
+          "$ref": "#/definitions/AgentInvoiceDto"
+        },
         "customerPayments": {
           "items": {
             "$ref": "#/definitions/CustomerPaymentDto",
@@ -12742,6 +12745,54 @@
         },
         "title": {
           "type": "string"
+        }
+      }
+    },
+    "AgentInvoiceDto": {
+      "properties": {
+        "issuer": {
+          "$ref": "#/definitions/ItemDto"
+        },
+        "recipient": {
+          "$ref": "#/definitions/ItemDto"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "issueDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "includedAppliedTaxes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AppliedTaxDto"
+          }
+        },
+        "excludedAppliedTaxes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AppliedTaxDto"
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "SELLER",
+            "AFFILIATE",
+            "CUSTOMER",
+            "PRODUCT"
+          ]
+        },
+        "lineItems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomLineItemDto"
+          }
         }
       }
     },

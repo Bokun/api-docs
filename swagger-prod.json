@@ -12779,15 +12779,6 @@
             "$ref": "#/definitions/AppliedTaxDto"
           }
         },
-        "type": {
-          "type": "string",
-          "enum": [
-            "SELLER",
-            "AFFILIATE",
-            "CUSTOMER",
-            "PRODUCT"
-          ]
-        },
         "lineItems": {
           "type": "array",
           "items": {

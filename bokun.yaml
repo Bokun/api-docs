@@ -6327,17 +6327,19 @@ definitions:
         type: boolean
         description: 'Specifies if pickup time is different for each pickup place'
       pickupTimeByLocations:
-        type: object
+        type: array
         description: 'Specifies when pickup starts per pickup place'
-        properties:
-          placeId:
-            type: integer
-            format: int64
-            description: 'Pickup place id'
-          minBeforeStart:
-            type: integer
-            format: int32
-            description: 'How many minutes pickup starts before start time, negative when pickup starts after start time'
+        items:
+          type: object
+          properties:
+            placeId:
+              type: integer
+              format: int64
+              description: 'Pickup place id'
+            minBeforeStart:
+              type: integer
+              format: int32
+              description: 'How many minutes pickup starts before start time, negative when pickup starts after start time'
       ticketMsg:
         type: string
         description: 'Specifies custom message on ticket. May contain HTML markup.'
@@ -10867,6 +10869,44 @@ definitions:
       - FISHING
       - SKIING
       - SNORKELING
+      - SELF_DRIVE_TOUR
+      - PRIVATE_ROUNDRIP
+      - MINI_CRUISE
+      - CITY_BREAK
+      - SHORT_BREAK
+      - SUN_AND_BEACH
+      - PILGRIMAGE_OR_RELIGION
+      - MOTORCYCLE_TOURS
+      - MOUNTAIN_BIKE
+      - GOLF
+      - MULTISPORT
+      - EDUCATIONAL_TOUR
+      - LANGUAGE_TOUR
+      - MEDICAL_TOUR
+      - CULTURAL_AND_THEME_TOURS
+      - DAY_TRIPS_AND_EXCURSIONS
+      - HOLIDAY_AND_SEASONAL_TOURS
+      - LUXURY_AND_SPECIAL_OCCASIONS
+      - OBSTACLE_COURSES
+      - ADRENALINE_AND_EXTREME
+      - PAINTBALL
+      - PARAGLIDING
+      - RUNNING
+      - SHORE_EXCURSIONS
+      - THEME_PARKS
+      - TROLLEY_TOURS
+      - LAYOVER_TOURS
+      - CLASSIC_CAR_TOURS
+      - UNDERGROUND_TOURS
+      - PLANTATION_TOURS
+      - HORSE_CARRIAGE_RIDE
+      - SKIP_THE_LINE
+      - CITY_TOURS
+      - TRANSFERS_AND_GROUND_TRANSPORT
+      - VIP_AND_EXCLUSIVE
+      - WEDDING_AND_HONEYMOON
+      - EBIKE_TOUR
+
   PassExpiryType:
     type: string
     enum:
@@ -10912,6 +10952,7 @@ definitions:
       - FREE
       - PER_BOOKING
       - PER_PERSON
+      - PER_PERSON_PER_NIGHT
   ActivitySortField:
     type: string
     enum:

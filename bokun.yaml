@@ -1,13 +1,14 @@
 swagger: '2.0'
 info:
   title: Bokun API
-  description: <p>You can sign up for the <a href="http://eepurl.com/gDj7Yb">Bokun API mailing list</a> to receive notifications when there are upcoming changes to this API.</p>
-               <br/>
-               <p>
-               Further documentation of this api is available here <a href="https://bokun.dev/booking-api-restful/vU6sCfxwYdJWd1QAcLt12i" target="_blank">Bokun REST API documentation</a>.
-               </p>
-               <br/>
-               <p>You can generate a client in your preferred language using <a href="http://editor.swagger.io/#/?import=https://bokun.github.io/api-docs/bokun.yaml">swagger editor</a></p>
+  description:
+    <p>You can sign up for the <a href="http://eepurl.com/gDj7Yb">Bokun API mailing list</a> to receive notifications when there are upcoming changes to this API.</p>
+    <br/>
+    <p>
+    Further documentation of this api is available here <a href="https://bokun.dev/booking-api-restful/vU6sCfxwYdJWd1QAcLt12i" target="_blank">Bokun REST API documentation</a>.
+    </p>
+    <br/>
+    <p>You can generate a client in your preferred language using <a href="http://editor.swagger.io/#/?import=https://bokun.github.io/api-docs/bokun.yaml">swagger editor</a></p>
   version: '1.0'
 schemes:
   - https
@@ -2790,16 +2791,16 @@ definitions:
         description: 'Data type of the answer object for this question.'
       dataFormat:
         enum:
-        - EMAIL_ADDRESS
-        - URL
-        - PHONE_NUMBER
-        - COUNTRY
-        - LANGUAGE
-        - TIME
-        - DAY_OF_MONTH
-        - MONTH
-        - YEAR
-        - PATTERN
+          - EMAIL_ADDRESS
+          - URL
+          - PHONE_NUMBER
+          - COUNTRY
+          - LANGUAGE
+          - TIME
+          - DAY_OF_MONTH
+          - MONTH
+          - YEAR
+          - PATTERN
         type: string
       pattern:
         type: string
@@ -3529,10 +3530,10 @@ definitions:
       allowedMethods:
         items:
           enum:
-          - CARD
-          - CASH
-          - VOUCHER
-          - RESERVE_FOR_EXTERNAL_PAYMENT
+            - CARD
+            - CASH
+            - VOUCHER
+            - RESERVE_FOR_EXTERNAL_PAYMENT
           type: string
         type: array
       cardProvider:
@@ -3702,12 +3703,12 @@ definitions:
     properties:
       type:
         enum:
-        - AGENT_AFFILIATE
-        - AGENT_CUSTOMER
-        - AGENT_RESELLER
-        - CUSTOMER_FULL_PAYMENT
-        - CUSTOMER_PARTIAL_PAYMENT
-        - CUSTOMER_NO_PAYMENT
+          - AGENT_AFFILIATE
+          - AGENT_CUSTOMER
+          - AGENT_RESELLER
+          - CUSTOMER_FULL_PAYMENT
+          - CUSTOMER_PARTIAL_PAYMENT
+          - CUSTOMER_NO_PAYMENT
         type: string
       label:
         type: string
@@ -3916,24 +3917,24 @@ definitions:
     properties:
       checkoutOption:
         enum:
-        - AGENT_AFFILIATE
-        - AGENT_CUSTOMER
-        - AGENT_RESELLER
-        - CUSTOMER_FULL_PAYMENT
-        - CUSTOMER_PARTIAL_PAYMENT
-        - CUSTOMER_NO_PAYMENT
+          - AGENT_AFFILIATE
+          - AGENT_CUSTOMER
+          - AGENT_RESELLER
+          - CUSTOMER_FULL_PAYMENT
+          - CUSTOMER_PARTIAL_PAYMENT
+          - CUSTOMER_NO_PAYMENT
         type: string
       paymentMethod:
         enum:
-        - CARD
-        - CASH
-        - VOUCHER
-        - RESERVE_FOR_EXTERNAL_PAYMENT
+          - CARD
+          - CASH
+          - VOUCHER
+          - RESERVE_FOR_EXTERNAL_PAYMENT
         type: string
       source:
         enum:
-        - SHOPPING_CART
-        - DIRECT_REQUEST
+          - SHOPPING_CART
+          - DIRECT_REQUEST
         type: string
       shoppingCart:
         $ref: '#/definitions/ShoppingCartCheckout'
@@ -4015,9 +4016,9 @@ definitions:
         type: array
       travelType:
         enum:
-        - BUSINESS
-        - LEISURE
-        - CONFERENCE
+          - BUSINESS
+          - LEISURE
+          - CONFERENCE
         type: string
       note:
         type: string

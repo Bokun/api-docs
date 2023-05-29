@@ -5480,6 +5480,7 @@ definitions:
       productGroupId:
         type: integer
         format: int32
+        nullable: true
         description: 'The id of commission group which is assigned to this product (set in Pricing/Commission group).'
       recurrenceId:
         type: integer
@@ -5524,6 +5525,7 @@ definitions:
           type: string
       defaultPrice:
         type: number
+        nullable: true
         description: 'Price for default price category, default rate from default price catalog.'
       pricesByCategory:
         type: object
@@ -5533,6 +5535,7 @@ definitions:
           format: double
       pickupPrice:
         type: number
+        nullable: true
         description: 'Pick-up price per booking. If pick-up pricing is set per participant then value is null.'
       pickupPricesByCategory:
         type: object
@@ -5542,6 +5545,7 @@ definitions:
           format: double
       dropoffPrice:
         type: number
+        nullable: true
         description: 'Drop-off price per booking. If drop-off pricing is set per participant then value is null.'
       dropoffPricesByCategory:
         type: object
@@ -5570,6 +5574,11 @@ definitions:
         type: boolean
         description: 'True if all seats are sold for this activity start time, false otherwise.'
   ActivityRatePrices:
+    required:
+      - activityRateId
+      - pricePerCategoryUnit
+      - extraPricePerUnit
+      - extraPricePerCategoryUnit
     properties:
       activityRateId:
         type: integer
@@ -5608,6 +5617,8 @@ definitions:
         items:
           $ref: '#/definitions/PriceByItem'
   PriceByItem:
+    required:
+      - id
     properties:
       id:
         type: integer
@@ -5651,6 +5662,7 @@ definitions:
         type: string
       dropoffPrice:
         type: number
+        nullable: true
       extraBookings:
         type: array
         items:
@@ -5680,6 +5692,7 @@ definitions:
         type: string
       pickupPrice:
         type: number
+        nullable: true
       pricingCategoryBookings:
         type: array
         items:
@@ -5877,6 +5890,7 @@ definitions:
       productGroupId:
         type: integer
         format: int64
+        nullable: true
         description: 'The id of commission group which is assigned to this product (set in Pricing/Commission group).'
       productCategory:
         $ref: '#/definitions/ProductCategoryEnum'
@@ -6651,6 +6665,7 @@ definitions:
       maxPerBooking:
         type: integer
         format: int32
+        nullable: true
         description: 'The maximum participants per one booking on this rate. This field is null if there is no such maximum set (but do not confuse with start time availability maximum seats).'
       cancellationPolicy:
         description: 'The cancellation policy for this rate.'
@@ -8265,6 +8280,7 @@ definitions:
       productGroupId:
         type: integer
         format: int64
+        nullable: true
         description: 'The id of commission group which is assigned to this product (set in Pricing/Commission group).'
       returnPricing:
         type: boolean

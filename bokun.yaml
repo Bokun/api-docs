@@ -1,13 +1,14 @@
 swagger: '2.0'
 info:
   title: Bokun API
-  description: <p>You can sign up for the <a href="http://eepurl.com/gDj7Yb">Bokun API mailing list</a> to receive notifications when there are upcoming changes to this API.</p>
-               <br/>
-               <p>
-               Further documentation of this api is available here <a href="https://bokun.dev/booking-api-restful/vU6sCfxwYdJWd1QAcLt12i" target="_blank">Bokun REST API documentation</a>.
-               </p>
-               <br/>
-               <p>You can generate a client in your preferred language using <a href="http://editor.swagger.io/#/?import=https://bokun.github.io/api-docs/bokun.yaml">swagger editor</a></p>
+  description:
+    <p>You can sign up for the <a href="http://eepurl.com/gDj7Yb">Bokun API mailing list</a> to receive notifications when there are upcoming changes to this API.</p>
+    <br/>
+    <p>
+    Further documentation of this api is available here <a href="https://bokun.dev/booking-api-restful/vU6sCfxwYdJWd1QAcLt12i" target="_blank">Bokun REST API documentation</a>.
+    </p>
+    <br/>
+    <p>You can generate a client in your preferred language using <a href="http://editor.swagger.io/#/?import=https://bokun.github.io/api-docs/bokun.yaml">swagger editor</a></p>
   version: '1.0'
 schemes:
   - https
@@ -2790,16 +2791,16 @@ definitions:
         description: 'Data type of the answer object for this question.'
       dataFormat:
         enum:
-        - EMAIL_ADDRESS
-        - URL
-        - PHONE_NUMBER
-        - COUNTRY
-        - LANGUAGE
-        - TIME
-        - DAY_OF_MONTH
-        - MONTH
-        - YEAR
-        - PATTERN
+          - EMAIL_ADDRESS
+          - URL
+          - PHONE_NUMBER
+          - COUNTRY
+          - LANGUAGE
+          - TIME
+          - DAY_OF_MONTH
+          - MONTH
+          - YEAR
+          - PATTERN
         type: string
       pattern:
         type: string
@@ -3529,10 +3530,10 @@ definitions:
       allowedMethods:
         items:
           enum:
-          - CARD
-          - CASH
-          - VOUCHER
-          - RESERVE_FOR_EXTERNAL_PAYMENT
+            - CARD
+            - CASH
+            - VOUCHER
+            - RESERVE_FOR_EXTERNAL_PAYMENT
           type: string
         type: array
       cardProvider:
@@ -3702,12 +3703,12 @@ definitions:
     properties:
       type:
         enum:
-        - AGENT_AFFILIATE
-        - AGENT_CUSTOMER
-        - AGENT_RESELLER
-        - CUSTOMER_FULL_PAYMENT
-        - CUSTOMER_PARTIAL_PAYMENT
-        - CUSTOMER_NO_PAYMENT
+          - AGENT_AFFILIATE
+          - AGENT_CUSTOMER
+          - AGENT_RESELLER
+          - CUSTOMER_FULL_PAYMENT
+          - CUSTOMER_PARTIAL_PAYMENT
+          - CUSTOMER_NO_PAYMENT
         type: string
       label:
         type: string
@@ -3916,24 +3917,24 @@ definitions:
     properties:
       checkoutOption:
         enum:
-        - AGENT_AFFILIATE
-        - AGENT_CUSTOMER
-        - AGENT_RESELLER
-        - CUSTOMER_FULL_PAYMENT
-        - CUSTOMER_PARTIAL_PAYMENT
-        - CUSTOMER_NO_PAYMENT
+          - AGENT_AFFILIATE
+          - AGENT_CUSTOMER
+          - AGENT_RESELLER
+          - CUSTOMER_FULL_PAYMENT
+          - CUSTOMER_PARTIAL_PAYMENT
+          - CUSTOMER_NO_PAYMENT
         type: string
       paymentMethod:
         enum:
-        - CARD
-        - CASH
-        - VOUCHER
-        - RESERVE_FOR_EXTERNAL_PAYMENT
+          - CARD
+          - CASH
+          - VOUCHER
+          - RESERVE_FOR_EXTERNAL_PAYMENT
         type: string
       source:
         enum:
-        - SHOPPING_CART
-        - DIRECT_REQUEST
+          - SHOPPING_CART
+          - DIRECT_REQUEST
         type: string
       shoppingCart:
         $ref: '#/definitions/ShoppingCartCheckout'
@@ -4015,9 +4016,9 @@ definitions:
         type: array
       travelType:
         enum:
-        - BUSINESS
-        - LEISURE
-        - CONFERENCE
+          - BUSINESS
+          - LEISURE
+          - CONFERENCE
         type: string
       note:
         type: string
@@ -4468,6 +4469,10 @@ definitions:
         type: string
   LocationCodeDto:
     description: 'Deprecated. Use Address instead.'
+    required:
+      - country
+      - location
+      - name
     properties:
       coordinates:
         type: string
@@ -4557,15 +4562,15 @@ definitions:
       description:
         type: string
         description: 'Description of the photo.'
+        nullable: true
       alternateText:
         type: string
+        nullable: true
       height:
-        type: integer
-        format: int32
+        type: string
         description: 'Specifies original size photo height in pixels.'
       width:
-        type: integer
-        format: int32
+        type: string
         description: 'Specifies original size photo width in pixels.'
       flags:
         type: array
@@ -5475,6 +5480,7 @@ definitions:
       productGroupId:
         type: integer
         format: int32
+        nullable: true
         description: 'The id of commission group which is assigned to this product (set in Pricing/Commission group).'
       recurrenceId:
         type: integer
@@ -5519,6 +5525,7 @@ definitions:
           type: string
       defaultPrice:
         type: number
+        nullable: true
         description: 'Price for default price category, default rate from default price catalog.'
       pricesByCategory:
         type: object
@@ -5528,6 +5535,7 @@ definitions:
           format: double
       pickupPrice:
         type: number
+        nullable: true
         description: 'Pick-up price per booking. If pick-up pricing is set per participant then value is null.'
       pickupPricesByCategory:
         type: object
@@ -5537,6 +5545,7 @@ definitions:
           format: double
       dropoffPrice:
         type: number
+        nullable: true
         description: 'Drop-off price per booking. If drop-off pricing is set per participant then value is null.'
       dropoffPricesByCategory:
         type: object
@@ -5565,6 +5574,11 @@ definitions:
         type: boolean
         description: 'True if all seats are sold for this activity start time, false otherwise.'
   ActivityRatePrices:
+    required:
+      - activityRateId
+      - pricePerCategoryUnit
+      - extraPricePerUnit
+      - extraPricePerCategoryUnit
     properties:
       activityRateId:
         type: integer
@@ -5603,6 +5617,8 @@ definitions:
         items:
           $ref: '#/definitions/PriceByItem'
   PriceByItem:
+    required:
+      - id
     properties:
       id:
         type: integer
@@ -5646,6 +5662,7 @@ definitions:
         type: string
       dropoffPrice:
         type: number
+        nullable: true
       extraBookings:
         type: array
         items:
@@ -5675,6 +5692,7 @@ definitions:
         type: string
       pickupPrice:
         type: number
+        nullable: true
       pricingCategoryBookings:
         type: array
         items:
@@ -5872,6 +5890,7 @@ definitions:
       productGroupId:
         type: integer
         format: int64
+        nullable: true
         description: 'The id of commission group which is assigned to this product (set in Pricing/Commission group).'
       productCategory:
         $ref: '#/definitions/ProductCategoryEnum'
@@ -5946,6 +5965,7 @@ definitions:
       slug:
         type: string
         description: 'Human readable string that may be used to identify the product.'
+        nullable: true
       baseLanguage:
         type: string
         description: 'The language that the product description is written in. There may also be translations available.'
@@ -5991,7 +6011,9 @@ definitions:
         $ref: '#/definitions/VendorDto'
         description: 'The vendor that operates this activity.'
       boxedVendor:
-        $ref: '#/definitions/VendorDto'
+        allOf:
+          - $ref: '#/definitions/VendorDto'
+        nullable: true
         description: 'If this is a boxed activity, then this field holds the ID of the vendor that owns the activity inside the box.'
       storedExternally:
         type: boolean
@@ -5999,6 +6021,7 @@ definitions:
         type: string
         #TODO
         description: ''
+        nullable: true
       reviewRating:
         type: number
         format: double
@@ -6022,11 +6045,14 @@ definitions:
         $ref: '#/definitions/ActivityCapacityType'
         description: 'Specifies whether capacity is limited, free sell, or on request.'
       passExpiryType:
-        $ref: '#/definitions/PassExpiryType'
+        allOf:
+          - $ref: '#/definitions/PassExpiryType'
+        nullable: true
         description: 'Only used if bookingType == PASS. Specifies how the pass expires after purchase. Could be non-empty, if this product had this value previously.'
       fixedPassExpiryDate:
         type: array
         description: 'Specifies at what fixed date the pass expires (array of year, month, day). Only used if Activity.bookingType == PASS and Activity.passExpiryType == FIXED_DATE. Could be non-empty, if this product had this value previously.'
+        nullable: true
         items:
           type: string
       meetingType:
@@ -6079,6 +6105,7 @@ definitions:
       included:
         type: string
         description: 'Optional text describing what is included when you book this product. May contain HTML markup.'
+        nullable: true
       exclusions:
         type: array
         items:
@@ -6086,9 +6113,11 @@ definitions:
       excluded:
         type: string
         description: 'Optional text describing what is excluded when you book this product. May contain HTML markup.'
+        nullable: true
       requirements:
         type: string
         description: 'The text describing what you need to bring for this activity. May contain HTML markup.'
+        nullable: true
       knowBeforeYouGoItems:
         type: array
         items:
@@ -6107,6 +6136,7 @@ definitions:
       attention:
         type: string
         description: 'Text describing any points that need special attention for the passengers. May contain HTML.'
+        nullable: true
       locationCode:
         $ref: '#/definitions/LocationCodeDto'
         description: 'Deprecated.'
@@ -6133,6 +6163,7 @@ definitions:
                 format: double
       resourceSlots:
         type: array
+        nullable: true
         items:
           type: object
           properties:
@@ -6185,6 +6216,7 @@ definitions:
         description: 'Specifies whether this is a combo activity.'
       comboParts:
         type: array
+        nullable: true
         items:
           $ref: '#/definitions/ComboPart'
         #TODO
@@ -6195,6 +6227,7 @@ definitions:
         description: 'Specifies whether this combo activity has tickets per combo component.'
       ticketComboComponents:
         type: array
+        nullable: true
         items:
           $ref: '#/definitions/ComboPart'
         #TODO
@@ -6202,6 +6235,7 @@ definitions:
       pickupActivityId:
         type: integer
         format: int64
+        nullable: true
         #TODO
         description: 'Specifies ID of activity which pickup config should be used for syncing pickup service of this combo.'
       allowCustomizedBookings:
@@ -6299,6 +6333,7 @@ definitions:
         description: 'Whether pick up has separate capacity from the activity (for example, activity can take 60 pax but the pick up bus can only take 30).'
       pickupAllotmentType:
         type: string
+        nullable: true
         enum:
           - NO_ALLOTMENT
           - USE_ALLOTMENT
@@ -6322,6 +6357,7 @@ definitions:
         description: 'Specifies how many minutes before departure the pick up service starts.'
       noPickupMsg:
         type: string
+        nullable: true
         description: 'Specifies custom message on ticket when customer does not want pick-up. May contain HTML markup.'
       pickupTimeLocationBased:
         type: boolean
@@ -6342,6 +6378,7 @@ definitions:
               description: 'How many minutes pickup starts before start time, negative when pickup starts after start time'
       ticketMsg:
         type: string
+        nullable: true
         description: 'Specifies custom message on ticket. May contain HTML markup.'
       showGlobalPickupMsg:
         type: boolean
@@ -6350,7 +6387,7 @@ definitions:
         type: boolean
         description: 'Specifies if the custom message when customer does not want pick-up is turned on to be shown on ticket.'
       pickupPlaceGroups:
-        type: object
+        type: array
         #TODO
         description: 'The list of the pickup place groups for this activity.'
       dropoffService:
@@ -6369,7 +6406,7 @@ definitions:
         #TODO
         description: 'Specifies if supplier wants to drop-off users to the same places that they can be picked up from.'
       dropoffPlaceGroups:
-        type: object
+        type: array
         #TODO
         description: 'The list of the drop-off place groups for this activity.'
       difficultyLevel:
@@ -6403,7 +6440,9 @@ definitions:
         items:
           $ref: '#/definitions/BookableExtraDto'
       route:
-        $ref: '#/definitions/ActivityRouteDto'
+        allOf:
+          - $ref: '#/definitions/ActivityRouteDto'
+        nullable: true
         description: 'Optional travel directions that show the start point, end point, and any waypoints in between.'
       hasOpeningHours:
         type: boolean
@@ -6461,6 +6500,15 @@ definitions:
         type: integer
         format: int64
   OpeningHours:
+    required:
+      - id
+      - monday
+      - tuesday
+      - wednesday
+      - thursday
+      - friday
+      - saturday
+      - sunday
     properties:
       id:
         type: integer
@@ -6529,6 +6577,10 @@ definitions:
         type: integer
         format: int32
   OpeningHoursWeekday:
+    required:
+      - id
+      - open24Hours
+      - timeIntervals
     properties:
       id:
         type: integer
@@ -6564,7 +6616,9 @@ definitions:
         description: 'Specifies total open minutes amount for that weekday.'
       frequency:
         type: object
-        $ref: '#/definitions/Duration'
+        nullable: true
+        allOf:
+          - $ref: '#/definitions/Duration'
         description: 'Set up in Advanced opening hours page. Specifies frequency of opening hours (e.g. customers are admited every 1 hour).'
   Duration:
     properties:
@@ -6592,6 +6646,7 @@ definitions:
       description:
         type: string
         description: 'The description of rate (may be displayed to the end customer to describe the rate).'
+        nullable: true
       index:
         type: integer
         format: int32
@@ -6599,6 +6654,7 @@ definitions:
       rateCode:
         type: string
         description: 'Short rate code.'
+        nullable: true
       pricedPerPerson:
         type: boolean
         description: 'Specifies whether this rate is priced per person. If this is false, then the rate is priced per booking.'
@@ -6609,6 +6665,7 @@ definitions:
       maxPerBooking:
         type: integer
         format: int32
+        nullable: true
         description: 'The maximum participants per one booking on this rate. This field is null if there is no such maximum set (but do not confuse with start time availability maximum seats).'
       cancellationPolicy:
         description: 'The cancellation policy for this rate.'
@@ -6681,6 +6738,7 @@ definitions:
       id:
         type: integer
         format: int64
+        nullable: true
       activityExtraId:
         type: integer
         format: int64
@@ -6836,7 +6894,7 @@ definitions:
         description: 'Specifies location details for this agenda item.'
       address:
         type: object
-        #TODO
+        additionalProperties: true
         description: 'Specifies the address for this agenda item.'
       keyPhoto:
         $ref: '#/definitions/PhotoDto'
@@ -7097,6 +7155,7 @@ definitions:
         description: 'Specifies ID of the starting time.'
       label:
         type: string
+        nullable: true
         #TODO
         description: 'Specifies label for this starting time.'
       hour:
@@ -7123,10 +7182,12 @@ definitions:
         description: 'Deprecated. Should be used durationMinutes, durationHours, durationDays, durationWeeks.'
       voucherPickupMsg:
         type: string
+        nullable: true
         #TODO
         description: 'Pick-up message on the ticket.'
       externalId:
         type: string
+        nullable: true
         #TODO
         description: 'Code for the start time, which could be used for external systems.'
       duration:
@@ -8219,6 +8280,7 @@ definitions:
       productGroupId:
         type: integer
         format: int64
+        nullable: true
         description: 'The id of commission group which is assigned to this product (set in Pricing/Commission group).'
       returnPricing:
         type: boolean
@@ -10597,12 +10659,19 @@ definitions:
         items:
           $ref: '#/definitions/PenaltyRuleDto'
       tax:
-        $ref: '#/definitions/TaxDto'
+        nullable: true
+        allOf:
+          - $ref: '#/definitions/TaxDto'
       defaultPolicy:
         type: boolean
         #TODO
         description: ''
   CancellationPolicy:
+    required:
+      - id
+      - title
+      - tax
+      - penaltyRules
     properties:
       id:
         type: integer
@@ -10618,7 +10687,9 @@ definitions:
         type: string
         description: 'Cancellation policy title.'
       tax:
-        $ref: '#/definitions/Tax'
+        allOf:
+          - $ref: '#/definitions/Tax'
+        nullable: true
       penaltyRules:
         type: array
         description: 'The list of penalty rules applied for this cancellation policy.'

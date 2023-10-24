@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Bokun API",
-    "description": "<p>You can sign up for the <a href=\"http://eepurl.com/gDj7Yb\">Bokun API mailing list</a> to receive notifications when there are upcoming changes to this API.</p> <br/> <p> Further documentation of this api is available here <a href=\"https://bokun.dev/booking-api-restful/vU6sCfxwYdJWd1QAcLt12i\" target=\"_blank\">Bokun REST API documentation</a>. </p> <br/> <p>You can generate a client in your preferred language using <a href=\"http://editor.swagger.io/#/?import=https://bokun.github.io/api-docs/bokun.yaml\">swagger editor</a></p>",
+    "description": "<p>You can sign up for the <a href=\"https://bokun.activehosted.com/f/17\">Bokun API mailing list</a> to receive notifications when there are upcoming changes to this API.</p> <br/> <p> Further documentation of this api is available here <a href=\"https://bokun.dev/booking-api-restful/vU6sCfxwYdJWd1QAcLt12i\" target=\"_blank\">Bokun REST API documentation</a>. </p> <br/> <p>You can generate a client in your preferred language using <a href=\"http://editor.swagger.io/#/?import=https://bokun.github.io/api-docs/bokun.yaml\">swagger editor</a></p>",
     "version": "1.0"
   },
   "schemes": [

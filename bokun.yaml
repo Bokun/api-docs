@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: Bokun API
-  description: <p>You can sign up for the <a href="http://eepurl.com/gDj7Yb">Bokun API mailing list</a> to receive notifications when there are upcoming changes to this API.</p>
+  description: <p>You can sign up for the <a href="https://bokun.activehosted.com/f/17">Bokun API mailing list</a> to receive notifications when there are upcoming changes to this API.</p>
                <br/>
                <p>
                Further documentation of this api is available here <a href="https://bokun.dev/booking-api-restful/vU6sCfxwYdJWd1QAcLt12i" target="_blank">Bokun REST API documentation</a>.
